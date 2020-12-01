@@ -1,4 +1,4 @@
-export function irradix(num, radic = Math.PI, subtractOrderOnly = true, wholeDivisorOnly = true) {
+export function irradix(num, radic = Math.PI, subtractOrderOnly = false, wholeDivisorOnly = false) {
   const rep = []; 
 
   const epsilon = radic**-(Math.log(num)/Math.log(radic));
@@ -8,7 +8,7 @@ export function irradix(num, radic = Math.PI, subtractOrderOnly = true, wholeDiv
   while(rem > epsilon) {
     const res = rem % radic; 
     const order = findOrder(res, rem, radic);
-    rep.push(order);
+    rep.unshift(order);
     if ( subtractOrderOnly ) {
       rem -= order;
     } else {
@@ -22,11 +22,11 @@ export function irradix(num, radic = Math.PI, subtractOrderOnly = true, wholeDiv
     }
   }
 
-  return rep;
+  return rep.join(',');
 }
 
 function findOrder(residue, num, radic) {
-  const low = Math.max(1,Math.floor(num - radic));
+  const low = Math.max(radic,Math.floor(num - radic));
   const high = Math.ceil(num + radic);
 
   const Res = [ ];
@@ -42,13 +42,17 @@ function findOrder(residue, num, radic) {
     j++;
   }
 
-  console.log({low,high,num,radic, Res});
+  //console.log({low,high,num,radic, Res, residue});
   const Order = [];
   let order, lastRes = -Infinity, run = 0, maxRun = -Infinity;
   let first0;
 
   for( let i = 0; i < Res.length; i++ ) {
     const res = Res[i];
+    if ( res === 0 ) {
+      first0 = i;
+      order = -1;
+    }
     if ( res > lastRes ) {
       run += 1;
       if ( order !== undefined ) {
@@ -64,7 +68,7 @@ function findOrder(residue, num, radic) {
       run = 0;
       order = 0;
     }
-    console.log({order, num, maxRun, res, lastRes, first0, i})
+    //console.log({order, num, maxRun, res, lastRes, first0, i})
     Order.push(order); 
     lastRes = res;
   }
@@ -73,7 +77,7 @@ function findOrder(residue, num, radic) {
     Order[i] = maxRun - (first0 - i - 1);
   }
 
-  console.log({Order, Res});
+  //console.log({Order, Res});
 
   return Order[index];
 }
