@@ -35,12 +35,14 @@ function findOrder(residue, num, radic) {
 
   for( let i = low; i <= high; i++ ) {
     const resi = i % radic; 
+    Res.push(resi);
     if ( index === undefined && resi === residue ) {
       index = j;
     }
     j++;
   }
 
+  console.log({low,high,num,radic, Res});
   const Order = [];
   let order, lastRes = -Infinity, run = 0, maxRun = -Infinity;
   let first0;
