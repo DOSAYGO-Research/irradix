@@ -26,7 +26,7 @@ export function irradix(num, radic = Math.PI, subtractOrderOnly = true, wholeDiv
 }
 
 function findOrder(residue, num, radic) {
-  const low = Math.floor(num - radic);
+  const low = Math.max(1,Math.floor(num - radic));
   const high = Math.ceil(num + radic);
 
   const Res = [ ];
@@ -51,22 +51,26 @@ function findOrder(residue, num, radic) {
     const res = Res[i];
     if ( res > lastRes ) {
       run += 1;
-      order++;
+      if ( order !== undefined ) {
+        order++;
+      }
     } else {
-      if ( num > maxRun ) {
+      if ( run > maxRun ) {
         maxRun = run;
       }
       if ( order === undefined ) {
         first0 = i;
       }
+      run = 0;
       order = 0;
     }
+    console.log({order, num, maxRun, res, lastRes, first0, i})
     Order.push(order); 
     lastRes = res;
   }
 
   for( let i = 0; i < first0; i++ ) {
-    Order[i] = maxRun - first0 - i - 1;
+    Order[i] = maxRun - (first0 - i - 1);
   }
 
   console.log({Order, Res});
