@@ -1,0 +1,28 @@
+{
+  "name": "irradix",
+  "version": "1.0.0",
+  "description": "irrational radices",
+  "main": "index.js",
+  "scripts": {
+    "test": "node -r esm test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/c9fe/irradix.git"
+  },
+  "keywords": [
+    "radix",
+    "irrational",
+    "number",
+    "mathematics"
+  ],
+  "author": "@dosy",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/c9fe/irradix/issues"
+  },
+  "homepage": "https://github.com/c9fe/irradix#readme",
+  "dependencies": {
+    "esm": "^3.2.25"
+  }
+}
