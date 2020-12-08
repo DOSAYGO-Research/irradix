@@ -1,3 +1,5 @@
+const DEBUG = false;
+
 export function irradix(num, radic = Math.PI, subtractOrderOnly = false, wholeDivisorOnly = false) {
   const rep = []; 
 
@@ -29,18 +31,28 @@ function findOrder(residue, num, radic) {
 
   const Res = [ ];
 
-  let index, j = 0;
+  let index, j = 0, minDif = Infinity, minIndex = undefined;
 
   for( let i = low; i <= high; i++ ) {
     const resi = i % radic; 
     Res.push(resi);
-    if ( index === undefined && resi === residue ) {
-      index = j;
+    if ( index === undefined ) {
+      if ( resi === residue ) {
+        index = j;
+      } else if ( Math.abs(resi-residue) < minDif ) {
+        minDif = Math.abs(resi-residue);
+        minIndex = j;
+      }
     }
     j++;
   }
 
-  //console.log({low,high,num,radic, Res, residue});
+  if ( index === undefined ) {
+    DEBUG && console.log({minDif, minIndex});
+    index = minIndex;
+    DEBUG && console.log({Res,low,high,num,radic,residue,index});
+  }
+
   const Order = [];
   let order, lastRes = -Infinity, run = 0, maxRun = -Infinity;
   let first0;
@@ -75,7 +87,26 @@ function findOrder(residue, num, radic) {
     Order[i] = maxRun - (first0 - i - 1);
   }
 
-  //console.log({Order, Res});
-
-  return Order[index];
+  const unit = Order[index];
+  if ( unit > (Math.floor(radic)-1) ) {
+    DEBUG && console.log({minDif, minIndex, unit});
+    DEBUG && console.log({Order,Res,low,high,num,radic,residue,index});
+  } 
+  return unit;
 }
+
+export function wholify(rep, radic = Math.PI) {
+  rep = rep.split('').reverse().map(u => parseInt(u));
+  let num = 1;
+  for(let u of rep) {
+    u = u + 1;
+    // count up to the uth whole number above num
+    while(u--) {
+      num = Math.floor(num + 1);
+    }
+    num *= radic;
+  }
+
+  return num;
+}
+
