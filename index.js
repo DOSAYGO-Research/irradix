@@ -1,6 +1,10 @@
 export function irradix(num, radic = Math.PI) {
   if ( ! Number.isInteger(num) ) {
-    throw new TypeError(`Sorry cannot convert non-integer numbers.`)
+    throw new TypeError(`Sorry cannot convert non-integer numbers.`);
+  }
+
+  if ( Math.abs(radic) <= 1 ) {
+    throw new TypeError(`Sorry we don't support radices less than or equal to 1`);
   }
 
   const S = Math.sign(num);
@@ -16,16 +20,26 @@ export function irradix(num, radic = Math.PI) {
   const quanta = radic**-(Math.log(num)/Math.log(radic));
   const epsilon = Number.EPSILON;
 
-  while( w[0] > epsilon ) {
+  while( Math.abs(w[0]) > epsilon ) {
     w[1] = w[0] % radic;
+
+    if ( w[1] < 0 ) {
+      w[1] -= radic;
+    }
+
     w[0] = w[0] - w[1];
     w[0] = w[0] / radic;
 
-    if ( w[0] >= lastW[0] ) {
-      break;
+    if ( Math.abs(w[0]) >= Math.abs(lastW[0]) ) {
+      if ( Math.sign(radic) === -1 ) {
+        if ( w[0] === 0 ) {
+          break;
+        }
+      } else {
+        break;
+      }
     }
-
-    const unit = Math.floor(w[1]).toString(36);
+    const unit = Math.floor(Math.abs(w[1])).toString(36);
     r.unshift(unit);
     
     lastW = Array.from(w);
@@ -33,7 +47,7 @@ export function irradix(num, radic = Math.PI) {
 
   if ( S == -1 ) {
     r.unshift('-');
-  }
+  } 
 
   if ( radic > 36 ) {
     return r.join(',');
