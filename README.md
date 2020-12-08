@@ -22,6 +22,7 @@ const num = derradix(rep, Math.PI);
 
 - Radices of 1 or smaller
 - Encoding non-integers
+- BigInts (sorry, you can't mix BigInt and regular Numbers and so there's not much point, since BigInts can't be fractional)
 
 ## Why?
 
@@ -81,4 +82,8 @@ I just think it's cool to have a sequence of units like that, that shows the rel
 - Obviously this is only good up to the precision you are calculating with. So Math.PI is not really PI it is just a representation of PI up to some number of bits. If JS had BigDecimals and constants that on-the-fly computed their bits to the required precision for any calculation, then I would be confident in saying that this scheme could really convert any integer, whatever the size, to any irrational number base, and be totally accurate. But if you push the integers high enough, probably two inaccuracies will happen: 1) the rep will differ from the "true rep" for that base, because you escaped the precision of the constant for that irrational, and 2) the rep might actually not be convertible back because you escape the precision of the numeric calculations. Those are both fairly "general" caveats, but worth mentioning for anything to do with numerical methods. 
 - This scheme might be wrong in some way and have some overlooked corner cases. I've tried to cover the ones important to me (+ve and -ve integer magnitudes, and +ve and -ve real radices), but I've only tested up to 20,000 or so, and while that probably means it's solid, it might not be. Something erroneous could have slipped through.
 
+## Get it
 
+```console
+npm i --save irradix
+```
