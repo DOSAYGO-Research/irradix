@@ -1,6 +1,6 @@
 # irradix
 
-Irrational radices 
+Irrational radices. Did you know 1000 in base *e* is `2010102`? Now you do.
 
 ## Usage
 
