@@ -4,7 +4,7 @@
   "description": "irrational radices",
   "main": "index.js",
   "scripts": {
-    "test": "node -r esm test.js"
+    "test": "clear && node -r esm test.js"
   },
   "repository": {
     "type": "git",
