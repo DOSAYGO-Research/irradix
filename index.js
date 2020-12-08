@@ -3,26 +3,24 @@ export function irradix(num, radic = Math.PI, subtractOrderOnly = false, wholeDi
 
   const epsilon = radic**-(Math.log(num)/Math.log(radic));
 
-  let rem = num;
+  const rem = num % radic;
+  const unit = Math.ceil(rem) - 1;
 
-  while(rem > epsilon) {
-    const res = rem % radic; 
-    const order = findOrder(res, rem, radic);
-    rep.unshift(order);
-    if ( subtractOrderOnly ) {
-      rem -= order;
-    } else {
-      rem -= res; 
-    }
+  rep.unshift(unit);
 
-    if ( wholeDivisorOnly ) {
-      rem /= Math.ceil(radic);
-    } else {
-      rem /= radic; 
-    }
+  num -= rem;
+
+  while( Math.abs(num) > epsilon ) {
+    num /= radic; 
+    const newRem = num % radic;
+    const newUnit = Math.round(newRem);
+
+    rep.unshift(unit);
+
+    num -= newRem;
   }
 
-  return rep.join(',');
+  return rep.join('');
 }
 
 function findOrder(residue, num, radic) {
