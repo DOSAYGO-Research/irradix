@@ -30,7 +30,7 @@ for( let i = 0; i <= 30; i ++ ) {
   const baseB = i.toString(B);
   const baseI = irradix(i, RADIX);
   const back = derradix(baseI, RADIX);
-  const N = parseInt(baseI,2);
+  const N = parseInt(baseI,B);
   for( let j = lastN; j < N; j++ ) {
     if ( j === lastN ) {
       pattern.push(MARK);
@@ -48,7 +48,7 @@ for( let i = 0; i <= 30; i ++ ) {
   //console.log("N",N);
   lastN = N;
   console.log(
-    `${i} in base ${RADIX}: ${baseI} ${baseI.length} (${parseInt(baseI,2)}) ${back} ${i === back} (${baseA}_${A}, ${baseB}_${B})`
+    `${i} in base ${RADIX}: ${baseI} ${baseI.length} (${parseInt(baseI,B)}) ${back} ${i === back} (${baseA}_${A}, ${baseB}_${B})`
   );
 }
 
