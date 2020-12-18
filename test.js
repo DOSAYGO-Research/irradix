@@ -24,7 +24,7 @@ let pattern = ['+'];
 let lastN = 0;
 let count = 1;
 
-for( let i = 0; i <= 30; i ++ ) {
+for( let i = 0; i <= 20; i ++ ) {
   const [A,B] = [Math.max(2,Math.min(36,Math.floor(RADIX))), Math.min(Math.max(2,Math.ceil(RADIX)),36)];
   const baseA = i.toString(A);
   const baseB = i.toString(B);
