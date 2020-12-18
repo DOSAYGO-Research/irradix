@@ -1,4 +1,8 @@
 export function irradix(num, radic = Math.PI) {
+  if ( num === 0 ) {
+    return "0";
+  }
+
   if ( ! Number.isInteger(num) ) {
     throw new TypeError(`Sorry cannot convert non-integer numbers.`);
   }

@@ -2,9 +2,9 @@ import {derradix,irradix} from './index.js';
 
 const VALS = {
   PI: Math.PI,
-  SQRT2: Math.SQRT2,
-  PHI: 0.5+Math.sqrt(5)/2,        /* golden mean */
-  "2PHI": 2/(0.5+Math.sqrt(5)/2), /* 2-inverse of golden mean */
+  SQRT2: Math.SQRT2,              /* no OEIS */
+  PHI: 0.5+Math.sqrt(5)/2,        /* golden mean, as binary is A336231 */
+  "2PHI": 2/(0.5+Math.sqrt(5)/2), /* 2-inverse of golden mean, no OEIS */
   DELTA: 1+Math.SQRT2,            /* silver mean */
   BRONZE: (3+Math.sqrt(13))/2,    /* bronze mean */
   SQRT3: Math.sqrt(3),
@@ -24,7 +24,7 @@ let pattern = ['+'];
 let lastN = 0;
 let count = 1;
 
-for( let i = 0; i <= 1023; i ++ ) {
+for( let i = 0; i <= 30; i ++ ) {
   const [A,B] = [Math.max(2,Math.min(36,Math.floor(RADIX))), Math.min(Math.max(2,Math.ceil(RADIX)),36)];
   const baseA = i.toString(A);
   const baseB = i.toString(B);
