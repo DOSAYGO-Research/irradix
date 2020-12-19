@@ -95,16 +95,33 @@ export function derradix(rep, radic = Math.PI) {
 // encode positive javascript integers of any size (not floats, not bigints)
 // into a packed array with members of arbitrary bit length
 export function encode(nums, bits = 8) {
-  nums = nums.map(x => irradix(x, VALS.PHI)); // every number now has no '101' in it
+  nums = Array.from(nums);
+  nums.unshift(nums.length);
+  nums.push(999);
   console.log(nums);
-  nums = nums.map(x => x.endsWith('10') ? x + '0101' : x); // add extra 0
-  nums = nums.join('10');                     // now every number is separated by 1-0-1
+
+  nums = nums.map(x => irradix(x*2, VALS.PHI)); // every number now has no '101' in it
 
   console.log(nums);
+
+  nums = nums.map(x => x.endsWith('10') ? x + '0101' : x); // add extra 0
+
+  console.log('1',nums);
+
+  console.assert(nums.join('').split('101').length === 1);
+
+  nums = nums.join('10');                     // now every number is separated by 1-0-1
+
+  console.log('2',nums);
+
   nums = chunk(nums, bits);
+
+  console.log(nums);
 
   nums = nums.map(s => parseInt(s,2));
   
+  console.log(nums);
+
   if ( bits > 6 ) {
     return nums;
   } else {
@@ -128,14 +145,27 @@ function chunk(str, size) {
     nextChunk = '';
   }
 
+  if ( nextChunk.length ) {
+    chunks.push(nextChunk);
+  }
+
   return chunks;
 }
 
-export function decode(chunks) {
-  chunks = chunks.map(n => n.toString(2)); 
+export function decode(chunks, bits = 8) {
+  chunks = chunks.map((n,i) => {
+    if ( i < chunks.length - 1 ) {
+      return n.toString(2).padStart(bits, '0');
+    } else {
+      return n.toString(2);
+    }
+  });
+  console.log(chunks);
   chunks = chunks.join('');
   let realChunks = [];
-  console.log(chunks);
+  console.log('3', chunks);
+  chunks = chunks.split('101');
+  /*
   while(chunks.length) {
     if ( chunks.slice(0,3) == '101' ) {
       chunks = chunks.slice(3);
@@ -155,6 +185,8 @@ export function decode(chunks) {
   }
   console.log(realChunks);
   chunks = Array.from(realChunks);
+  */
+  console.log(chunks);
   for ( let i = 0; i < chunks.length; i++ ) {
     let chunk = chunks[i];
     console.log(chunk);
@@ -174,6 +206,9 @@ export function decode(chunks) {
     realChunks.push(chunk);
   }
   console.log(realChunks);
-  chunks = realChunks.map(c => parseInt(c,2));
-  return chunks;
+  chunks = realChunks.map(c => derradix(c,VALS.PHI));
+  chunks = chunks.map(x => x/2);
+  const len = chunks.shift();
+
+  return chunks.slice(0,len);
 }

@@ -3,8 +3,8 @@ import {encode, decode, VALS,derradix,irradix} from './index.js';
 testCodec();
 
 function testCodec() {
-  const X = [1,2,3,4,5,6,7,8,9,10];
-  const packed = encode(X, 8);
+  const X = [1123,1312,1,9,1231312,11231312,111231312,211231312,311231312,411231312,511231312,611231312,711231312,811231312,911231312,1011231312,57];
+  const packed = encode(X, 32);
   const unpacked = decode(packed);
   console.log({X,packed,unpacked});
 }
