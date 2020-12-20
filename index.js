@@ -13,6 +13,10 @@ export const VALS = {
   G20T: (Math.E**Math.PI-Math.PI)/10
 };
 
+const ALPHABET = {
+  6: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'.split('')
+};
+
 export function irradix(num, radic = Math.PI) {
   if ( num === 0 ) {
     return "0";
@@ -71,7 +75,11 @@ export function irradix(num, radic = Math.PI) {
   if ( radic > 36 ) {
     return r.join(',');
   } else {
-    return r.join('');
+    const OK = r.join('');
+    if ( OK.includes('101') ) {
+      throw new TypeError('UH OH', OK, num);
+    }
+    return OK;
   }
 }
 
@@ -96,43 +104,49 @@ export function derradix(rep, radic = Math.PI) {
 // into a packed array with members of arbitrary bit length
 export function encode(nums, bits = 8) {
   nums = Array.from(nums);
-  nums.unshift(nums.length);
-  nums.push(999);
+  //nums.unshift(nums.length);
+  //nums.push(999);
   console.log(nums);
 
-  nums = nums.map(x => irradix(x*2, VALS.PHI)); // every number now has no '101' in it
+  nums = nums.map(x => irradix(x*2+1, VALS.PHI)); // every number now has no '101' in it
 
   console.log(nums);
+
+  //console.assert(nums.map(x => x.endsWith('10') ? x + '0' : x ).join('').split('101').length === 1);
 
   nums = nums.map(x => x.endsWith('10') ? x + '0101' : x); // add extra 0
 
   console.log('1',nums);
 
-  console.assert(nums.join('').split('101').length === 1);
 
   nums = nums.join('10');                     // now every number is separated by 1-0-1
 
   console.log('2',nums);
 
-  nums = chunk(nums, bits);
+  let maxSize;
+  ({chunks:nums,maxSize:bits} = chunk(nums, bits));
 
-  console.log(nums);
+  console.log('oo', nums);
 
-  nums = nums.map(s => parseInt(s,2));
+  nums = nums.filter(s => s.length).map(s => parseInt(s,2));
   
   console.log(nums);
 
   if ( bits > 6 ) {
-    return nums;
-  } else {
+    // do nothing
+  } else if ( bits === 6 ) {
     nums = nums.map(x => ALPHABET[bits][x]);
+  } else {
+    nums = nums.map(x => x.toString(2**bits));
   }
+  return {nums,bits};
 }
 
 /* probably need to handle last chunk somehow */
 function chunk(str, size) {
   const chunks = []; 
   let nextChunk = '';
+  let maxSize = 0;
 
   let i = 0;
 
@@ -141,25 +155,43 @@ function chunk(str, size) {
     i++;
     if ( nextChunk.length < size ) continue;
 
-    chunks.push(nextChunk);
-    nextChunk = '';
+    if ( str[i] === '0' ) {
+      const last1Index = nextChunk.lastIndexOf('1');
+      const suffix = nextChunk.slice(last1Index);
+      const chunk = nextChunk.slice(0,last1Index);
+      if ( chunk.length > maxSize ) {
+        maxSize = chunk.length;
+      }
+      chunks.push(chunk);
+      nextChunk = suffix;
+    } else {
+      if ( nextChunk.length > maxSize ) {
+        maxSize = nextChunk.length;
+      }
+      chunks.push(nextChunk);
+      nextChunk = '';
+    }
   }
 
   if ( nextChunk.length ) {
+    if ( nextChunk.length > maxSize ) {
+      maxSize = nextChunk.length;
+    }
     chunks.push(nextChunk);
   }
 
-  return chunks;
+  return {chunks, maxSize};
 }
 
 export function decode(chunks, bits = 8) {
   chunks = Array.from(chunks);
+  if ( bits === 6 ) {
+    chunks = chunks.map(i => ALPHABET_I[bits][i]);
+  } else if ( bits < 6 ) {
+    chunks = chunks.map(i => parseInt(i, 2**bits));
+  }
   chunks = chunks.map((n,i) => {
-    if ( i < chunks.length - 1 ) {
-      return n.toString(2).padStart(bits, '0');
-    } else {
-      return n.toString(2);
-    }
+    return n.toString(2);
   });
   console.log(chunks);
   chunks = chunks.join('');
@@ -206,10 +238,11 @@ export function decode(chunks, bits = 8) {
 
     realChunks.push(chunk);
   }
-  console.log(realChunks);
+  console.log('rc', realChunks);
   chunks = realChunks.map(c => derradix(c,VALS.PHI));
-  chunks = chunks.map(x => x/2);
-  const len = chunks.shift();
+  chunks = chunks.map(x => (x-1)/2);
+  //const len = chunks.shift();
+  const len = chunks.length;
 
   return chunks.slice(0,len);
 }

@@ -5,13 +5,19 @@ const NUM_SIZE = 64;
 testCodec();
 
 function testCodec() {
-  const bits = 32;
+  let bits = 8;
   let X = [1123,1312,1,9,1231312,8,11231312,111231312,211231312,311231312,411231312,511231312,611231312,711231312,811231312,911231312,1011231312,57];
-  X = [1,2,3,51,4];
-  const packed = toTypedArray(encode(X, bits), bits);
+  X = [0,1,1,1,2,3,99,51,4,8,9,81,781,81];
+  let packed;
+  ({nums:packed,bits} = encode(X, bits));
+  console.log('ok', packed);
+  let key;
+  if ( bits >= 7 ) {
+    ({key,packed} = toTypedArray(packed, bits));
+  }
   const unpacked = decode(packed, bits);
   console.log({X,packed,unpacked});
-  console.log({packedSize:packed.length*bits/8,unpackedSize:unpacked.length*NUM_SIZE/8});
+  console.log({packedSize:packed.length*(key||bits)/8,unpackedSize:unpacked.length*NUM_SIZE/8});
 }
 
 function toTypedArray(stuff, bits) {
@@ -21,14 +27,15 @@ function toTypedArray(stuff, bits) {
     32: Uint32Array,
     64: BigUint64Array
   }
-  let arrayType;
+  let arrayType, key;
   for( let i = 0; i < Object.keys(types).length; i++ ) {
-    const key = parseInt(Object.keys(types)[i]);
+    const Key = parseInt(Object.keys(types)[i]);
     if ( bits > key ) continue;
-    arrayType = types[key];
+    arrayType = types[Key];
+    key = Key;
     break;
   }
-  return new arrayType(stuff);
+  return {packed:new arrayType(stuff), key};
 }
 
 function testRadix() {
