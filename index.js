@@ -153,6 +153,7 @@ function chunk(str, size) {
 }
 
 export function decode(chunks, bits = 8) {
+  chunks = Array.from(chunks);
   chunks = chunks.map((n,i) => {
     if ( i < chunks.length - 1 ) {
       return n.toString(2).padStart(bits, '0');

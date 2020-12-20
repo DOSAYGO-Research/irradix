@@ -1,12 +1,34 @@
 import {encode, decode, VALS,derradix,irradix} from './index.js';
 
+const NUM_SIZE = 64;
+
 testCodec();
 
 function testCodec() {
-  const X = [1123,1312,1,9,1231312,11231312,111231312,211231312,311231312,411231312,511231312,611231312,711231312,811231312,911231312,1011231312,57];
-  const packed = encode(X, 32);
-  const unpacked = decode(packed);
+  const bits = 32;
+  let X = [1123,1312,1,9,1231312,8,11231312,111231312,211231312,311231312,411231312,511231312,611231312,711231312,811231312,911231312,1011231312,57];
+  X = [1,2,3,51,4];
+  const packed = toTypedArray(encode(X, bits), bits);
+  const unpacked = decode(packed, bits);
   console.log({X,packed,unpacked});
+  console.log({packedSize:packed.length*bits/8,unpackedSize:unpacked.length*NUM_SIZE/8});
+}
+
+function toTypedArray(stuff, bits) {
+  const types = {
+    8: Uint8Array,
+    16: Uint16Array,
+    32: Uint32Array,
+    64: BigUint64Array
+  }
+  let arrayType;
+  for( let i = 0; i < Object.keys(types).length; i++ ) {
+    const key = parseInt(Object.keys(types)[i]);
+    if ( bits > key ) continue;
+    arrayType = types[key];
+    break;
+  }
+  return new arrayType(stuff);
 }
 
 function testRadix() {
