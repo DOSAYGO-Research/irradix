@@ -124,7 +124,12 @@ export function encode(nums, bits = 8) {
   console.log('2',nums);
 
   let maxSize;
-  ({chunks:nums,maxSize:bits} = chunk(nums, bits));
+  ({chunks:nums,maxSize} = chunk(nums, bits));
+
+  console.log({maxSize,bits});
+  if ( maxSize > bits ) {
+    bits = maxSize;
+  }
 
   console.log('oo', nums);
 
