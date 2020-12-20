@@ -128,11 +128,11 @@ function newRandomLength() {
 }
 
 function newRandomBitSize() {
-  return Math.round((Math.random()*62) + 2);
+  return Math.round((Math.random()*28) + 4);
 }
 
 function newRandomValue() {
-  const TOP = Number.MAX_SAFE_INTEGER;
+  const TOP = Number.MAX_SAFE_INTEGER/32;
   const topLog = Math.log(TOP);
   const bottomLog = Math.log(1);
   const range = topLog - bottomLog;

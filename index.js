@@ -77,7 +77,8 @@ export function irradix(num, radic = Math.PI) {
   } else {
     const OK = r.join('');
     if ( OK.includes('101') ) {
-      throw new TypeError('UH OH', OK, r, num);
+      console.info(OK,r,num);
+      throw new TypeError('UH OH');
     }
     return OK;
   }
