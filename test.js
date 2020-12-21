@@ -132,12 +132,13 @@ function newRandomBitSize() {
 }
 
 function newRandomValue() {
-  const TOP = Number.MAX_SAFE_INTEGER/32;
+  const TOP = 2**40;
   const topLog = Math.log(TOP);
   const bottomLog = Math.log(1);
   const range = topLog - bottomLog;
-  const logRan = Math.random()*range + bottomLog;
-  const val = Math.expm1(logRan); // can use expm1 since our bottomLog is on 1 
+  const logRan = Math.random()*range;
+  const val = Math.expm1(logRan);
+                                  // can use expm1 since our bottomLog is on 1 
                                   // rather than 0 but our values can go from zero 
   const realVal = Math.round(val);
   return realVal;
