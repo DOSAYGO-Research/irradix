@@ -3,6 +3,8 @@
   const MAX_SAFE = 2**46;
 
   export const VALS = {
+    PSI: 1.465571231876768026656731,
+    APERY: 1.2020569031595942853997381,
     P: 1.32471795724474602596,
     PI: Math.PI,
     SQRT2: Math.SQRT2,              /* no OEIS */
