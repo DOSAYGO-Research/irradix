@@ -2,7 +2,12 @@ import {encode, decode, VALS,derradix,irradix} from './index.js';
 
 const NUM_SIZE = 64;
 
-randomTest();
+testOne(149950108427);
+//randomTest();
+
+function testOne(num) {
+  encode([(num-1)/2], 8);
+}
 
 function randomTest() {
   const X = newRandomArray(newRandomLength());

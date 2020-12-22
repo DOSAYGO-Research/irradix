@@ -80,16 +80,33 @@
       r.unshift('-');
     } 
 
+    const errors = [];
+
+    let result;
     if ( radic > 36 ) {
-      return r.join(',');
+      result = r.join(',');
     } else {
-      const OK = r.join('');
-      if ( OK.includes('101') ) {
-        console.info(OK,OK.length,num, num.toString(2).length);
-        throw new TypeError('UH OH');
+      result = r.join('');
+      if ( result.includes('101') ) {
+        //console.info(101,result,result.length,num, num.toString(2).length);
+        errors.push(new TypeError('UH OH 101'));
       }
-      return OK;
     }
+    let try1;
+    if ( (try1=derradix(result, radic)) !== num ) {
+      console.info('xderradix',result,result.length,num, num.toString(2).length, try1);
+      errors.push(new TypeError('UH OH No ret'));
+    }
+
+    console.log(try1,num);
+
+    if ( errors.length ) {
+      console.warn(errors[1]);
+      setTimeout(() => {throw errors[0]}, 100);
+      //throw errors[0];
+    }
+
+    return result;
   }
 
   export function derradix(rep, radic = Math.PI) {
@@ -139,6 +156,7 @@
     if ( maxSize > bits ) {
       bits = maxSize;
     }
+    console.log(nums);
 
     DEBUG && console.log('oo', nums);
 
