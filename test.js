@@ -2,8 +2,10 @@ import {encode, decode, VALS,derradix,irradix} from './index.js';
 
 const NUM_SIZE = 64;
 
-testOne(149950108427);
+//testOne(149950108427);
 //randomTest();
+//testCodec();
+testRadix();
 
 function testOne(num) {
   encode([(num-1)/2], 8);
@@ -75,7 +77,7 @@ function testRadix() {
   let lastN = 0;
   let count = 1;
 
-  for( let i = 0; i <= 20; i ++ ) {
+  for( let i = 0; i <= 64; i ++ ) {
     const [A,B] = [Math.max(2,Math.min(36,Math.floor(RADIX))), Math.min(Math.max(2,Math.ceil(RADIX)),36)];
     const baseA = i.toString(A);
     const baseB = i.toString(B);

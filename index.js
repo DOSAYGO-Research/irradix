@@ -3,6 +3,7 @@
   const MAX_SAFE = 2**46;
 
   export const VALS = {
+    P: 1.32471795724474602596,
     PI: Math.PI,
     SQRT2: Math.SQRT2,              /* no OEIS */
     PHI: 0.5+Math.sqrt(5)/2,        /* golden mean, as binary is A336231 */
@@ -16,6 +17,7 @@
     G20: Math.E**Math.PI-Math.PI,
     G20T: (Math.E**Math.PI-Math.PI)/10
   };
+  VALS.P2 = VALS.P**2;
 
   const ALPHABET = {
     6: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'.split('')
@@ -87,7 +89,7 @@
       result = r.join(',');
     } else {
       result = r.join('');
-      if ( result.includes('101') ) {
+      if ( radic === VALS.PHI && result.includes('101') ) {
         //console.info(101,result,result.length,num, num.toString(2).length);
         errors.push(new TypeError('UH OH 101'));
       }
@@ -98,7 +100,7 @@
       errors.push(new TypeError('UH OH No ret'));
     }
 
-    console.log(try1,num);
+    //console.log(try1,num);
 
     if ( errors.length ) {
       console.warn(errors[1]);
