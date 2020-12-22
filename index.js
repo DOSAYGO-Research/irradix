@@ -3,6 +3,11 @@
   const MAX_SAFE = 2**46;
 
   export const VALS = {
+    C1: Math.log(Math.PI**2),
+    C2: Math.log(Math.PI**2) - Math.log(6) + 1, /* sum of 1 and reciprocals of squares of primes */
+    HBARC: 3.16152649, /* plankc in radians */
+    EM1: 1.57721566490153286060651209008240243, /* Euler M constant */
+    RZ2: Math.PI**2/6,
     PISOTV3: 1.4432687912703731076,
     PISOTV6: 1.5341577449142669154,
     PISOTV9: 1.5701473121960543629,
