@@ -4,7 +4,8 @@
 
   export const VALS = {
     C1: Math.log(Math.PI**2),
-    C2: Math.log(Math.PI**2) - Math.log(6) + 1, /* sum of 1 and reciprocals of squares of primes */
+    C2: Math.log(Math.PI**2) - Math.log(6) + 1, /* not sum of 1 and reciprocals of squares of primes */
+    C3: 1.4522474200410654985065, /* correct C2 */
     HBARC: 3.16152649, /* plankc in radians */
     EM1: 1.57721566490153286060651209008240243, /* Euler M constant */
     RZ2: Math.PI**2/6,
