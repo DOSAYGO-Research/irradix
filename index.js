@@ -49,7 +49,7 @@
 
   export function irradix(num, radic = Math.PI) {
     if ( num > MAX_SAFE ) {
-      console.log(num, num.toString(2).length);
+      DEBUG && console.log(num, num.toString(2).length);
       throw new TypeError(`We only support conversions up to ${MAX_SAFE} because beyond that precision is lost and the conversion is inaccurate.`);
     }
     num = new Decimal(num);
@@ -130,20 +130,20 @@
     } else {
       result = r.join('');
       if ( radic.comparedTo(VALS.BigPHI) === 0 && result.includes('101') ) {
-        //console.info(101,result,result.length,num, num.toBinary().length);
+        //DEBUG && console.info(101,result,result.length,num, num.toBinary().length);
         errors.push(new TypeError('UH OH 101'));
       }
     }
     let try1;
     if ( (try1=derradix(result, radic)).comparedTo(num) !== 0 ) {
-      console.info('xderradix',result,result.length,num, num.toBinary().length, try1);
+      DEBUG && console.info('xderradix',result,result.length,num, num.toBinary().length, try1);
       errors.push(new TypeError('UH OH No ret'));
     }
 
-    //console.log(try1,num);
+    //DEBUG && console.log(try1,num);
 
     if ( errors.length ) {
-      errors.length > 1 && console.warn(errors[1]);
+      errors.length > 1 && DEBUG && console.warn(errors[1]);
       throw errors[0];
     }
 
@@ -200,7 +200,7 @@
     if ( maxSize > bits ) {
       bits = maxSize;
     }
-    console.log(nums);
+    DEBUG && console.log(nums);
 
     DEBUG && console.log('oo', nums);
 

@@ -182,7 +182,7 @@ function newRandomBitSize() {
 }
 
 function newRandomValue() {
-  const TOP = 2**40;
+  const TOP = 2**32;
   const topLog = Math.log(TOP);
   const bottomLog = Math.log(1);
   const range = topLog - bottomLog;
