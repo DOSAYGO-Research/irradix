@@ -1,6 +1,6 @@
 {
   "name": "irradix",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "irrational radices and special golden-ratio base integer packing",
   "main": "index.js",
   "scripts": {
