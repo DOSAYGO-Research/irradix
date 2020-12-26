@@ -53,8 +53,6 @@
       throw new TypeError(`Sorry cannot convert non-integer numbers.`);
     }
 
-    console.log("Good", num);
-
     radic = new Decimal(radic);
     if ( Decimal.abs(radic).comparedTo(1) <= 0 ) {
       throw new TypeError(`Sorry we don't support radices less than or equal to 1`);
@@ -75,9 +73,9 @@
 
     const thresh = Decimal.min(quanta, epsilon);
 
-    console.log({quanta, epsilon, thresh});
+    DEBUG && console.log({quanta, epsilon, thresh});
     while( true ) {
-      console.log("abs", Decimal.abs(w[0]));
+      DEBUG && console.log("abs", Decimal.abs(w[0]));
       if ( Decimal.abs(w[0]).comparedTo(thresh) <= 0 ) {
         break;
       }
@@ -88,12 +86,12 @@
         w[1] = w[1].sub(radic);
       }
 
-      console.log({w});
+      DEBUG && console.log({w});
       w[0] = w[0].sub(w[1]);
-      console.log({w});
+      DEBUG && console.log({w});
       w[0] = w[0].div(radic);
 
-      console.log({w});
+      DEBUG && console.log({w});
 
       if ( Decimal.abs(w[0]).comparedTo(Decimal.abs(lastW[0])) >= 0 ) {
         if ( Decimal.sign(radic) === -1 ) {
@@ -105,7 +103,7 @@
         }
       }
       let unit = Decimal.floor(Decimal.abs(w[1]));
-      console.log(unit.toString());
+      DEBUG && console.log(unit.toString());
       unit = unit.toNumber().toString(36);
       r.unshift(unit);
       
@@ -138,8 +136,7 @@
 
     if ( errors.length ) {
       errors.length > 1 && console.warn(errors[1]);
-      setTimeout(() => {throw errors[0]}, 100);
-      //throw errors[0];
+      throw errors[0];
     }
 
     return result;
@@ -157,8 +154,9 @@
     rep = rep.split(radic > 36 ? ',' : '').map(u => new Decimal(parseInt(u, 36)));
     let num = new Decimal(0);
     for(let u of rep) {
-      num.mul(radic);
+      num = num.mul(radic);
       num = Decimal.ceil(num.plus(u));
+      DEBUG && console.log({rep,num});
     }
 
     return num.mul(S);

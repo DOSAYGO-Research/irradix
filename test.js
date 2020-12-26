@@ -3,12 +3,16 @@ import {encode, decode, VALS,derradix,irradix} from './index.js';
 const NUM_SIZE = 64;
 
 //testOne(149950108427);
-//randomTest();
+//testOne(133799491136);
+randomTest();
 //testCodec();
-testRadix();
+//testRadix();
 
 function testOne(num) {
-  encode([(num-1)/2], 8);
+  const {nums,bits} = encode([(num-1)/2], 8);
+  console.log({nums,bits});
+  const unpacked = (decode(nums, bits)*2)+1;
+  console.log(num,unpacked);
 }
 
 function randomTest() {
@@ -34,8 +38,8 @@ function testCodec() {
   let bits = 5;
   let X = [1123,1312,1,9,1231312,8,11231312,111231312,211231312,311231312,411231312,511231312,611231312,711231312,811231312,911231312,1011231312,57];
   X = [0,1,1,1,2,3,99,51,4,8,9,81,781,81];
-  X = [0,1,1,99,51,4,8,9,81,781,81];
-  X = [1,2,3,4,5,10111];
+  //X = [0,1,1,99,51,4,8,9,81,781,81];
+  //X = [1,2,3,4,5,10111];
   let packed;
   ({nums:packed,bits} = encode(X, bits));
   console.log('ok', packed, bits);
@@ -43,7 +47,7 @@ function testCodec() {
   if ( bits >= 7 ) {
     ({key,packed} = toTypedArray(packed, bits));
   }
-  console.log(packed);
+  console.log(packed, key, bits);
   const unpacked = decode(packed, bits);
   console.log({X,packed,unpacked});
   console.log({packedSize:packed.length*(key||bits)/8,unpackedSize:unpacked.length*NUM_SIZE/8});
@@ -77,7 +81,7 @@ function testRadix() {
   let lastN = 0;
   let count = 1;
 
-  for( let i = 24; i <= 24; i ++ ) {
+  for( let i = 0; i <= 64; i ++ ) {
     const [A,B] = [Math.max(2,Math.min(36,Math.floor(RADIX))), Math.min(Math.max(2,Math.ceil(RADIX)),36)];
     const baseA = i.toString(A);
     const baseB = i.toString(B);
@@ -106,7 +110,7 @@ function testRadix() {
     );
     */
 
-    console.log({baseI, back});
+    console.log({baseI, back, i});
   }
 
   pattern.push('+')
@@ -129,7 +133,7 @@ function newRandomArray(len) {
 
 function newRandomLength() {
   const lowEnd = 1;
-  const highEnd = 10000000;
+  const highEnd = 100000;
   const logLowEnd = Math.log(lowEnd);
   const logHighEnd = Math.log(highEnd);
   const range = logHighEnd - logLowEnd;
