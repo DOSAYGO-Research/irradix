@@ -1,1 +1,10 @@
-- implement with a bigdecimal to see if the '101's and non-revertibles are coming from precision loss. 
+- try chunking into fixed width bits, if zeros exceed current bit width, just output another chunk, and always revivfy by left padding with zeroes. should work, right? (and simpler, I think)
+- tabulate the derradix compression function (irradix_rep -> number), but turn irradix_rep over all bit strings of that length not just the ones that irradix outputs. (idea: an expander code likes this is basically an invertible hash. num -> irradix(num) expands to some slots in longer bit space, while num -> derradix(num) maps different nums to the same shorter bit space, like a hash.) 
+and in a sense the encoder/decoder is the same idea, but working in a slightly different way and creating a mapping between bit sequences and integer vectors
+
+could it be used as a hash? does it have any utility as a "sequential" hash for indexing or something?
+
+is it any better than simply deleting every 3rd (or nth) bit to compress like that?
+
+
+

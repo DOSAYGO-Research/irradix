@@ -1,0 +1,3 @@
+
+- implement with a bigdecimal to see if the '101's and non-revertibles are coming from precision loss. 
+  - This improves it, and it works for all numbers
