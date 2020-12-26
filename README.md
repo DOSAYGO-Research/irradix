@@ -129,13 +129,13 @@ Did you know 1000 in base *e* is `2010102`? Now you do.
 
 Did you also know that base phi (Golden Ratio) creates binary representations that have no "101" sequence?
 
-At least, that's the hypothesis: Every sequence of 0 bits between any two 1 bits is always even-numbered. I discovered this fact while writing this library, and I realized it could be used to pack integers into a contiguous bit sequence (and then say, "chop" it up into discrete x-bit sized chunks). This packing, like the radix encoding, is reversible. I put the numbers I was getting into [OEIS](http://oeis.org/), and found [this sequence](http://oeis.org/A336231), then supposed it was true for every integer, and tests up to some high values (million) then randomly tested multiple times across the space in 0 -- 2**53 (JS integer range). There might be a counter example somewhere!
+At least, that's the hypothesis: Every sequence of 0 bits between any two 1 bits is always even-numbered. I discovered this fact while writing this library, and I realized it could be used to pack integers into a contiguous bit sequence (and then say, "chop" it up into discrete x-bit sized chunks). This packing, like the radix encoding, is reversible. I put the numbers I was getting into [OEIS](http://oeis.org/), and found [this sequence](http://oeis.org/A336231), then supposed it was true for every integer, and tests up to some high values (million) then randomly tested multiple times across the space in 0 -- `2**53` (JS integer range). There might be a counter example somewhere!
 
 # Math
 
 Sorry this is not a proof, more of a discussion of my intuition about this. I only acquired this intutiont after noticing the fact, not before. Before creating this irrational radix, I had no idea, the golden ratio base would behave in this way. After investigation a range of other irrational radices, I noticed no other patterns (but surely there must be some). 
 
-I think the "only even zero sequence between 1s" property of base PHI is related to the fact that phi represents a ratio of ratios, as in a:b ~ b:a+b, and because phi**2 = phi + 1, and any sequence of zeroes in the base-phi representation will correspond to an sequence of multiplications via phi, but phi**3 (or any odd-sequence of multiplications) will not have this identity. 
+I think the "only even zero sequence between 1s" property of base PHI is related to the fact that phi represents a ratio of ratios, as in `a:b ~ b:a+b`, and because `phi**2 = phi + 1`, and any sequence of zeroes in the base-phi representation will correspond to an sequence of multiplications via phi, but ``phi**3`` (or any odd-sequence of multiplications) will not have this identity. 
 
 But that's about as far as I got. It would be great to see a proof of this, I think it should be pretty simple.
 
