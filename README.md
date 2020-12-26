@@ -129,7 +129,7 @@ Did you know 1000 in base *e* is `2010102`? Now you do.
 
 Did you also know that base phi (Golden Ratio) creates binary representations that have no "101" sequence?
 
-At least, that's the hypothesis: Every sequence of 0 bits between any two 1 bits is always even-numbered. I discovered this fact while writing this library, and I realized it could be used to pack integers into a contiguous bit sequence (and then say, "chop" it up into discrete x-bit sized chunks). This packing, like the radix encoding, is reversible. I put the numbers I was getting into [OEIS](http://oeis.org/), and found this sequence](http://oeis.org/A336231), then supposed it was true for every integer, and tests up to some high values (million) then randomly tested multiple times across the space in 0 -- 2**53 (JS integer range). There might be a counter example somewhere!
+At least, that's the hypothesis: Every sequence of 0 bits between any two 1 bits is always even-numbered. I discovered this fact while writing this library, and I realized it could be used to pack integers into a contiguous bit sequence (and then say, "chop" it up into discrete x-bit sized chunks). This packing, like the radix encoding, is reversible. I put the numbers I was getting into [OEIS](http://oeis.org/), and found [this sequence](http://oeis.org/A336231), then supposed it was true for every integer, and tests up to some high values (million) then randomly tested multiple times across the space in 0 -- 2**53 (JS integer range). There might be a counter example somewhere!
 
 # Math
 
