@@ -38,6 +38,7 @@
   const ALPHABET = {
     6: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'.split('')
   };
+
   const ALPHABET_I = {
     6: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
       .split('')
@@ -48,10 +49,6 @@
   };
 
   export function irradix(num, radic = Math.PI) {
-    if ( num > MAX_SAFE ) {
-      DEBUG && console.log(num, num.toString(2).length);
-      throw new TypeError(`We only support conversions up to ${MAX_SAFE} because beyond that precision is lost and the conversion is inaccurate.`);
-    }
     num = new Decimal(num);
     if ( num.comparedTo(0) === 0 ) {
       return "0";

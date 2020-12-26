@@ -66,6 +66,10 @@ function randomTest(len) {
   const A = JSON.stringify(X);
   const B = JSON.stringify(Array.from(unpacked));
   console.assert(A === B);
+  if ( A !== B ) {
+    console.log(A,B);
+    throw new TypeError("Packing failed");
+  }
   return {packedSize,unpackedSize};
 }
 
