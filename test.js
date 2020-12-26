@@ -5,9 +5,9 @@ const NUM_SIZE = 64;
 //testOne(149950108427);
 //testOne(133799491136);
 //randomTestLong();
-randomTestShorts();
+//randomTestShorts();
 //testCodec();
-//testRadix();
+testRadix();
 
 function testOne(num) {
   const {nums,bits} = encode([(num-1)/2], 8);
@@ -149,7 +149,7 @@ function testRadix() {
     );
     */
 
-    console.log({baseI, back, i});
+    console.log({based:baseI, back, i});
   }
 
   pattern.push('+')

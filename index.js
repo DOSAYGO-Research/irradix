@@ -3,10 +3,9 @@
 
   const DEBUG = false;
 
-  const MAX_SAFE = 2**52;
-
   export const VALS = {
     BigPHI: Decimal.sqrt(5).plus(1).div(2),
+    // note the rest of these have no been converted to Decimal size (maybe you can?)
     C1: Math.log(Math.PI**2),
     C2: Math.log(Math.PI**2) - Math.log(6) + 1, /* not sum of 1 and reciprocals of squares of primes */
     C3: 1.4522474200410654985065, /* correct C2 */
