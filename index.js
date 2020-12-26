@@ -1,8 +1,12 @@
+  import {Decimal} from 'decimal.js';
+  Decimal.set({precision:101});
+
   const DEBUG = false;
 
-  const MAX_SAFE = 2**46;
+  const MAX_SAFE = 2**52;
 
   export const VALS = {
+    BigPHI: Decimal.sqrt(5).plus(1).div(2),
     C1: Math.log(Math.PI**2),
     C2: Math.log(Math.PI**2) - Math.log(6) + 1, /* not sum of 1 and reciprocals of squares of primes */
     C3: 1.4522474200410654985065, /* correct C2 */
@@ -40,51 +44,69 @@
       console.log(num, num.toString(2).length);
       throw new TypeError(`We only support conversions up to ${MAX_SAFE} because beyond that precision is lost and the conversion is inaccurate.`);
     }
-    if ( num === 0 ) {
+    num = new Decimal(num);
+    if ( num.comparedTo(0) === 0 ) {
       return "0";
     }
 
-    if ( ! Number.isInteger(num) ) {
+    if ( ! num.isInteger() ) {
       throw new TypeError(`Sorry cannot convert non-integer numbers.`);
     }
 
-    if ( Math.abs(radic) <= 1 ) {
+    console.log("Good", num);
+
+    radic = new Decimal(radic);
+    if ( Decimal.abs(radic).comparedTo(1) <= 0 ) {
       throw new TypeError(`Sorry we don't support radices less than or equal to 1`);
     }
 
-    const S = Math.sign(num);
+    const S = Decimal.sign(num);
 
     if ( S == -1 ) {
-      num *= S;
+      num = num.mul(S);
     }
 
     const w = [num, 0];
     const r = []; 
     let lastW = Array.from(w);
 
-    const quanta = radic**-(Math.log(num)/Math.log(radic));
-    const epsilon = Number.EPSILON;
+    const quanta = radic.pow(-(Decimal.log(num)/Decimal.log(radic)));
+    const epsilon = new Decimal(Number.EPSILON);
 
-    while( Math.abs(w[0]) > epsilon ) {
-      w[1] = w[0] % radic;
+    const thresh = Decimal.min(quanta, epsilon);
 
-      if ( w[1] < 0 ) {
-        w[1] -= radic;
+    console.log({quanta, epsilon, thresh});
+    while( true ) {
+      console.log("abs", Decimal.abs(w[0]));
+      if ( Decimal.abs(w[0]).comparedTo(thresh) <= 0 ) {
+        break;
       }
 
-      w[0] = w[0] - w[1];
-      w[0] = w[0] / radic;
+      w[1] = w[0].mod(radic);
 
-      if ( Math.abs(w[0]) >= Math.abs(lastW[0]) ) {
-        if ( Math.sign(radic) === -1 ) {
-          if ( w[0] === 0 ) {
+      if ( w[1].comparedTo(0) < 0 ) {
+        w[1] = w[1].sub(radic);
+      }
+
+      console.log({w});
+      w[0] = w[0].sub(w[1]);
+      console.log({w});
+      w[0] = w[0].div(radic);
+
+      console.log({w});
+
+      if ( Decimal.abs(w[0]).comparedTo(Decimal.abs(lastW[0])) >= 0 ) {
+        if ( Decimal.sign(radic) === -1 ) {
+          if ( w[0].comparedTo(0) === 0 ) {
             break;
           }
         } else {
           break;
         }
       }
-      const unit = Math.floor(Math.abs(w[1])).toString(36);
+      let unit = Decimal.floor(Decimal.abs(w[1]));
+      console.log(unit.toString());
+      unit = unit.toNumber().toString(36);
       r.unshift(unit);
       
       lastW = Array.from(w);
@@ -97,25 +119,25 @@
     const errors = [];
 
     let result;
-    if ( radic > 36 ) {
+    if ( radic.comparedTo(36) > 0 ) {
       result = r.join(',');
     } else {
       result = r.join('');
-      if ( radic === VALS.PHI && result.includes('101') ) {
-        //console.info(101,result,result.length,num, num.toString(2).length);
+      if ( radic.comparedTo(VALS.BigPHI) === 0 && result.includes('101') ) {
+        //console.info(101,result,result.length,num, num.toBinary().length);
         errors.push(new TypeError('UH OH 101'));
       }
     }
     let try1;
-    if ( (try1=derradix(result, radic)) !== num ) {
-      console.info('xderradix',result,result.length,num, num.toString(2).length, try1);
+    if ( (try1=derradix(result, radic)).comparedTo(num) !== 0 ) {
+      console.info('xderradix',result,result.length,num, num.toBinary().length, try1);
       errors.push(new TypeError('UH OH No ret'));
     }
 
     //console.log(try1,num);
 
     if ( errors.length ) {
-      console.warn(errors[1]);
+      errors.length > 1 && console.warn(errors[1]);
       setTimeout(() => {throw errors[0]}, 100);
       //throw errors[0];
     }
@@ -130,14 +152,16 @@
       rep = rep.slice(1);
     }
 
-    rep = rep.split(radic > 36 ? ',' : '').map(u => parseInt(u, 36));
-    let num = 0;
+    radic = new Decimal(radic);
+
+    rep = rep.split(radic > 36 ? ',' : '').map(u => new Decimal(parseInt(u, 36)));
+    let num = new Decimal(0);
     for(let u of rep) {
-      num *= radic;
-      num = Math.ceil(num + u);
+      num.mul(radic);
+      num = Decimal.ceil(num.plus(u));
     }
 
-    return S*num;
+    return num.mul(S);
   }
 
   // encode positive javascript integers of any size (not floats, not bigints)

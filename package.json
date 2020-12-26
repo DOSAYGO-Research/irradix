@@ -4,7 +4,8 @@
   "description": "irrational radices",
   "main": "index.js",
   "scripts": {
-    "test": "clear && node -r esm test.js"
+    "test": "clear && node -r esm test.js",
+    "test-bd": "clear && node -r esm bd-test.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,9 @@
   },
   "homepage": "https://github.com/c9fe/irradix#readme",
   "dependencies": {
+    "big.js": "^6.0.3",
+    "bignumber.js": "^9.0.1",
+    "decimal.js": "^10.2.1",
     "esm": "^3.2.25"
   }
 }

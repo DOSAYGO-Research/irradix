@@ -68,7 +68,7 @@ function toTypedArray(stuff, bits) {
 }
 
 function testRadix() {
-  const RADIX = VALS[process.argv[2] || 'PI'] || parseFloat(process.argv[2]);
+  const RADIX = VALS[process.argv[2] || 'BigPHI'] || parseFloat(process.argv[2]);
 
   const MARK = '+';
   const GAP = '-';
@@ -77,7 +77,7 @@ function testRadix() {
   let lastN = 0;
   let count = 1;
 
-  for( let i = 0; i <= 64; i ++ ) {
+  for( let i = 24; i <= 24; i ++ ) {
     const [A,B] = [Math.max(2,Math.min(36,Math.floor(RADIX))), Math.min(Math.max(2,Math.ceil(RADIX)),36)];
     const baseA = i.toString(A);
     const baseB = i.toString(B);
@@ -100,9 +100,13 @@ function testRadix() {
     }
     //console.log("N",N);
     lastN = N;
+    /*
     console.log(
       `${i} in base ${RADIX}: ${baseI} ${baseI.length} (${parseInt(baseI,B)}) ${back} ${i === back} (${baseA}_${A}, ${baseB}_${B})`
     );
+    */
+
+    console.log({baseI, back});
   }
 
   pattern.push('+')
@@ -110,8 +114,8 @@ function testRadix() {
   count++;
 
   console.log('');
-  console.log(pattern.join('') + '\n');
-  console.log(count);
+  //console.log(pattern.join('') + '\n');
+  //console.log(count);
 }
 
 function newRandomArray(len) {
