@@ -4,7 +4,8 @@ const NUM_SIZE = 64;
 
 //testOne(149950108427);
 //testOne(133799491136);
-randomTest();
+//randomTestLong();
+randomTestShorts();
 //testCodec();
 //testRadix();
 
@@ -15,8 +16,37 @@ function testOne(num) {
   console.log(num,unpacked);
 }
 
-function randomTest() {
-  const X = newRandomArray(newRandomLength());
+function randomTestLong() {
+  return randomTest();
+}
+
+function randomTestShorts() {
+  let i= 0;
+  let PS = 0, UPS = 0, PC = 0;
+  while(i++ < 100) {
+    const {packedSize, unpackedSize} = randomTest(100);
+    PS += packedSize;
+    UPS += unpackedSize;
+    const pc = parseFloat(((packedSize/unpackedSize)*100).toFixed(2));
+    console.log({pc:pc+'%'});
+    PC += pc;
+  }
+
+  const PPC = ((PS/UPS)*100).toFixed(2);
+  i--;
+  PS /= i;
+  UPS /= i;
+  PC /= i;
+  console.log({
+    avgPacked: PS.toFixed(2),
+    avgUnpacked: UPS.toFixed(2),
+    avgPackPC: PC.toFixed(2),
+    avgPackedTotalPC: PPC
+  });
+}
+
+function randomTest(len) {
+  const X = newRandomArray(newRandomLength(len));
   let bits = newRandomBitSize();
   let packed;
   ({nums:packed,bits} = encode(X, bits));
@@ -28,10 +58,15 @@ function randomTest() {
   console.log(packed);
   const unpacked = decode(packed, bits);
   console.log({X,packed,unpacked});
-  console.log({packedSize:packed.length*(key||bits)/8,unpackedSize:unpacked.length*NUM_SIZE/8});
+  const packedSize = packed.length*(key||bits)/8;
+  const unpackedSize = unpacked.length*NUM_SIZE/8;
+  if ( ! len ) {
+    console.log({packedSize,unpackedSize});
+  }
   const A = JSON.stringify(X);
   const B = JSON.stringify(Array.from(unpacked));
   console.assert(A === B);
+  return {packedSize,unpackedSize};
 }
 
 function testCodec() {
@@ -131,9 +166,9 @@ function newRandomArray(len) {
   return arr;
 }
 
-function newRandomLength() {
+function newRandomLength(len) {
   const lowEnd = 1;
-  const highEnd = 100000;
+  const highEnd = len || 10000;
   const logLowEnd = Math.log(lowEnd);
   const logHighEnd = Math.log(highEnd);
   const range = logHighEnd - logLowEnd;

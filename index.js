@@ -38,6 +38,14 @@
   const ALPHABET = {
     6: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'.split('')
   };
+  const ALPHABET_I = {
+    6: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+      .split('')
+      .reduce((dict, letter, index) => {
+        dict[letter] = index; 
+        return dict;
+      }, {})
+  };
 
   export function irradix(num, radic = Math.PI) {
     if ( num > MAX_SAFE ) {
@@ -170,7 +178,7 @@
     //nums.push(999);
     DEBUG && console.log(nums);
 
-    nums = nums.map(x => irradix(x*2+1, VALS.PHI)); // every number now has no '101' in it
+    nums = nums.map(x => irradix((x+1)*2, VALS.BigPHI)); // every number now has no '101' in it
 
     DEBUG && console.log(nums);
 
@@ -307,8 +315,8 @@
       realChunks.push(chunk);
     }
     DEBUG && console.log('rc', realChunks);
-    chunks = realChunks.map(c => derradix(c,VALS.PHI));
-    chunks = chunks.map(x => (x-1)/2);
+    chunks = realChunks.map(c => derradix(c,VALS.BigPHI).toNumber());
+    chunks = chunks.map(x => (x/2)-1);
     //const len = chunks.shift();
     const len = chunks.length;
 
