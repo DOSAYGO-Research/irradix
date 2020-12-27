@@ -1,9 +1,11 @@
   import {Decimal} from 'decimal.js';
   Decimal.set({precision:101});
 
+  const VAR_WIDTHS = false;
   const DEBUG = false;
 
   export const VALS = {
+    HILBERT: (new Decimal(2)).pow(Decimal.sqrt(2)),
     BigPHI: Decimal.sqrt(5).plus(1).div(2),
     // note the rest of these have no been converted to Decimal size (maybe you can?)
     C1: Math.log(Math.PI**2),
@@ -170,8 +172,10 @@
   // into a packed array with members of arbitrary bit length
   export function encode(nums, bits = 8) {
     nums = Array.from(nums);
-    //nums.unshift(nums.length);
-    //nums.push(999);
+    if ( ! VAR_WIDTHS ) {
+      nums.unshift(nums.length);
+      nums.push(0x99, 0x99, 0x99);
+    }
     DEBUG && console.log(nums);
 
     nums = nums.map(x => irradix((x+1)*2, VALS.BigPHI)); // every number now has no '101' in it
@@ -227,7 +231,7 @@
       i++;
       if ( nextChunk.length < size ) continue;
 
-      if ( str[i] === '0' ) {
+      if ( VAR_WIDTHS && str[i] === '0' ) {
         const last1Index = nextChunk.lastIndexOf('1');
         const suffix = nextChunk.slice(last1Index);
         const chunk = nextChunk.slice(0,last1Index);
@@ -263,7 +267,11 @@
       chunks = chunks.map(i => parseInt(i, 2**bits));
     }
     chunks = chunks.map((n,i) => {
-      return n.toString(2);
+      let x = n.toString(2)
+      if ( !VAR_WIDTHS ) {
+        x = x.padStart(bits, '0');
+      }
+      return x;
     });
     DEBUG && console.log(chunks);
     chunks = chunks.join('');
@@ -313,8 +321,7 @@
     DEBUG && console.log('rc', realChunks);
     chunks = realChunks.map(c => derradix(c,VALS.BigPHI).toNumber());
     chunks = chunks.map(x => (x/2)-1);
-    //const len = chunks.shift();
-    const len = chunks.length;
+    const len = VAR_WIDTHS ? chunks.length : chunks.shift();
 
     return chunks.slice(0,len);
   }
