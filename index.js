@@ -168,9 +168,18 @@
     return num.mul(S);
   }
 
+  export function encodeString(str, bits = 6) {
+    return Array.from(encode(str.split('').map(c => c.codePointAt(0)), bits).nums).join('');
+  }
+
+  export function decodeString(str, bits = 6) {
+    return decode(str, bits).map(p => String.fromCodePoint(p)).join('');  
+  }
+
   // encode positive javascript integers of any size (not floats, not bigints)
   // into a packed array with members of arbitrary bit length
   export function encode(nums, bits = 8) {
+    console.log(nums, bits);
     nums = Array.from(nums);
     if ( ! VAR_WIDTHS ) {
       nums.unshift(nums.length);

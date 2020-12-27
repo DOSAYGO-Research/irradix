@@ -1,13 +1,23 @@
-import {encode, decode, VALS,derradix,irradix} from './index.js';
+import {encodeString, decodeString, encode, decode, VALS,derradix,irradix} from './index.js';
 
 const NUM_SIZE = 64;
 
 //testOne(149950108427);
 //testOne(133799491136);
 //randomTestLong();
-randomTestShorts();
+//randomTestShorts();
 //testCodec();
 //testRadix();
+testStrings();
+
+function testStrings() {
+ const hi= "💉💎 or 👦🏻👓⚡嗨，我唔係Gpt - 3寫嘅。 你叫咩名呀?"
+ console.log(hi);
+ const result = encodeString(hi);
+ console.log({result});
+ const hey = decodeString(result);
+ console.log(hey);
+}
 
 function testOne(num) {
   const {nums,bits} = encode([(num-1)/2], 8);
