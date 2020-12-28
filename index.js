@@ -4,6 +4,14 @@
   const VAR_WIDTHS = false;
   const DEBUG = false;
 
+  const API = {
+    encode,
+    decode,
+    irradix, 
+    derradix,
+  };
+  export default API;
+
   export const VALS = {
     HILBERT: (new Decimal(2)).pow(Decimal.sqrt(2)),
     BigPHI: Decimal.sqrt(5).plus(1).div(2),
