@@ -9,6 +9,8 @@
     decode,
     irradix, 
     derradix,
+    encodeString,
+    decodeString,
   };
   export default API;
 
