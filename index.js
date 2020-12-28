@@ -189,7 +189,7 @@
   // encode positive javascript integers of any size (not floats, not bigints)
   // into a packed array with members of arbitrary bit length
   export function encode(nums, bits = 8) {
-    console.log(nums, bits);
+    DEBUG && console.log(nums, bits);
     nums = Array.from(nums);
     if ( ! VAR_WIDTHS ) {
       nums.unshift(nums.length);
