@@ -17,6 +17,9 @@
   export const VALS = {
     HILBERT: (new Decimal(2)).pow(Decimal.sqrt(2)),
     BigPHI: Decimal.sqrt(5).plus(1).div(2),
+    BigPHI7: Decimal.sqrt(7).plus(1).div(2),
+    BigDELTA: Decimal.sqrt(2).plus(1),
+    BigBRONZE: Decimal.sqrt(13).plus(3).div(2),
     // note the rest of these have no been converted to Decimal size (maybe you can?)
     C1: Math.log(Math.PI**2),
     C2: Math.log(Math.PI**2) - Math.log(6) + 1, /* not sum of 1 and reciprocals of squares of primes */

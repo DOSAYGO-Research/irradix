@@ -7,8 +7,8 @@ const NUM_SIZE = 64;
 //randomTestLong();
 //randomTestShorts();
 //testCodec();
-//testRadix();
-testStrings();
+testRadix();
+//testStrings();
 
 function testStrings() {
  const hi= "💉💎 or 👦🏻👓⚡嗨，我唔係Gpt - 3寫嘅。 你叫咩名呀?"
@@ -153,11 +153,9 @@ function testRadix() {
     }
     //console.log("N",N);
     lastN = N;
-    /*
     console.log(
       `${i} in base ${RADIX}: ${baseI} ${baseI.length} (${parseInt(baseI,B)}) ${back} ${i === back} (${baseA}_${A}, ${baseB}_${B})`
     );
-    */
 
     console.log({based:baseI, back, i});
   }
