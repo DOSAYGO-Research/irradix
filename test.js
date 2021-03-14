@@ -7,8 +7,24 @@ const NUM_SIZE = 64;
 //randomTestLong();
 //randomTestShorts();
 //testCodec();
-testRadix();
+//testRadix();
 //testStrings();
+test3Nplus1();
+
+function test3Nplus1() {
+  const start = BigInt(Math.floor(Math.random()*1e12));
+  let n = start;
+  let run = 0n;
+
+  while(n > 1n) {
+    //console.log(n, irradix(n, VALS.SQRT2)); // seems to have a pattern
+    console.log(n, irradix(n, VALS.C1));
+    n = (n%2n === 0n) ? n/2n : 3n*n+1n; 
+    run++;
+  }
+
+    console.log(`Collapsed to 1 in ${run} steps.`);
+}
 
 function testStrings() {
  const hi= "💉💎 or 👦🏻👓⚡嗨，我唔係Gpt - 3寫嘅。 你叫咩名呀?"
@@ -17,6 +33,12 @@ function testStrings() {
  console.log({result});
  const hey = decodeString(result);
  console.log(hey);
+
+ const a=  process.argv[2];
+ const b = encodeString(a);
+ const c= decodeString(b);
+
+ console.log({a,b,c});
 }
 
 function testOne(num) {

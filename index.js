@@ -63,7 +63,7 @@
   };
 
   export function irradix(num, radic = Math.PI) {
-    num = new Decimal(num);
+    num = new Decimal(num.toString());
     if ( num.comparedTo(0) === 0 ) {
       return "0";
     }
