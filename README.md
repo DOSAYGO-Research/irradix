@@ -1,10 +1,14 @@
-# possible uses
+# irradix ![npm](https://img.shields.io/npm/dt/irradix)
+
+Irrational bases for integers.
+
+## possible uses
 
 - add to weird-json to basically turn a string (sequence of UTF-32 codepoints) into a packed array.
 - weird-json to encode all types (but not base36 everything), then turn that into packed base-phi, and export that bitstring as base-whatever (64)
 - string -> array, array -> array, number -> array, array -> string
 
-# examples
+## examples
 
 Play from console:
 
