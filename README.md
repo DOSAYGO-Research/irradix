@@ -624,3 +624,9 @@ I'm not a mathematician, this is just a hobby investigation for me, so I would r
 { based: '10000000011111', back: 998, i: 998 }
 { based: '10000001000000', back: 999, i: 999 }
 ```
+
+## Future work
+
+Investigate an algebra for these representations. In other words, will they obey normal addition and multiplication? What do we get if we try regular radix-unit algorithms to add, multiply, divide and subtract these, do we get the expected results, or something else? Are the results of such regular operations consistent? Can we define a new way of adding, multiplying, etc, these that would give expected results?
+
+
