@@ -143,7 +143,7 @@ At least, that's the hypothesis: Every sequence of 0 bits between any two 1 bits
 
 # Math
 
-Sorry this is not a proof, more of a discussion of my intuition about this. I only acquired this intutiont after noticing the fact, not before. Before creating this irrational radix, I had no idea, the golden ratio base would behave in this way. After investigation a range of other irrational radices, I noticed no other patterns (but surely there must be some). 
+Sorry this is not a proof, more of a discussion of my intuition about this. I only acquired this intution after noticing the fact, not before. Before creating this irrational radix, I had no idea, the golden ratio base would behave in this way. After investigation a range of other irrational radices, I noticed no other patterns (but surely there must be some). 
 
 I think the "only even zero sequence between 1s" property of base PHI is related to the fact that phi represents a ratio of ratios, as in `a:b ~ b:a+b`, and because `phi**2 = phi + 1`, and any sequence of zeroes in the base-phi representation will correspond to an sequence of multiplications via phi, but ``phi**3`` (or any odd-sequence of multiplications) will not have this identity. 
 
