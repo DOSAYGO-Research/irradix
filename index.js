@@ -1,5 +1,4 @@
-  import DecimalModule from 'decimal.js';
-  const {Decimal} = DecimalModule;
+  import {Decimal} from 'decimal.js';
   Decimal.set({precision:101});
 
   const VAR_WIDTHS = false;
