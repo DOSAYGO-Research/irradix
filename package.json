@@ -2,10 +2,10 @@
   "name": "irradix",
   "version": "1.0.12",
   "description": "irrational radices and special golden-ratio base integer packing",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "clear && node -r esm test.js",
-    "test-bd": "clear && node -r esm bd-test.js"
+    "test": "clear && node test.js"
   },
   "repository": {
     "type": "git",
@@ -24,7 +24,6 @@
   },
   "homepage": "https://github.com/c9fe/irradix#readme",
   "dependencies": {
-    "decimal.js": "^10.2.1",
-    "esm": "^3.2.25"
+    "decimal.js": "latest"
   }
 }
