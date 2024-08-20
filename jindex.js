@@ -219,7 +219,7 @@ export function decode(chunks, bits = 8) {
   return chunks.slice(0, len);
 }
 
-export function _bi_encode(nums, bits = 8) {
+export function _bi_encode(nums, bits = 2) {
   DEBUG && console.log(nums, bits);
   nums = Array.from(nums, BigInt);
 
@@ -268,7 +268,7 @@ export function _bi_encode(nums, bits = 8) {
   return { nums, bits };
 }
 
-export function _bi_decode(chunks, bits = 8n) {
+export function _bi_decode(chunks, bits = 2n) {
   chunks = Array.from(chunks);
   if (bits === 6n) {
     chunks = chunks.map(i => ALPHABET_I[bits][i]);
