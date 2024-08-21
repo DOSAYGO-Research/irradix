@@ -24,6 +24,8 @@
   },
   "homepage": "https://github.com/c9fe/irradix#readme",
   "dependencies": {
-    "decimal.js": "latest"
+    "bignumber.js": "^9.1.2",
+    "decimal.js": "latest",
+    "decimal.js-light": "^2.5.1"
   }
 }
