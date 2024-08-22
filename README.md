@@ -10,11 +10,11 @@ This project explores a novel method for encoding integers using a representatio
 
 The golden ratio $\phi$ is defined as:
 
-$phi = \frac{1 + \sqrt{5}}{2} \approx 1.618033988749895$
+$$phi = \frac{1 + \sqrt{5}}{2} \approx 1.618033988749895$$
 
 Encoding integers using base $\phi$ involves representing numbers in a non-standard manner, where the expansion factor in terms of binary bits is approximately:
 
-$frac{\log(2)}{\log(\phi)} \approx 1.44$
+$$frac{\log(2)}{\log(\phi)} \approx 1.44$$
 
 This suggests that base $\phi$ encoding requires around 44% more bits than traditional binary encoding. Despite this apparent inefficiency, base $\phi$ encoding has unique properties, such as naturally excluding the sequence "101," which we use as a delimiter.
 
@@ -24,7 +24,7 @@ This section provides a detailed explanation of the conversion algorithms used i
 
 #### `irradix` Algorithm
 
-The `irradix` function converts a positive integer \( n \) into its base $\phi$ representation. The process involves iterative calculations that decompose the number into a series of coefficients that correspond to powers of $\phi$.
+The `irradix` function converts a positive integer $ n $ into its base $\phi$ representation. The process involves iterative calculations that decompose the number into a series of coefficients that correspond to powers of $\phi$.
 
 ```math
 \text{irradix}(n) =
@@ -38,7 +38,7 @@ The `irradix` function converts a positive integer \( n \) into its base $\phi$ 
 \end{aligned}
 ```
 
-The result, \( r \), is the string of digits that represents \( n \) in base $\phi$.
+The result, $ r $, is the string of digits that represents $ n $ in base $\phi$.
 
 #### `derradix` Algorithm
 
