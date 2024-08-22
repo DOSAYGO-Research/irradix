@@ -24,7 +24,7 @@ This section provides a detailed explanation of the conversion algorithms used i
 
 #### `irradix` Algorithm
 
-The `irradix` function converts a positive integer $ n $ into its base $\phi$ representation. The process involves iterative calculations that decompose the number into a series of coefficients that correspond to powers of $\phi$.
+The `irradix` function converts a positive integer $\( n \)$ into its base $\phi$ representation. The process involves iterative calculations that decompose the number into a series of coefficients that correspond to powers of $\phi$.
 
 ```math
 \text{irradix}(n) =
@@ -38,7 +38,7 @@ The `irradix` function converts a positive integer $ n $ into its base $\phi$ re
 \end{aligned}
 ```
 
-The result, $ r $, is the string of digits that represents $ n $ in base $\phi$.
+The result, $\( r \)$, is the string of digits that represents $\( n \)$ in base $\phi$.
 
 #### `derradix` Algorithm
 
@@ -48,7 +48,7 @@ The `derradix` function performs the inverse operation, converting a base $\phi$
 \text{derradix}(r) = \left\lceil \sum_{i=0}^{k} r_i \phi^{k-i} \right\rceil
 ```
 
-In this equation, \( r_i \) represents the digits of the base $\phi$ encoded number, and the sum reconstructs the original integer.
+In this equation, $\( r_i \)$ represents the digits of the base $\phi$ encoded number, and the sum reconstructs the original integer.
 
 ### Iterative Radix Conversion with Ceil Function
 
@@ -65,9 +65,9 @@ This corresponds to the code, where the ceiling is applied after each multiplica
 - **Sign Handling**: The above algorithms omit sign handling for clarity. In practice, if the original integer is negative, the algorithm first converts it to a positive number, performs the conversion, and then adds a negative sign to the final result.
   
 - **Termination Conditions in `irradix`**:
-  - **\(\text{thresh}\)**: A small threshold value that stops the loop once the magnitude of \( w_0 \) is sufficiently small.
-  - **\(\text{quanta}\)**: Represents a precision level, ensuring that the algorithm's results are accurate.
-  - **\(\epsilon\)**: A small value related to the precision of floating-point arithmetic, ensuring that the loop halts when further iterations no longer contribute meaningful digits.
+  - **$\(\text{thresh}\)$**: A small threshold value that stops the loop once the magnitude of $\( w_0 \)$ is sufficiently small.
+  - **$\(\text{quanta}\)$**: Represents a precision level, ensuring that the algorithm's results are accurate.
+  - **$\(\epsilon\)$**: A small value related to the precision of floating-point arithmetic, ensuring that the loop halts when further iterations no longer contribute meaningful digits.
 
 ## Exploring Base $\phi$ Representation
 
