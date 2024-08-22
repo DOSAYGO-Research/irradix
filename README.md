@@ -33,11 +33,11 @@ Original Integer     irradix Representation         Interpreted as Binary       
 
 The golden ratio $\phi$ is defined as:
 
-$$phi = \frac{1 + \sqrt{5}}{2} \approx 1.618033988749895$$
+$$\phi = \frac{1 + \sqrt{5}}{2} \approx 1.618033988749895$$
 
 Encoding integers using base $\phi$ involves representing numbers in a non-standard manner, where the expansion factor in terms of binary bits is approximately:
 
-$$frac{\log(2)}{\log(\phi)} \approx 1.44$$
+$$\frac{\log(2)}{\log(\phi)} \approx 1.44$$
 
 This suggests that base $\phi$ encoding requires around 44% more bits than traditional binary encoding. Despite this apparent inefficiency, base $\phi$ encoding has unique properties, such as naturally excluding the sequence "101," which we use as a delimiter.
 
