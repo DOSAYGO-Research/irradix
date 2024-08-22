@@ -10,7 +10,7 @@ def test_irradix_binary_equivalence():
     binary_prime_count = 0
 
     print(f"{'Original Integer':<20} {'irradix Representation':<30} {'Interpreted as Binary':<30} {'isPrime':<10} {'Prime Comparison':<20} {'Binary Expansion (%)':<20}")
-    print("-" * 150)
+    print("-" * 132)
 
     for i in range(1, max_num + 1):
         irradix_rep = irradix(i)
@@ -43,8 +43,18 @@ def test_irradix_binary_equivalence():
     binary_prime_density = (both_prime_count + binary_prime_count) / max_num * 100
 
     print("\nPrime Density:")
-    print(f"Original: {original_prime_density:.2f}%")
-    print(f"Binary: {binary_prime_density:.2f}%")
+    print(f"Original:                          {original_prime_density:.2f}%")
+    print(f"Interpret base-phi rep as binary:   {binary_prime_density:.2f}%")
+
+    # Prime Comparison Key
+    print("\nPrime Comparison Key:")
+    print("3: Both Original and Binary Interpretations are Prime")
+    print("2: Original is Prime, Binary Interpretation is Not")
+    print("1: Binary Interpretation is Prime, Original is Not")
+    print("0: Neither Original nor Binary Interpretation is Prime")
+
+    print("\n")
+
 
 if __name__ == "__main__":
     test_irradix_binary_equivalence()
