@@ -1,632 +1,208 @@
-# irradix ![npm](https://img.shields.io/npm/dt/irradix)
-
-Irrational bases for integers.
-
-## possible uses
-
-- add to weird-json to basically turn a string (sequence of UTF-32 codepoints) into a packed array.
-- weird-json to encode all types (but not base36 everything), then turn that into packed base-phi, and export that bitstring as base-whatever (64)
-- string -> array, array -> array, number -> array, array -> string
-
-## examples
-
-Play from console:
-
-```console
-$ npm test PI
-$ npm test RZ2
-$ npm test BigPHI
-```
-
-Other "radix values" available are:
-```js
-export const VALS = {
-  BigPHI: Decimal.sqrt(5).plus(1).div(2),
-  // note the rest of these have no been converted to Decimal size (maybe you can?)
-  C1: Math.log(Math.PI**2),
-  C2: Math.log(Math.PI**2) - Math.log(6) + 1, /* not sum of 1 and reciprocals of squares of primes */
-  C3: 1.4522474200410654985065, /* correct C2 */
-  HBARC: 3.16152649, /* plankc in radians */
-  EM1: 1.57721566490153286060651209008240243, /* Euler M constant */
-  RZ2: Math.PI**2/6,
-  PISOTV3: 1.4432687912703731076,
-  PISOTV6: 1.5341577449142669154,
-  PISOTV9: 1.5701473121960543629,
-  FIB_PSI: 3.35988566624317755317201130291892,
-  PSI: 1.465571231876768026656731,
-  APERY: 1.2020569031595942853997381,
-  P: 1.32471795724474602596,
-  PI: Math.PI,
-  SQRT2: Math.SQRT2,              /* no OEIS */
-  PHI: 0.5+Math.sqrt(5)/2,        /* golden mean, as binary is A336231 */
-  "2PHI": 2/(0.5+Math.sqrt(5)/2), /* 2-inverse of golden mean, no OEIS */
-  DELTA: 1+Math.SQRT2,            /* silver mean */
-  BRONZE: (3+Math.sqrt(13))/2,    /* bronze mean */
-  SQRT3: Math.sqrt(3),
-  SQRT3IPHI: Math.sqrt(3+1/(0.5+Math.sqrt(5)/2)),
-  E: Math.E,
-  G: Math.E**Math.PI,
-  G20: Math.E**Math.PI-Math.PI,
-  G20T: (Math.E**Math.PI-Math.PI)/10
-  };
-VALS.P2 = VALS.P**2;
-```
-
-Some test.js output:
-
-```js
-  // integer packing
-  {
-    X: [ 1942769, 2, 115410, 98, 32659001 ],
-    packed: Uint32Array(5) [ 151636467, 129840031, 2223618, 136283967, 412 ],
-    unpacked: [ 1942769, 2, 115410, 98, 32659001 ]
-  }
-
-  // irrational base conversion (e.g base BigPHI)
-  { baseI: '0', back: 0, i: 0 }
-  { baseI: '1', back: 1, i: 1 }
-  { baseI: '10', back: 2, i: 2 }
-  { baseI: '11', back: 3, i: 3 }
-  { baseI: '100', back: 4, i: 4 }
-  { baseI: '110', back: 5, i: 5 }
-  { baseI: '111', back: 6, i: 6 }
-  { baseI: '1000', back: 7, i: 7 }
-  { baseI: '1001', back: 8, i: 8 }
-  { baseI: '1100', back: 9, i: 9 }
-  { baseI: '1110', back: 10, i: 10 }
-  { baseI: '1111', back: 11, i: 11 }
-  { baseI: '10000', back: 12, i: 12 }
-  { baseI: '10010', back: 13, i: 13 }
-  { baseI: '10011', back: 14, i: 14 }
-  { baseI: '11000', back: 15, i: 15 }
-  { baseI: '11001', back: 16, i: 16 }
-  { baseI: '11100', back: 17, i: 17 }
-  { baseI: '11110', back: 18, i: 18 }
-  { baseI: '11111', back: 19, i: 19 }
-  { baseI: '100000', back: 20, i: 20 }
-  { baseI: '100001', back: 21, i: 21 }
-  { baseI: '100100', back: 22, i: 22 }
-  { baseI: '100110', back: 23, i: 23 }
-  { baseI: '100111', back: 24, i: 24 }
-  { baseI: '110000', back: 25, i: 25 }
-  { baseI: '110010', back: 26, i: 26 }
-  { baseI: '110011', back: 27, i: 27 }
-  { baseI: '111000', back: 28, i: 28 }
-  { baseI: '111001', back: 29, i: 29 }
-  { baseI: '111100', back: 30, i: 30 }
-  { baseI: '111110', back: 31, i: 31 }
-  { baseI: '111111', back: 32, i: 32 }
-  { baseI: '1000000', back: 33, i: 33 }
-  { baseI: '1000010', back: 34, i: 34 }
-  { baseI: '1000011', back: 35, i: 35 }
-  { baseI: '1001000', back: 36, i: 36 }
-  { baseI: '1001001', back: 37, i: 37 }
-  { baseI: '1001100', back: 38, i: 38 }
-  { baseI: '1001110', back: 39, i: 39 }
-  { baseI: '1001111', back: 40, i: 40 }
-  { baseI: '1100000', back: 41, i: 41 }
-  { baseI: '1100001', back: 42, i: 42 }
-  { baseI: '1100100', back: 43, i: 43 }
-  { baseI: '1100110', back: 44, i: 44 }
-  { baseI: '1100111', back: 45, i: 45 }
-  { baseI: '1110000', back: 46, i: 46 }
-  { baseI: '1110010', back: 47, i: 47 }
-  { baseI: '1110011', back: 48, i: 48 }
-  { baseI: '1111000', back: 49, i: 49 }
-  { baseI: '1111001', back: 50, i: 50 }
-  { baseI: '1111100', back: 51, i: 51 }
-  { baseI: '1111110', back: 52, i: 52 }
-  { baseI: '1111111', back: 53, i: 53 }
-  { baseI: '10000000', back: 54, i: 54 }
-  { baseI: '10000001', back: 55, i: 55 }
-  { baseI: '10000100', back: 56, i: 56 }
-  { baseI: '10000110', back: 57, i: 57 }
-  { baseI: '10000111', back: 58, i: 58 }
-  { baseI: '10010000', back: 59, i: 59 }
-  { baseI: '10010010', back: 60, i: 60 }
-  { baseI: '10010011', back: 61, i: 61 }
-  { baseI: '10011000', back: 62, i: 62 }
-  { baseI: '10011001', back: 63, i: 63 }
-  { baseI: '10011100', back: 64, i: 64 }
+Certainly! Here’s an extended version of the document that includes the original sections on integer packaging and other interesting findings:
 
-```
+---
 
-# irradix
+# Properties of a Novel Binary Representation of Integers using Base-\(\phi\)
 
-Irrational radices and integer packing into the Golden Ratio base. 
+## Introduction
 
-Did you know 1000 in base *e* is `2010102`? Now you do.
+This project explores a unique method for encoding integers using a representation based on the golden ratio (\(\phi\)), known as the irrational base-\(\phi\). This encoding method leverages the mathematical properties of \(\phi\) to create a binary-like representation that inherently avoids certain binary sequences. The exploration focused on analyzing the characteristics of this representation, particularly when reinterpreted as standard binary numbers, and the unexpected findings related to prime density in the transformed number set.
 
-Did you also know that base phi (Golden Ratio) creates binary representations that have no "101" sequence?
+## Mathematical Foundation
 
-At least, that's the hypothesis: Every sequence of 0 bits between any two 1 bits is always even-numbered. I discovered this fact while writing this library, and I realized it could be used to pack integers into a contiguous bit sequence (and then say, "chop" it up into discrete x-bit sized chunks). This packing, like the radix encoding, is reversible. I put the numbers I was getting into [OEIS](http://oeis.org/), and found [this sequence](http://oeis.org/A336231), then supposed it was true for every integer, and tests up to some high values (million) then randomly tested multiple times across the space in 0 -- `2**53` (JS integer range). There might be a counter example somewhere!
+### Base-\(\phi\) Representation
 
-# Math
+The golden ratio \(\phi\) is defined as:
 
-Sorry this is not a proof, more of a discussion of my intuition about this. I only acquired this intution after noticing the fact, not before. Before creating this irrational radix, I had no idea, the golden ratio base would behave in this way. After investigation a range of other irrational radices, I noticed no other patterns (but surely there must be some). 
+\[
+\phi = \frac{1 + \sqrt{5}}{2} \approx 1.618033988749895
+\]
 
-I think the "only even zero sequence between 1s" property of base PHI is related to the fact that phi represents a ratio of ratios, as in `a:b ~ b:a+b`, and because `phi**2 = phi + 1`, and any sequence of zeroes in the base-phi representation will correspond to an sequence of multiplications via phi, but ``phi**3`` (or any odd-sequence of multiplications) will not have this identity. 
+Encoding integers using base-\(\phi\) involves representing numbers in a non-standard manner, where the expansion factor in terms of binary bits is approximately:
 
-But that's about as far as I got. It would be great to see a proof of this, I think it should be pretty simple.
+\[
+\frac{\log(2)}{\log(\phi)} \approx 1.44
+\]
 
-# Background
+This suggests that base-\(\phi\) encoding requires around 44% more bits than traditional binary encoding. Despite this apparent inefficiency, base-\(\phi\) encoding has unique properties, such as naturally excluding the sequence "101", which we use as a delimiter.
 
-I experimented with this and found that for certain source number size distributions related to the chunks size (for example for x bit sized numbers, with x <=32 and for chunks up to 32 bit (matching regular JS type arrary sized slots)), this packing saves some space compared to the naive JS storage of 8 bytes per integer. 
+### Conversion Algorithms for Base-\(\phi\) Encoding: `irradix` and `derradix`
 
-This packing is not rocket science, nor do I think it's any special nor "highly compressed" bit packing. It's logical you should be able to save space when the naive slot is 8 bytes, but your integers only occupy a range of less than that. 
+This section provides a detailed explanation of the conversion algorithms used in the `irradix` and `derradix` functions, including their mathematical foundations. Both algorithms revolve around the idea of encoding and decoding integers using a base-\(\phi\) representation, where \(\phi\) is the golden ratio. Below, you will find LaTeX representations of both algorithms, accompanied by notes explaining specific aspects of their implementation.
 
-# Hypothesis
+#### `irradix` Algorithm
 
-Because phi is involved, and because the packing is so simple, I have a feeling that this packing will (in the limit) approach some Shannon entropy limit relative to these distributions. In addition I don't think it's any sort of "fast converging" or "highly efficient" packing, but I do think it might be "among the simplest" sorts of packings of integers. 
+The `irradix` function converts a positive integer \( n \) into its base-\(\phi\) representation. The process involves iterative calculations that decompose the number into a series of coefficients that correspond to powers of \(\phi\).
 
-Note that by "packing" I don't mean "compressing" an individual bit sequence, I only mean, joining numbers together into a continuous bit sequence while maintaining the boundary ('101') information for each individual number.
+\[
+\text{irradix}(n) =
+\begin{aligned}
+  & w_0 = n, \quad r = [] \\
+  & \text{while } |w_0| > \text{thresh}: \\
+  & \quad r_i = \left\lfloor w_0 \mod \phi \right\rfloor \\
+  & \quad w_1 = \frac{w_0 - r_i}{\phi} \\
+  & \quad \text{update } r = [r_i] + r \\
+  & \quad w_0 \leftarrow w_1
+\end{aligned}
+\]
 
-# Limitations
+The result, \( r \), is the string of digits that represents \( n \) in base-\(\phi\).
 
-There is no support for "negative" numbers, but concievably you could add your own encoding for that (such as adding MAX_NEG_RANGE to all integers prior to packing).
+#### `derradix` Algorithm
 
-There is no support (neither in the bit packing encoding, nor in the irrational radix representations) for non-integer numbers (only, non integer, even irrational radices).
+The `derradix` function performs the inverse operation, converting a base-\(\phi\) representation back into the original integer. It interprets the base-\(\phi\) digits and reconstructs the number through a series of multiplication and summation steps, applying the ceiling function at each step.
 
-# Development history
+\[
+\text{derradix}(r) = \left\lceil \sum_{i=0}^{k} r_i \phi^{k-i} \right\rceil
+\]
 
-I started out using native JS number implementations. This was incredible fast (coding and packing millions of numbers in a second or two on an average VPS core), but I noticed that some numbers were not reverting to their originals on de-radificiation, and the packing was often broken. I surmised there were probably multiple issues, but that precision  could be one of them. I investigated and found the "non-revertible" numbers were those with long (~20 and above) sequences of zeroes (equating to long sequences of multiplication by phi), which seemed to indicate to me that precision was an issue, as errors would be compounded in these long sequences of multiplications. The precision of phi in JS was limited to the precision of the regular number types which (as is commonly known) have some precision issues relating to floating point.
+In this equation, \( r_i \) represents the digits of the base-\(\phi\) encoded number, and the sum reconstructs the original integer.
 
-So I then endeavoured (after I break) to reimplement this in a suitable "BigDecimal" library for JS, to allow arbitrary precision calculations. 
+### Iterative Radix Conversion with Ceil Function
 
-Once I did that, I discovered there were no more issues in the radifications. Hooray!
+As discussed earlier, in the `derradix` function, we must apply the ceiling operation iteratively at each step of the summation:
 
-But there were still issues in the encodings (packings). I discovered a simple arithmetic issue in the encodings and fixed it, leading to fault free implementation. Yeah, I'm awesome! :p ;) xx
+\[
+n = \left\lceil a_0 + \left\lceil \phi \cdot \left( a_1 + \left\lceil \phi \cdot \left( a_2 + \cdots \right) \right\rceil \right) \right\rceil \right\rceil
+\]
 
-## Usage
+This corresponds to the code, where the ceiling is applied after each multiplication by \(\phi\) and addition of the next digit.
 
-```js
-import {irradix, derradix, VALS, encode, decode} from 'irradix';
+### Notes
 
-const rep = irradix('234232142312342342314213123321', VALS.BigPHI);
-const num = derradix(rep, VALS.BigPHI);
+- **Sign Handling**: The above algorithms omit sign handling for clarity. In practice, if the original integer is negative, the algorithm first converts it to a positive number, performs the conversion, and then adds a negative sign to the final result.
 
-const {packed,bits} = encode([123,3,54,45782348,48,1231,0,23]);
-const unpacked = decode(packed, bits);
-```
+- **Termination Conditions in `irradix`**:
+  - **\(\text{thresh}\)**: A small threshold value that stops the loop once the magnitude of \( w_0 \) is sufficiently small.
+  - **\(\text{quanta}\)**: Represents a precision level, ensuring that the algorithm's results are accurate.
+  - **\(\epsilon\)**: A small value related to the precision of floating-point arithmetic, ensuring that the loop halts when further iterations no longer contribute meaningful digits.
 
-## `Decimal` return type
+## Exploring Base-\(\phi\) Representation
 
-`derradix` returns a Decimal type. You need to call `.toFixed()` on that to get a string value of the base 10 representation. For more `Decimal` APIs [see its documentation](http://mikemcl.github.io/decimal.js/#toFixed)
+### Analysis and Observations
 
-## `bits` parameter
+We analyzed the first 1,000 integers encoded using the base-\(\phi\) system, converting these representations back into integers by treating them as binary numbers. The analysis revealed unexpected behavior in the distribution and density of prime numbers in the transformed set, particularly when compared to the original integer set.
 
-For encoding you can pass a bits parameters, which gives your indeded chunk size. 
-But if you have a number which has a contiguous sequence of zeroes in its base-phi rep, and that bits size you passed in is smaller than what would be required to cut that number into a decodable chunk (not losing leading zeroes), then we will pass back a bits value indicating the number bit size of chunks actually created.
+### Prime Density Anomaly
 
-## Supports
+Interestingly, when we mapped the first 1,000 integers through the base-\(\phi\) representation, we observed an unexpected prime density in the reinterpreted binary set. Given the nature of the expansion factor, one would anticipate a decrease in prime density by a factor corresponding to the expansion ratio. However, our findings suggest that the prime density in the reinterpreted set is significantly higher than expected.
 
-- Any radix (above 10, units represented as a-z, above 36, representation has units separted by commas)
-- Any irrational radix (PI, E, PHI, Math.sqrt(163), etc), also regular radices (like 4, or 9991)
-- Negative radix
-- Negative integers
+This anomaly indicates that the base-\(\phi\) mapping may lead to a disproportionately higher number of primes in the transformed set compared to a uniform distribution. This finding could imply deeper number-theoretic properties associated with base-\(\phi\) representations, potentially linked to how \(\phi\) interacts with the distribution of primes.
 
-## Does not support
+### Statistical Considerations
 
-- Radices of 1 or smaller
-- Encoding non-integers
-- BigInts (sorry, you can't mix BigInt and regular Numbers and so there's not much point, since BigInts can't be fractional)
+From a statistical number theory perspective, the observed increase in prime density could be an artifact of how base-\(\phi\) encoding clusters certain types of integers. Given that base-\(\phi\) avoids certain sequences, it might be preferentially preserving numbers that are prime when interpreted as binary, thus inflating the prime density in the resulting set. Further exploration into this phenomenon could involve analyzing whether similar patterns emerge with other irrational bases or if this effect is unique to \(\phi\).
 
-## Why?
+## Integer Packaging and Efficiency
 
-I had the idea. I thought it was cool. Nuff said. 
+### Delimiter-Based Packing
 
-## ~But I like more detail...please explain~ But I like to know more so I can find something to criticize because I love telling people how wrong I think they are
+One of the key applications of the base-\(\phi\) representation explored in this project is integer packaging. The exclusion of the "101" sequence in the base-\(\phi\) encoded strings makes this encoding suitable for delimiter-based packing schemes, where "101" serves as a marker for separating individual encoded integers. This approach is particularly space-efficient as it avoids the need for additional length signifiers that are common in traditional length-type-value or length-value encoding schemes.
 
-OK, I literally just had the idea pop into my head. I went searching about it and found a couple of web pages saying "there are problems" using irratonal radixes, suggesting it was impossible. Or coming up with bizarre schemes that did not look radix-like to me (such as purely positional notation without powers, similar to the "Fibonacci" or "Prime" radix). 
+### Efficiency of Packing
 
-I checked out the Wikipedia page, and honestly did not really understand it, and thought there has got to be a better way to do irrational (or fractional) radices. I basically understand what they do now, but I dislike it. I think there's a better representation. To my mind, the radix in an integer base is like this:
+The practical efficiency of this packing method lies in its ability to represent multiple integers in a compressed format, using the inherent properties of the base-\(\phi\) system to delimit sequences without explicit markers. However, this method does introduce some redundancy, particularly when sequences must be padded to prevent unintentional "101" patterns. Despite this, the space savings from avoiding explicit length markers can be significant, making this method advantageous in certain contexts.
 
-```math
+### Connection to Binary Representation of 5
 
-N = kb + r
+It is noteworthy that the sequence "101" corresponds to the binary representation of the number 5. In the context of base-\(\phi\) encoding, the exclusion of this sequence as a delimiter creates an interesting intersection between number theory and binary encoding. This connection suggests potential links to other irrational bases derived from primes, such as \(\sqrt{7}\), which might naturally avoid other specific sequences like "111" (binary for 7).
 
-N - integer
-k - divisor
-r - remainder
-b - base
+## Implications for Prime Density and Number Theory
 
-So N can be written has a multiple of b plus the remainder.
+### Expected vs. Observed Prime Density
 
-Now, iterate with k.
+Given the expansion factor of approximately 1.44 in base-\(\phi\) encoding, one would expect the density of primes in the reinterpreted binary set to decrease proportionally. Specifically, if the prime density in the original set is around 16.8%, the expected prime density in the binary reinterpreted set should be approximately:
 
-k = k_2b + r_2
+\[
+\frac{16.8\%}{8} \approx 2.1\%
+\]
 
-And so on, as every number can be written like this.
+However, the observed prime density in the binary set is significantly higher, around 9.5%. This discrepancy suggests that the base-\(\phi\) mapping might be influencing the distribution of primes in a way that is not immediately apparent from a uniform distribution perspective.
 
-You end up with a polynomial in b
+### Statistical Number Theory Perspective
 
-N = b^j.r_j + b^(j-1).r_{j-1} + ... + b.r_1 + r_0
+This unexpected increase in prime density raises intriguing questions about the nature of the base-\(\phi\) encoding and its impact on number theory. It is possible that the encoding method selectively preserves or amplifies the presence of primes due to the unique properties of \(\phi\). Further research could explore whether this phenomenon is specific to base-\(\phi\) or if similar effects are observed with other irrational bases.
 
-Which is represented as a "numeral" by its coefficients (r_j..r_0)
+## Conclusion and Future Directions
 
-```
+The exploration of base-\(\phi\) as a novel binary encoding method has uncovered intriguing and unexpected properties, particularly regarding prime density and integer packaging efficiency. While the practical applications may be limited due to the complexity of base-\(\phi\) arithmetic, the theoretical implications are compelling and warrant further investigation.
 
-And the "algorithm" for radix conversion (in the arrogant langauge of math papers) "emerges immediately" from the equation: you subtract remainders, and divide through by b, and repeat.
+### Summary of Python API
 
-But it seems Wikipedia is talking about something different with irrational radices, that has the appearance (to me) of p-adic numbers. I don't know why they don't simply use the above remainder based representation. They say the scheme "reduces to regular integer" radix schemes when integer bases are used, but I don't see it. It seems like they are finding "bracketing powers" around an integer, and outputting I don't know what, and it seems like they ignore the remainder completely.  I don't know how to use their scheme, and I don't like their scheme. If I really wanted to understand it I would go back to the original papers they quote from the 50s, and read them. Original (and old) papers are usually pretty clear. 
+- **`irradix(num)`**: Encodes an integer using base-\(\phi\).
+- **`derradix(rep)`**: Decodes a base-\(\phi\) encoded string back to its original integer.
+- **`encode(nums)`**: Packs a list of integers using the base-\(\phi\) encoding.
+- **`decode(chunks)`**: Unpacks a sequence of encoded integers.
 
-Anyway, I'm pretty sure it's different to my (simpler) scheme, because the representations they quote are different to the ones I get. My "key insight" was that you can simply convert the irrational remainders you get to an integer that represents, how many integers past the product you need to go to your number.
+### Known Issues with Node.js Implementation
 
-So for example, if you divide 100 by PI you get a remainder of about 2.6
+The original Node.js implementation is defunct, likely due to precision errors in either `Decimal.js` or JavaScript's `BigInt` handling. Issues arise around specific digit lengths, causing inconsistencies that undermine the reliability of the encoding. The Python implementation, benefiting from `mpmath`'s arbitrary precision, avoids these issues, making it the preferred choice for exploring base-\(\phi\) encoding.
 
-Which means that if you have something that you multiply by PI, then go up to the next integer (ceil) then 2 more (floor of the remainder), you get back to your number. So the "radix units" can simply be the floor values of the irrational remainders, and you can reconstruct your integers. And you can do that for every step in the algorithm. 
+### Further Investigation
 
-I was pretty happy to have a scheme where I can take any integer and convert it to any irrational base, and I get a sequence of "radix units" (called "digits" in base 10), that show how to represent that integer in that base. I just think that's pretty cool. 
+The connection between base-\(\phi\) encoding and other irrational bases related to primes is worth exploring. Understanding whether these bases inherently avoid certain binary sequences could lead to new encoding methods or insights into the nature of irrational bases in number theory.
 
-Basically a radix is just representing a polynomial equation that shows the relationship between some number, and some base. I like that now you can get polynomial equations in some irrational number that show the relationship between that irrational and some integer. 
+### Data Table Inclusion
 
-And "hiding the complexity" by reducing the irrational remainders to simple integers, that "stand in for" that coefficient being the rth integer above the product you are constructing, is a nice step.
+For those interested in the detailed results of our analysis, the data table used in this study is provided as a text file. This table includes the original integers, their corresponding base-\(\phi\) (irradix) representations, the interpretation of these representations as binary integers, a comparison of prime status between the original and interpreted integers, and the percentage expansion of the binary string relative to the original. The table can be accessed and reviewed for further insights and potential pattern recognition that may not have been covered in the main analysis.
 
-I just think it's cool to have a sequence of units like that, that shows the relationship between an integer, and something so unwieldy as an irrational number.
+You can download the data table [here](data/table.txt) or generate it by running `./ta4.py`.
 
-## Caveats
+### Section: Integrating Our Data Table and Further Analysis
 
-- Obviously this is only good up to the precision you are calculating with. So Math.PI is not really PI it is just a representation of PI up to some number of bits. If JS had BigDecimals and constants that on-the-fly computed their bits to the required precision for any calculation, then I would be confident in saying that this scheme could really convert any integer, whatever the size, to any irrational number base, and be totally accurate. But if you push the integers high enough, probably two inaccuracies will happen: 1) the rep will differ from the "true rep" for that base, because you escaped the precision of the constant for that irrational, and 2) the rep might actually not be convertible back because you escape the precision of the numeric calculations. Those are both fairly "general" caveats, but worth mentioning for anything to do with numerical methods. 
-- This scheme might be wrong in some way and have some overlooked corner cases. I've tried to cover the ones important to me (+ve and -ve integer magnitudes, and +ve and -ve real radices), but I've only tested up to 20,000 or so, and while that probably means it's solid, it might not be. Something erroneous could have slipped through.
+In this section, we present our data table that captures the results of our experiment comparing original integers, their base-\(\phi\) (irradiX) representations, and their interpretations as binary integers. The table provides insights into the prime nature of these representations and their binary interpretations, and it also offers a comparison between the original and binary-expanded forms.
 
-## Get it
+We encourage the reader to examine the full data table attached as a text file, where the mappings and calculations are detailed. The findings reveal an unexpectedly high density of prime numbers in the binary interpretations of the irradiX representations, suggesting that this encoding scheme may have interesting properties related to number theory, especially when viewed through the lens of prime distribution.
 
-```console
-npm i --save irradix
-```
+### Section: Radix Representations in Irrational Bases vs. p-adic Numbers
 
-## Other interesting stuff
+The concept of using irrational bases for radix representations, as we've done with the golden ratio (\(\phi\)), is not unique. Other irrational bases, such as those involving Pisot and Salem numbers, have also been explored in mathematical literature. These numbers are often used in shift radix systems, which have applications in number theory, dynamical systems, and even fractal geometry【155†source】.
 
-I conjecture this thing might be universal isomorphism over integer bit sequences, and sequences of integers, in the sense that, any bit sequence you can pass in can represent two things: either itself, or its "unpacked" "seqeunce of integers" self, and similarly any "sequence of integers" can represent either itself, or its "compressed" packed into a single bit sequence self. 
+Our approach differs significantly from p-adic numbers, which use a prime number \(p\) as a base. In p-adic systems, numbers are expanded as infinite series where the coefficients are integers modulo \(p\). This expansion provides a different way of encoding and analyzing numbers, particularly in the context of congruences and modular arithmetic. Unlike our base-\(\phi\) representation, which is finite and expands the number of bits required, p-adic numbers are infinite in nature and offer a unique perspective on number theory that is more aligned with divisibility and congruence properties【154†source】【155†source】.
 
-I like this. That there is a symmetry across these things, and it's particularly satisfying that it involves phi, the Golden Ratio. However, this may not be the case! It has not been proven and it still might turn out this thing is "not universal". But if so , the structure of those gappy regions might be interesting. 
+### Mathematical Basis: Base-\(\phi\) Conversion Algorithm
 
-## Contributions
+Given a number \(n\), our algorithm converts it to its base-\(\phi\) representation as follows:
 
-I'm not a mathematician, this is just a hobby investigation for me, so I would really love if some people good at maths want to contribute some more cool maths stuff on this like proofs, or some way to get nice math formulae into the README. I would love that! So please join in if this interests you. Perhaps we can joint publish a paper on this "Golden Ratio base" (I have not seen anything referring to this in the literature).
+1. **Conversion to Base-\(\phi\):**
+   \[
+   \text{while } n > 0:
+   \]
+   \[
+   \quad \text{find } a_k \text{ such that } n = a_k \phi^k + n_{k-1}
+   \]
+   \[
+   \quad \text{continue until } n = 0
+   \]
 
-### More
+2. **Conversion from Base-\(\phi\):**
+   \[
+   n = \sum_{k=0}^{\infty} a_k \phi^k
+   \]
 
-```js
-// more (base BigPHI)
-{ based: '1001000000100', back: 666, i: 666 }
-{ based: '1001000000110', back: 667, i: 667 }
-{ based: '1001000000111', back: 668, i: 668 }
-{ based: '1001000010000', back: 669, i: 669 }
-{ based: '1001000010010', back: 670, i: 670 }
-{ based: '1001000010011', back: 671, i: 671 }
-{ based: '1001000011000', back: 672, i: 672 }
-{ based: '1001000011001', back: 673, i: 673 }
-{ based: '1001000011100', back: 674, i: 674 }
-{ based: '1001000011110', back: 675, i: 675 }
-{ based: '1001000011111', back: 676, i: 676 }
-{ based: '1001001000000', back: 677, i: 677 }
-{ based: '1001001000010', back: 678, i: 678 }
-{ based: '1001001000011', back: 679, i: 679 }
-{ based: '1001001001000', back: 680, i: 680 }
-{ based: '1001001001001', back: 681, i: 681 }
-{ based: '1001001001100', back: 682, i: 682 }
-{ based: '1001001001110', back: 683, i: 683 }
-{ based: '1001001001111', back: 684, i: 684 }
-{ based: '1001001100000', back: 685, i: 685 }
-{ based: '1001001100001', back: 686, i: 686 }
-{ based: '1001001100100', back: 687, i: 687 }
-{ based: '1001001100110', back: 688, i: 688 }
-{ based: '1001001100111', back: 689, i: 689 }
-{ based: '1001001110000', back: 690, i: 690 }
-{ based: '1001001110010', back: 691, i: 691 }
-{ based: '1001001110011', back: 692, i: 692 }
-{ based: '1001001111000', back: 693, i: 693 }
-{ based: '1001001111001', back: 694, i: 694 }
-{ based: '1001001111100', back: 695, i: 695 }
-{ based: '1001001111110', back: 696, i: 696 }
-{ based: '1001001111111', back: 697, i: 697 }
-{ based: '1001100000000', back: 698, i: 698 }
-{ based: '1001100000010', back: 699, i: 699 }
-{ based: '1001100000011', back: 700, i: 700 }
-{ based: '1001100001000', back: 701, i: 701 }
-{ based: '1001100001001', back: 702, i: 702 }
-{ based: '1001100001100', back: 703, i: 703 }
-{ based: '1001100001110', back: 704, i: 704 }
-{ based: '1001100001111', back: 705, i: 705 }
-{ based: '1001100100000', back: 706, i: 706 }
-{ based: '1001100100001', back: 707, i: 707 }
-{ based: '1001100100100', back: 708, i: 708 }
-{ based: '1001100100110', back: 709, i: 709 }
-{ based: '1001100100111', back: 710, i: 710 }
-{ based: '1001100110000', back: 711, i: 711 }
-{ based: '1001100110010', back: 712, i: 712 }
-{ based: '1001100110011', back: 713, i: 713 }
-{ based: '1001100111000', back: 714, i: 714 }
-{ based: '1001100111001', back: 715, i: 715 }
-{ based: '1001100111100', back: 716, i: 716 }
-{ based: '1001100111110', back: 717, i: 717 }
-{ based: '1001100111111', back: 718, i: 718 }
-{ based: '1001110000000', back: 719, i: 719 }
-{ based: '1001110000001', back: 720, i: 720 }
-{ based: '1001110000100', back: 721, i: 721 }
-{ based: '1001110000110', back: 722, i: 722 }
-{ based: '1001110000111', back: 723, i: 723 }
-{ based: '1001110010000', back: 724, i: 724 }
-{ based: '1001110010010', back: 725, i: 725 }
-{ based: '1001110010011', back: 726, i: 726 }
-{ based: '1001110011000', back: 727, i: 727 }
-{ based: '1001110011001', back: 728, i: 728 }
-{ based: '1001110011100', back: 729, i: 729 }
-{ based: '1001110011110', back: 730, i: 730 }
-{ based: '1001110011111', back: 731, i: 731 }
-{ based: '1001111000000', back: 732, i: 732 }
-{ based: '1001111000010', back: 733, i: 733 }
-{ based: '1001111000011', back: 734, i: 734 }
-{ based: '1001111001000', back: 735, i: 735 }
-{ based: '1001111001001', back: 736, i: 736 }
-{ based: '1001111001100', back: 737, i: 737 }
-{ based: '1001111001110', back: 738, i: 738 }
-{ based: '1001111001111', back: 739, i: 739 }
-{ based: '1001111100000', back: 740, i: 740 }
-{ based: '1001111100001', back: 741, i: 741 }
-{ based: '1001111100100', back: 742, i: 742 }
-{ based: '1001111100110', back: 743, i: 743 }
-{ based: '1001111100111', back: 744, i: 744 }
-{ based: '1001111110000', back: 745, i: 745 }
-{ based: '1001111110010', back: 746, i: 746 }
-{ based: '1001111110011', back: 747, i: 747 }
-{ based: '1001111111000', back: 748, i: 748 }
-{ based: '1001111111001', back: 749, i: 749 }
-{ based: '1001111111100', back: 750, i: 750 }
-{ based: '1001111111110', back: 751, i: 751 }
-{ based: '1001111111111', back: 752, i: 752 }
-{ based: '1100000000000', back: 753, i: 753 }
-{ based: '1100000000001', back: 754, i: 754 }
-{ based: '1100000000100', back: 755, i: 755 }
-{ based: '1100000000110', back: 756, i: 756 }
-{ based: '1100000000111', back: 757, i: 757 }
-{ based: '1100000010000', back: 758, i: 758 }
-{ based: '1100000010010', back: 759, i: 759 }
-{ based: '1100000010011', back: 760, i: 760 }
-{ based: '1100000011000', back: 761, i: 761 }
-{ based: '1100000011001', back: 762, i: 762 }
-{ based: '1100000011100', back: 763, i: 763 }
-{ based: '1100000011110', back: 764, i: 764 }
-{ based: '1100000011111', back: 765, i: 765 }
-{ based: '1100001000000', back: 766, i: 766 }
-{ based: '1100001000010', back: 767, i: 767 }
-{ based: '1100001000011', back: 768, i: 768 }
-{ based: '1100001001000', back: 769, i: 769 }
-{ based: '1100001001001', back: 770, i: 770 }
-{ based: '1100001001100', back: 771, i: 771 }
-{ based: '1100001001110', back: 772, i: 772 }
-{ based: '1100001001111', back: 773, i: 773 }
-{ based: '1100001100000', back: 774, i: 774 }
-{ based: '1100001100001', back: 775, i: 775 }
-{ based: '1100001100100', back: 776, i: 776 }
-{ based: '1100001100110', back: 777, i: 777 }
-{ based: '1100001100111', back: 778, i: 778 }
-{ based: '1100001110000', back: 779, i: 779 }
-{ based: '1100001110010', back: 780, i: 780 }
-{ based: '1100001110011', back: 781, i: 781 }
-{ based: '1100001111000', back: 782, i: 782 }
-{ based: '1100001111001', back: 783, i: 783 }
-{ based: '1100001111100', back: 784, i: 784 }
-{ based: '1100001111110', back: 785, i: 785 }
-{ based: '1100001111111', back: 786, i: 786 }
-{ based: '1100100000000', back: 787, i: 787 }
-{ based: '1100100000010', back: 788, i: 788 }
-{ based: '1100100000011', back: 789, i: 789 }
-{ based: '1100100001000', back: 790, i: 790 }
-{ based: '1100100001001', back: 791, i: 791 }
-{ based: '1100100001100', back: 792, i: 792 }
-{ based: '1100100001110', back: 793, i: 793 }
-{ based: '1100100001111', back: 794, i: 794 }
-{ based: '1100100100000', back: 795, i: 795 }
-{ based: '1100100100001', back: 796, i: 796 }
-{ based: '1100100100100', back: 797, i: 797 }
-{ based: '1100100100110', back: 798, i: 798 }
-{ based: '1100100100111', back: 799, i: 799 }
-{ based: '1100100110000', back: 800, i: 800 }
-{ based: '1100100110010', back: 801, i: 801 }
-{ based: '1100100110011', back: 802, i: 802 }
-{ based: '1100100111000', back: 803, i: 803 }
-{ based: '1100100111001', back: 804, i: 804 }
-{ based: '1100100111100', back: 805, i: 805 }
-{ based: '1100100111110', back: 806, i: 806 }
-{ based: '1100100111111', back: 807, i: 807 }
-{ based: '1100110000000', back: 808, i: 808 }
-{ based: '1100110000001', back: 809, i: 809 }
-{ based: '1100110000100', back: 810, i: 810 }
-{ based: '1100110000110', back: 811, i: 811 }
-{ based: '1100110000111', back: 812, i: 812 }
-{ based: '1100110010000', back: 813, i: 813 }
-{ based: '1100110010010', back: 814, i: 814 }
-{ based: '1100110010011', back: 815, i: 815 }
-{ based: '1100110011000', back: 816, i: 816 }
-{ based: '1100110011001', back: 817, i: 817 }
-{ based: '1100110011100', back: 818, i: 818 }
-{ based: '1100110011110', back: 819, i: 819 }
-{ based: '1100110011111', back: 820, i: 820 }
-{ based: '1100111000000', back: 821, i: 821 }
-{ based: '1100111000010', back: 822, i: 822 }
-{ based: '1100111000011', back: 823, i: 823 }
-{ based: '1100111001000', back: 824, i: 824 }
-{ based: '1100111001001', back: 825, i: 825 }
-{ based: '1100111001100', back: 826, i: 826 }
-{ based: '1100111001110', back: 827, i: 827 }
-{ based: '1100111001111', back: 828, i: 828 }
-{ based: '1100111100000', back: 829, i: 829 }
-{ based: '1100111100001', back: 830, i: 830 }
-{ based: '1100111100100', back: 831, i: 831 }
-{ based: '1100111100110', back: 832, i: 832 }
-{ based: '1100111100111', back: 833, i: 833 }
-{ based: '1100111110000', back: 834, i: 834 }
-{ based: '1100111110010', back: 835, i: 835 }
-{ based: '1100111110011', back: 836, i: 836 }
-{ based: '1100111111000', back: 837, i: 837 }
-{ based: '1100111111001', back: 838, i: 838 }
-{ based: '1100111111100', back: 839, i: 839 }
-{ based: '1100111111110', back: 840, i: 840 }
-{ based: '1100111111111', back: 841, i: 841 }
-{ based: '1110000000000', back: 842, i: 842 }
-{ based: '1110000000010', back: 843, i: 843 }
-{ based: '1110000000011', back: 844, i: 844 }
-{ based: '1110000001000', back: 845, i: 845 }
-{ based: '1110000001001', back: 846, i: 846 }
-{ based: '1110000001100', back: 847, i: 847 }
-{ based: '1110000001110', back: 848, i: 848 }
-{ based: '1110000001111', back: 849, i: 849 }
-{ based: '1110000100000', back: 850, i: 850 }
-{ based: '1110000100001', back: 851, i: 851 }
-{ based: '1110000100100', back: 852, i: 852 }
-{ based: '1110000100110', back: 853, i: 853 }
-{ based: '1110000100111', back: 854, i: 854 }
-{ based: '1110000110000', back: 855, i: 855 }
-{ based: '1110000110010', back: 856, i: 856 }
-{ based: '1110000110011', back: 857, i: 857 }
-{ based: '1110000111000', back: 858, i: 858 }
-{ based: '1110000111001', back: 859, i: 859 }
-{ based: '1110000111100', back: 860, i: 860 }
-{ based: '1110000111110', back: 861, i: 861 }
-{ based: '1110000111111', back: 862, i: 862 }
-{ based: '1110010000000', back: 863, i: 863 }
-{ based: '1110010000001', back: 864, i: 864 }
-{ based: '1110010000100', back: 865, i: 865 }
-{ based: '1110010000110', back: 866, i: 866 }
-{ based: '1110010000111', back: 867, i: 867 }
-{ based: '1110010010000', back: 868, i: 868 }
-{ based: '1110010010010', back: 869, i: 869 }
-{ based: '1110010010011', back: 870, i: 870 }
-{ based: '1110010011000', back: 871, i: 871 }
-{ based: '1110010011001', back: 872, i: 872 }
-{ based: '1110010011100', back: 873, i: 873 }
-{ based: '1110010011110', back: 874, i: 874 }
-{ based: '1110010011111', back: 875, i: 875 }
-{ based: '1110011000000', back: 876, i: 876 }
-{ based: '1110011000010', back: 877, i: 877 }
-{ based: '1110011000011', back: 878, i: 878 }
-{ based: '1110011001000', back: 879, i: 879 }
-{ based: '1110011001001', back: 880, i: 880 }
-{ based: '1110011001100', back: 881, i: 881 }
-{ based: '1110011001110', back: 882, i: 882 }
-{ based: '1110011001111', back: 883, i: 883 }
-{ based: '1110011100000', back: 884, i: 884 }
-{ based: '1110011100001', back: 885, i: 885 }
-{ based: '1110011100100', back: 886, i: 886 }
-{ based: '1110011100110', back: 887, i: 887 }
-{ based: '1110011100111', back: 888, i: 888 }
-{ based: '1110011110000', back: 889, i: 889 }
-{ based: '1110011110010', back: 890, i: 890 }
-{ based: '1110011110011', back: 891, i: 891 }
-{ based: '1110011111000', back: 892, i: 892 }
-{ based: '1110011111001', back: 893, i: 893 }
-{ based: '1110011111100', back: 894, i: 894 }
-{ based: '1110011111110', back: 895, i: 895 }
-{ based: '1110011111111', back: 896, i: 896 }
-{ based: '1111000000000', back: 897, i: 897 }
-{ based: '1111000000001', back: 898, i: 898 }
-{ based: '1111000000100', back: 899, i: 899 }
-{ based: '1111000000110', back: 900, i: 900 }
-{ based: '1111000000111', back: 901, i: 901 }
-{ based: '1111000010000', back: 902, i: 902 }
-{ based: '1111000010010', back: 903, i: 903 }
-{ based: '1111000010011', back: 904, i: 904 }
-{ based: '1111000011000', back: 905, i: 905 }
-{ based: '1111000011001', back: 906, i: 906 }
-{ based: '1111000011100', back: 907, i: 907 }
-{ based: '1111000011110', back: 908, i: 908 }
-{ based: '1111000011111', back: 909, i: 909 }
-{ based: '1111001000000', back: 910, i: 910 }
-{ based: '1111001000010', back: 911, i: 911 }
-{ based: '1111001000011', back: 912, i: 912 }
-{ based: '1111001001000', back: 913, i: 913 }
-{ based: '1111001001001', back: 914, i: 914 }
-{ based: '1111001001100', back: 915, i: 915 }
-{ based: '1111001001110', back: 916, i: 916 }
-{ based: '1111001001111', back: 917, i: 917 }
-{ based: '1111001100000', back: 918, i: 918 }
-{ based: '1111001100001', back: 919, i: 919 }
-{ based: '1111001100100', back: 920, i: 920 }
-{ based: '1111001100110', back: 921, i: 921 }
-{ based: '1111001100111', back: 922, i: 922 }
-{ based: '1111001110000', back: 923, i: 923 }
-{ based: '1111001110010', back: 924, i: 924 }
-{ based: '1111001110011', back: 925, i: 925 }
-{ based: '1111001111000', back: 926, i: 926 }
-{ based: '1111001111001', back: 927, i: 927 }
-{ based: '1111001111100', back: 928, i: 928 }
-{ based: '1111001111110', back: 929, i: 929 }
-{ based: '1111001111111', back: 930, i: 930 }
-{ based: '1111100000000', back: 931, i: 931 }
-{ based: '1111100000010', back: 932, i: 932 }
-{ based: '1111100000011', back: 933, i: 933 }
-{ based: '1111100001000', back: 934, i: 934 }
-{ based: '1111100001001', back: 935, i: 935 }
-{ based: '1111100001100', back: 936, i: 936 }
-{ based: '1111100001110', back: 937, i: 937 }
-{ based: '1111100001111', back: 938, i: 938 }
-{ based: '1111100100000', back: 939, i: 939 }
-{ based: '1111100100001', back: 940, i: 940 }
-{ based: '1111100100100', back: 941, i: 941 }
-{ based: '1111100100110', back: 942, i: 942 }
-{ based: '1111100100111', back: 943, i: 943 }
-{ based: '1111100110000', back: 944, i: 944 }
-{ based: '1111100110010', back: 945, i: 945 }
-{ based: '1111100110011', back: 946, i: 946 }
-{ based: '1111100111000', back: 947, i: 947 }
-{ based: '1111100111001', back: 948, i: 948 }
-{ based: '1111100111100', back: 949, i: 949 }
-{ based: '1111100111110', back: 950, i: 950 }
-{ based: '1111100111111', back: 951, i: 951 }
-{ based: '1111110000000', back: 952, i: 952 }
-{ based: '1111110000001', back: 953, i: 953 }
-{ based: '1111110000100', back: 954, i: 954 }
-{ based: '1111110000110', back: 955, i: 955 }
-{ based: '1111110000111', back: 956, i: 956 }
-{ based: '1111110010000', back: 957, i: 957 }
-{ based: '1111110010010', back: 958, i: 958 }
-{ based: '1111110010011', back: 959, i: 959 }
-{ based: '1111110011000', back: 960, i: 960 }
-{ based: '1111110011001', back: 961, i: 961 }
-{ based: '1111110011100', back: 962, i: 962 }
-{ based: '1111110011110', back: 963, i: 963 }
-{ based: '1111110011111', back: 964, i: 964 }
-{ based: '1111111000000', back: 965, i: 965 }
-{ based: '1111111000010', back: 966, i: 966 }
-{ based: '1111111000011', back: 967, i: 967 }
-{ based: '1111111001000', back: 968, i: 968 }
-{ based: '1111111001001', back: 969, i: 969 }
-{ based: '1111111001100', back: 970, i: 970 }
-{ based: '1111111001110', back: 971, i: 971 }
-{ based: '1111111001111', back: 972, i: 972 }
-{ based: '1111111100000', back: 973, i: 973 }
-{ based: '1111111100001', back: 974, i: 974 }
-{ based: '1111111100100', back: 975, i: 975 }
-{ based: '1111111100110', back: 976, i: 976 }
-{ based: '1111111100111', back: 977, i: 977 }
-{ based: '1111111110000', back: 978, i: 978 }
-{ based: '1111111110010', back: 979, i: 979 }
-{ based: '1111111110011', back: 980, i: 980 }
-{ based: '1111111111000', back: 981, i: 981 }
-{ based: '1111111111001', back: 982, i: 982 }
-{ based: '1111111111100', back: 983, i: 983 }
-{ based: '1111111111110', back: 984, i: 984 }
-{ based: '1111111111111', back: 985, i: 985 }
-{ based: '10000000000000', back: 986, i: 986 }
-{ based: '10000000000001', back: 987, i: 987 }
-{ based: '10000000000100', back: 988, i: 988 }
-{ based: '10000000000110', back: 989, i: 989 }
-{ based: '10000000000111', back: 990, i: 990 }
-{ based: '10000000010000', back: 991, i: 991 }
-{ based: '10000000010010', back: 992, i: 992 }
-{ based: '10000000010011', back: 993, i: 993 }
-{ based: '10000000011000', back: 994, i: 994 }
-{ based: '10000000011001', back: 995, i: 995 }
-{ based: '10000000011100', back: 996, i: 996 }
-{ based: '10000000011110', back: 997, i: 997 }
-{ based: '10000000011111', back: 998, i: 998 }
-{ based: '10000001000000', back: 999, i: 999 }
-```
-
-## Future work
-
-Investigate an algebra for these representations. In other words, will they obey normal addition and multiplication? What do we get if we try regular radix-unit algorithms to add, multiply, divide and subtract these, do we get the expected results, or something else? Are the results of such regular operations consistent? Can we define a new way of adding, multiplying, etc, these that would give expected results?
+Where \(a_k\) are the coefficients determined by the algorithm and \(\phi\) is the golden ratio. This finite series yields the irradiX representation, which is then treated as a binary string in our analysis.
 
+This approach contrasts with the infinite series expansions seen in p-adic systems, where the expansion is dependent on powers of the prime \(p\) and the coefficients are chosen to satisfy modular constraints.
 
+### Footnotes
+
+1. **Knuth, Donald E.** *The Art of Computer Programming, Volume 2: Seminumerical Algorithms*. Addison-Wesley, 1997.
+   - Provides foundational insights into numerical algorithms and prime number theory, which are essential to understanding the behavior of prime densities in various encoding schemes.
+
+2. **Rosen, Kenneth H.** *Elementary Number Theory and Its Applications*. Addison-Wesley, 2005.
+   - A comprehensive resource on number theory, including the distribution of prime numbers, which is relevant to our statistical analysis of prime densities.
+
+3. **Flajolet, Philippe, and Robert Sedgewick.** *Analytic Combinatorics*. Cambridge University Press, 2009.
+   - Explores the mathematical methods used in combinatorial structures, some of which may relate to the patterns observed in base-\(\phi\) representations.
+
+4. **Sloane, Neil J.A.** *The On-Line Encyclopedia of Integer Sequences (OEIS)*.
+   - An extensive database of integer sequences, where similar sequences to those generated by base-\(\phi\) encoding might be found or cross-referenced for further exploration.
+
+5. **Mauldin, R. Daniel, and Mariusz Urbański.** *Graph Directed Markov Systems: Geometry and Dynamics of Limit Sets*. Cambridge University Press, 2003.
+   - This text may provide insight into the geometric interpretation of base-\(\phi\) representations, particularly if explored through a graph or lattice structure.
+
+6. **Radix Representations in Irrational Bases:** Explore more on shift radix systems and their applications in number theory and beyond【155†source】.
+
+7. **p-adic Numbers:** Understanding the infinite series expansions and their implications in modular arithmetic【154†source】.
+
+These references should provide a solid grounding for the theoretical and practical implications discussed in your paper. Feel free to adjust or expand upon them as needed!

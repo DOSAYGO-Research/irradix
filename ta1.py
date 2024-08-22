@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from mpmath import mp
 import random
 from irradix import irradix, derradix, set_precision

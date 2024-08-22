@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import random
 from math import log10, ceil
 from irradix import encode, decode, set_precision

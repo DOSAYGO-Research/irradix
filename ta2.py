@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from irradix import irradix, set_precision
 import random
 

@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from mpmath import mp, mpf, sqrt, floor, ceil, log, log10
 
 # Initialize global variables for BigPHI
