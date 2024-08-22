@@ -1,3 +1,0 @@
-- try chunking into fixed width bits, if zeros exceed current bit width, just output another chunk, and always revivfy by left padding with zeroes. should work, right? (and simpler, I think)
-- implement with a bigdecimal to see if the '101's and non-revertibles are coming from precision loss. 
-  - This improves it, and it works for all numbers
