@@ -1,28 +1,27 @@
-from mpmath import mp, mpf, sqrt, floor, log
+from mpmath import mp, mpf, sqrt, floor, ceil, log, log10
 
-# Set precision
-mp.dps = 400  # digits of precision
+# Initialize global variables for BigPHI
+current_bigphi_dps = 1000
+mp.dps = current_bigphi_dps
+_bigphi_value = (mpf(1) + sqrt(mpf(5))) / 2
 
-# Generate BigPHI programmatically (phi = (1 + sqrt(5)) / 2)
-BigPHI = (mpf(1) + sqrt(mpf(5))) / 2
+# Getter for BigPHI in VALS
+def get_bigphi():
+    return _bigphi_value
 
-# Constants dictionary
+# Constants dictionary with dynamic getter
 VALS = {
-    'BigPHI': BigPHI,
+    'BigPHI': get_bigphi,
     # Add other constants here as needed
 }
 
-def irradix(num, radic=BigPHI):
+def irradix(num):
     num = mpf(num)
     if num == 0:
         return "0"
 
     if not num % 1 == 0:
         raise TypeError("Sorry cannot convert non-integer numbers.")
-
-    radic = mpf(radic)
-    if abs(radic) <= 1:
-        raise TypeError("Sorry we don't support radices less than or equal to 1")
 
     S = mp.sign(num)
 
@@ -33,7 +32,8 @@ def irradix(num, radic=BigPHI):
     r = []
     lastW = list(w)
 
-    quanta = radic ** -(log(num) / log(radic))
+    bigphi = VALS['BigPHI']()  # Use the getter to get the current BigPHI value
+    quanta = bigphi ** -(log(num) / log(bigphi))
     epsilon = mpf(2) ** -mp.prec
 
     thresh = min(quanta, epsilon)
@@ -42,22 +42,22 @@ def irradix(num, radic=BigPHI):
         if abs(w[0]) <= thresh:
             break
 
-        w[1] = w[0] % radic
+        w[1] = w[0] % bigphi
 
         if w[1] < 0:
-            w[1] = w[1] - radic
+            w[1] = w[1] - bigphi
 
-        w[0] = (w[0] - w[1]) / radic
+        w[0] = (w[0] - w[1]) / bigphi
 
         if abs(w[0]) >= abs(lastW[0]):
-            if mp.sign(radic) == -1:
+            if mp.sign(bigphi) == -1:
                 if w[0] == 0:
                     break
             else:
                 break
 
         unit = floor(abs(w[1]))
-        r.insert(0, str(unit))
+        r.insert(0, str(int(unit)))
 
         lastW = list(w)
 
@@ -66,26 +66,20 @@ def irradix(num, radic=BigPHI):
 
     return ''.join(r)
 
-def derradix(rep, radic=BigPHI):
+def derradix(rep):
     S = -1 if rep[0] == '-' else 1
 
     if S == -1:
         rep = rep[1:]
 
-    radic = mpf(radic)
+    bigphi = VALS['BigPHI']()  # Use the getter to get the current BigPHI value
 
-    rep = [mpf(int(u, 36)) for u in rep.split(',')]
+    # Ensure the rep string is correctly split into integers
+    rep = [mpf(int(u, 10)) for u in rep]
     num = mpf(0)
     for u in rep:
-        num = num * radic
+        num = num * bigphi
         num = ceil(num + u)
 
     return int(num * S)
-
-# Example usage
-encoded = irradix(12345)
-decoded = derradix(encoded)
-
-print("Encoded:", encoded)
-print("Decoded:", decoded)
 
