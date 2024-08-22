@@ -4,6 +4,23 @@
 
 This project explores a novel method for encoding integers using a representation based on the golden ratio ($\phi$), known as the irrational base $\phi$. This encoding method leverages the unique mathematical properties of $\phi$ to create a binary-like representation that inherently avoids certain binary sequences. The exploration focuses on analyzing the characteristics of this representation, particularly when reinterpreted as standard binary numbers, and the unexpected findings related to prime density in the transformed number set.
 
+It's conjectured the binary sequence `101` never occurs in this representation. This has been experimentally verified on millions of values.
+
+Here's what it looks like](data/table.txt):
+
+```text
+Original Integer     irradix Representation         Interpreted as Binary          isPrime    Prime Comparison     Binary Expansion (%)
+------------------------------------------------------------------------------------------------------------------------------------
+1                    1                              1                              False      0                    100.00
+2                    10                             2                              True       3                    100.00
+3                    11                             3                              True       3                    100.00
+4                    100                            4                              False      0                    100.00
+5                    110                            6                              False      2                    100.00
+6                    111                            7                              True       1                    100.00
+7                    1000                           8                              False      2                    133.33
+8                    1001                           9                              False      0                    100.00
+```
+
 ## Mathematical Foundation
 
 ### Base $\phi$ Representation
@@ -108,6 +125,47 @@ Given the expansion factor of approximately 1.44 in base $\phi$ encoding, one wo
 $$\frac{16.8\%}{8} \approx 2.1\%$$
 
 However, the observed prime density in the binary set is significantly higher, [around 9.5%](data/table.txt). This discrepancy suggests that the base $\phi$ mapping might be influencing the distribution of primes in a way that is not immediately apparent from a uniform distribution perspective.
+
+*The first and last few lines of the data table:*
+```text
+Original Integer     irradix Representation         Interpreted as Binary          isPrime    Prime Comparison     Binary Expansion (%)
+------------------------------------------------------------------------------------------------------------------------------------
+1                    1                              1                              False      0                    100.00
+2                    10                             2                              True       3                    100.00
+3                    11                             3                              True       3                    100.00
+4                    100                            4                              False      0                    100.00
+5                    110                            6                              False      2                    100.00
+6                    111                            7                              True       1                    100.00
+7                    1000                           8                              False      2                    133.33
+8                    1001                           9                              False      0                    100.00
+
+ ... 
+
+
+988                  10000000000100                 8196                           False      0                    140.00
+989                  10000000000110                 8198                           False      0                    140.00
+990                  10000000000111                 8199                           False      0                    140.00
+991                  10000000010000                 8208                           False      2                    140.00
+992                  10000000010010                 8210                           False      0                    140.00
+993                  10000000010011                 8211                           False      0                    140.00
+994                  10000000011000                 8216                           False      0                    140.00
+995                  10000000011001                 8217                           False      0                    140.00
+996                  10000000011100                 8220                           False      0                    140.00
+997                  10000000011110                 8222                           False      2                    140.00
+998                  10000000011111                 8223                           False      0                    140.00
+999                  10000001000000                 8256                           False      0                    140.00
+1000                 10000001000010                 8258                           False      0                    140.00
+
+Prime Density:
+Original:                          16.80%
+Interpret base-phi rep as binary:   9.40%
+
+Prime Comparison Key:
+3: Both Original and Binary Interpretations are Prime
+2: Original is Prime, Binary Interpretation is Not
+1: Binary Interpretation is Prime, Original is Not
+0: Neither Original nor Binary Interpretation is Prime
+```
 
 ### Statistical Number Theory Perspective
 
