@@ -184,7 +184,7 @@
       DEBUG && console.log({rep,num});
     }
 
-    return BigInt('0b'+num.mul(S).toBinary());
+    return BigInt(num.mul(S).toBinary());
   }
 
   export function encodeString(str, bits = 6) {
