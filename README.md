@@ -97,7 +97,7 @@ The practical efficiency of this packing method lies in its ability to represent
 
 ### Connection to Binary Representation of 5
 
-It is noteworthy that the sequence "101" corresponds to the binary representation of the number 5. In the context of base $\phi$ encoding, the exclusion of this sequence as a delimiter creates an interesting intersection between number theory and binary encoding. This connection suggests potential links to other irrational bases derived from primes, such as \(\sqrt{7}\), which might naturally avoid other specific sequences like "111" (binary for 7).
+It is noteworthy that the sequence "101" corresponds to the binary representation of the number 5. In the context of base $\phi$ encoding, the exclusion of this sequence as a delimiter creates an interesting intersection between number theory and binary encoding. This connection suggests potential links to other irrational bases derived from primes, such as $\(\sqrt{7}\)$, which might naturally avoid other specific sequences like "111" (binary for 7).
 
 ## Implications for Prime Density and Number Theory
 
@@ -105,9 +105,7 @@ It is noteworthy that the sequence "101" corresponds to the binary representatio
 
 Given the expansion factor of approximately 1.44 in base $\phi$ encoding, one would expect the density of primes in the reinterpreted binary set to decrease proportionally. Specifically, if the prime density in the original set is around 16.8%, the expected prime density in the binary reinterpreted set should be approximately:
 
-\[
-\frac{16.8\%}{8} \approx 2.1\%
-\]
+$$\frac{16.8\%}{8} \approx 2.1\%$$
 
 However, the observed prime density in the binary set is significantly higher, around 9.5%. This discrepancy suggests that the base $\phi$ mapping might be influencing the distribution of primes in a way that is not immediately apparent from a uniform distribution perspective.
 
