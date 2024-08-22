@@ -12,7 +12,6 @@ def get_bigphi():
 # Constants dictionary with dynamic getter
 VALS = {
     'BigPHI': get_bigphi,
-    # Add other constants here as needed
 }
 
 def irradix(num):
@@ -32,7 +31,7 @@ def irradix(num):
     r = []
     lastW = list(w)
 
-    bigphi = VALS['BigPHI']()  # Use the getter to get the current BigPHI value
+    bigphi = VALS['BigPHI']()  
     quanta = bigphi ** -(log(num) / log(bigphi))
     epsilon = mpf(2) ** -mp.prec
 
@@ -72,7 +71,7 @@ def derradix(rep):
     if S == -1:
         rep = rep[1:]
 
-    bigphi = VALS['BigPHI']()  # Use the getter to get the current BigPHI value
+    bigphi = VALS['BigPHI']()  
 
     # Ensure the rep string is correctly split into integers
     rep = [mpf(int(u, 10)) for u in rep]
@@ -82,4 +81,39 @@ def derradix(rep):
         num = ceil(num + u)
 
     return int(num * S)
+
+def encode(nums):
+    nums = [irradix((n+1)*2) for n in nums]
+    concatenated = '101'.join(nums)  # Concatenate with '101' as delimiter
+    print("Concatenated sequence:", concatenated)
+
+    # Convert the concatenated sequence into 8-bit chunks
+    padded_sequence = concatenated + ('0' * (8 - len(concatenated) % 8))
+    chunks = [padded_sequence[i:i+8] for i in range(0, len(padded_sequence), 8)]
+    print("8-bit chunks:", chunks)
+
+    # Convert each 8-bit chunk to an integer
+    chunk_values = [int(chunk, 2) for chunk in chunks]
+    print("Chunk values:", chunk_values)
+
+    return chunk_values
+
+def decode(chunks):
+    # Convert chunks back to binary strings
+    binary_chunks = [bin(chunk)[2:].zfill(8) for chunk in chunks]
+    print("Binary chunks:", binary_chunks)
+
+    # Reconstruct the full sequence
+    reconstructed = ''.join(binary_chunks).rstrip('0')  # Remove padding zeros
+    print("Reconstructed sequence:", reconstructed)
+
+    # Split the sequence by the delimiter '101'
+    rep_strings = reconstructed.split('101')
+    print("Recovered reps:", rep_strings)
+
+    # Decode each rep back to its original number
+    numbers = [(derradix(rep) // 2) - 1 for rep in rep_strings if rep]
+    print("Recovered numbers:", numbers)
+
+    return numbers
 
