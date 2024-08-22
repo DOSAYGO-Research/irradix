@@ -6,7 +6,13 @@ This project explores a novel method for encoding integers using a representatio
 
 It's conjectured the binary sequence `101` never occurs in this representation. This has been experimentally verified on millions of values.
 
-Here's what it looks like](data/table.txt):
+You can run the available tests on this function by cloning this repository, installing the required dependencies and running:
+
+```console
+$ python test.py
+```
+
+Here's what it [looks like](data/table.txt):
 
 ```text
 Original Integer     irradix Representation         Interpreted as Binary          isPrime    Prime Comparison     Binary Expansion (%)
