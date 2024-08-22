@@ -107,7 +107,7 @@ Given the expansion factor of approximately 1.44 in base $\phi$ encoding, one wo
 
 $$\frac{16.8\%}{8} \approx 2.1\%$$
 
-However, the observed prime density in the binary set is significantly higher, around 9.5%. This discrepancy suggests that the base $\phi$ mapping might be influencing the distribution of primes in a way that is not immediately apparent from a uniform distribution perspective.
+However, the observed prime density in the binary set is significantly higher, [around 9.5%](data/table.txt). This discrepancy suggests that the base $\phi$ mapping might be influencing the distribution of primes in a way that is not immediately apparent from a uniform distribution perspective.
 
 ### Statistical Number Theory Perspective
 

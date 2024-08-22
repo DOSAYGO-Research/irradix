@@ -1,5 +1,5 @@
 Original Integer     irradix Representation         Interpreted as Binary          isPrime    Prime Comparison     Binary Expansion (%)
-------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
 1                    1                              1                              False      0                    100.00              
 2                    10                             2                              True       3                    100.00              
 3                    11                             3                              True       3                    100.00              
@@ -1002,5 +1002,13 @@ Original Integer     irradix Representation         Interpreted as Binary       
 1000                 10000001000010                 8258                           False      0                    140.00              
 
 Prime Density:
-Original: 16.80%
-Binary: 9.40%
+Original:                          16.80%
+Interpret base-phi rep as binary:   9.40%
+
+Prime Comparison Key:
+3: Both Original and Binary Interpretations are Prime
+2: Original is Prime, Binary Interpretation is Not
+1: Binary Interpretation is Prime, Original is Not
+0: Neither Original nor Binary Interpretation is Prime
+
+
