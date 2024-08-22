@@ -1,6 +1,8 @@
 import random
 from math import log10, ceil
-from irradix import encode, decode  
+from irradix import encode, decode, set_precision
+
+set_precision(100) # enough to cover the 32 digits below
 
 # Generate a random integer with logarithmic bias
 def generate_random_integer():
@@ -12,20 +14,20 @@ def generate_random_integer():
 
 # Test function to encode and decode a list of random integers
 def test_random_integers():
-    num_tests = 100  # Number of tests to run
+    num_tests = 1000  # Number of tests to run
 
     for i in range(num_tests):
         # Generate a random list of integers
         original_numbers = [generate_random_integer() for _ in range(random.randint(1, 10))]
-        print(f"\nTest {i+1}: Original Numbers: {original_numbers}")
+        print(f"\nTest {i+1}:\nOriginal Numbers: {original_numbers}")
 
         # Encode the list of integers
         encoded_chunks = encode(original_numbers)
-        print(f"Encoded Chunks: {encoded_chunks}")
+        #print(f" Encoded Chunks: {encoded_chunks}")
 
         # Decode the packed sequence
         decoded_numbers = decode(encoded_chunks)
-        print(f"Decoded Numbers: {decoded_numbers}")
+        print(f"\n Decoded Numbers: {decoded_numbers}")
 
         # Verify that the decoded numbers match the original numbers
         assert decoded_numbers == original_numbers, f"Test {i+1} failed! Decoded numbers do not match the original."

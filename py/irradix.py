@@ -1,7 +1,7 @@
 from mpmath import mp, mpf, sqrt, floor, ceil, log, log10
 
 # Initialize global variables for BigPHI
-current_bigphi_dps = 1000
+current_bigphi_dps = 100
 mp.dps = current_bigphi_dps
 _bigphi_value = (mpf(1) + sqrt(mpf(5))) / 2
 
@@ -13,6 +13,16 @@ def get_bigphi():
 VALS = {
     'BigPHI': get_bigphi,
 }
+
+# Debug flag
+DEBUG = False
+
+# API to set the precision (dps) dynamically
+def set_precision(dps):
+    global current_bigphi_dps, _bigphi_value
+    current_bigphi_dps = dps
+    mp.dps = current_bigphi_dps
+    _bigphi_value = (mpf(1) + sqrt(mpf(5))) / 2  # Recalculate BigPHI with new precision
 
 def irradix(num):
     num = mpf(num)
@@ -83,37 +93,73 @@ def derradix(rep):
     return int(num * S)
 
 def encode(nums):
-    nums = [irradix((n+1)*2) for n in nums]
-    concatenated = '101'.join(nums)  # Concatenate with '101' as delimiter
-    print("Concatenated sequence:", concatenated)
+    encoded_list = []
+    for num in nums:
+        binary_rep = irradix((num + 1) * 2)
+        if DEBUG:
+            print(f"Initial Binary Representation for {num}: {binary_rep}")
 
-    # Convert the concatenated sequence into 8-bit chunks
-    padded_sequence = concatenated + ('0' * (8 - len(concatenated) % 8))
-    chunks = [padded_sequence[i:i+8] for i in range(0, len(padded_sequence), 8)]
-    print("8-bit chunks:", chunks)
+        if binary_rep.endswith('10'):
+            binary_rep += '0101'
+            if DEBUG:
+                print(f"Appended 0101 for {num} because it ends with 10: {binary_rep}")
 
-    # Convert each 8-bit chunk to an integer
+        encoded_list.append(binary_rep)
+
+    concatenated = '101'.join(encoded_list)
+    if DEBUG:
+        print(f"Concatenated Sequence Before Padding: {concatenated}")
+
+    padding_length = (8 - len(concatenated) % 8) % 8
+    padded_sequence = '0' * padding_length + concatenated
+    if DEBUG:
+        print(f"Padded Sequence (left padding with zeros): {padded_sequence} (Padding Length: {padding_length})")
+
+    chunks = [padded_sequence[i:i + 8] for i in range(0, len(padded_sequence), 8)]
+    if DEBUG:
+        print(f"8-bit Chunks: {chunks}")
+
     chunk_values = [int(chunk, 2) for chunk in chunks]
-    print("Chunk values:", chunk_values)
+    if DEBUG:
+        print(f"Encoded Chunk Values: {chunk_values}")
 
     return chunk_values
 
 def decode(chunks):
-    # Convert chunks back to binary strings
     binary_chunks = [bin(chunk)[2:].zfill(8) for chunk in chunks]
-    print("Binary chunks:", binary_chunks)
+    if DEBUG:
+        print(f"Binary Chunks: {binary_chunks}")
 
-    # Reconstruct the full sequence
-    reconstructed = ''.join(binary_chunks).rstrip('0')  # Remove padding zeros
-    print("Reconstructed sequence:", reconstructed)
+    reconstructed = ''.join(binary_chunks)
+    if DEBUG:
+        print(f"Reconstructed Sequence Before Removing Padding: {reconstructed}")
 
-    # Split the sequence by the delimiter '101'
+    leading_zeros = len(reconstructed) - len(reconstructed.lstrip('0'))
+    if DEBUG:
+        print(f"Identified Leading Zeros (Padding Length): {leading_zeros}")
+
+    reconstructed = reconstructed[leading_zeros:]
+    if DEBUG:
+        print(f"Reconstructed Sequence (after removing leading zeros): {reconstructed}")
+
     rep_strings = reconstructed.split('101')
-    print("Recovered reps:", rep_strings)
+    if DEBUG:
+        print(f"Split Representation Strings: {rep_strings}")
 
-    # Decode each rep back to its original number
-    numbers = [(derradix(rep) // 2) - 1 for rep in rep_strings if rep]
-    print("Recovered numbers:", numbers)
+    numbers = []
+    for i in range(len(rep_strings)):
 
+        if rep_strings[i]:
+            if i < len(rep_strings) - 1 and not rep_strings[i+1]:
+                if DEBUG:
+                    print(f"\n\nEmpty spot found, adjusting representation: {rep_strings[i]}")
+                rep_strings[i] = rep_strings[i][:-1]
+                if DEBUG:
+                    print(f"Empty spot found, adjusting representation: {rep_strings[i]}\n\n")
+            num = (derradix(rep_strings[i]) // 2) - 1
+            numbers.append(num)
+
+    if DEBUG:
+        print(f"Decoded Numbers: {numbers}")
     return numbers
 

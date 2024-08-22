@@ -1,7 +1,8 @@
-from irradix import irradix
+from irradix import irradix, set_precision
 import random
 
 def test_no_101_sequence():
+    set_precision(1000)
     val = 10  # Start with a small number
     for i in range(1000):  # Test over a range of values
         encoded = irradix(val)

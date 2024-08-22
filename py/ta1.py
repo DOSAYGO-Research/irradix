@@ -1,7 +1,8 @@
 from mpmath import mp
 import random
-from irradix import irradix, derradix
+from irradix import irradix, derradix, set_precision
 
+set_precision(1000)
 val = mp.mpf(10)
 
 for i in range(1000):
