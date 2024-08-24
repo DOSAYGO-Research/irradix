@@ -164,3 +164,44 @@ def decode(chunks):
         print(f"Decoded Numbers: {numbers}")
     return numbers
 
+# online variants, suitable for streaming
+# online encode
+def olencode(nums):
+  return encode(nums)
+
+# online decode 
+def oldecode(chunks):
+  return decode(chunks)
+
+# l1 - length first variants, suitable when numbers are known ahead of time
+
+# length first encode
+def l1encode(nums):
+    # Step 1: Calculate the bit lengths of the numbers in base-2
+    lengths = [num.bit_length() for num in nums]
+
+    # Step 2: Encode the lengths using olencode
+    encoded_lengths = olencode(lengths)
+
+    # Step 3: Concatenate the bit strings of the numbers themselves
+    concatenated_bits = ''.join(bin(num)[2:] for num in nums)
+
+    # Step 4: Return the encoded lengths followed by the concatenated bits
+    return encoded_lengths, concatenated_bits
+
+# length first decode
+def l1decode(encoded_lengths, concatenated_bits):
+    # Step 1: Decode the lengths using oldecode
+    lengths = oldecode(encoded_lengths)
+
+    # Step 2: Reconstruct the original numbers using the decoded lengths
+    numbers = []
+    pos = 0
+    for length in lengths:
+        num_bits = concatenated_bits[pos:pos + length]
+        num = int(num_bits, 2)
+        numbers.append(num)
+        pos += length
+
+    return numbers
+
