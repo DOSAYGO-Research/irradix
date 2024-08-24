@@ -174,27 +174,49 @@ def oldecode(chunks):
   return decode(chunks)
 
 # l1 - length first variants, suitable when numbers are known ahead of time
-
-# length first encode
+# length first encode and decode
 def l1encode(nums):
     # Step 1: Calculate the bit lengths of the numbers in base-2
     lengths = [num.bit_length() for num in nums]
-
+    
     # Step 2: Encode the lengths using olencode
     encoded_lengths = olencode(lengths)
-
+    
     # Step 3: Concatenate the bit strings of the numbers themselves
     concatenated_bits = ''.join(bin(num)[2:] for num in nums)
+    
+    # Step 4: Append the triple '101' sequence and the concatenated bits
+    triple_101 = '101101101'
+    full_bit_sequence = triple_101 + concatenated_bits
 
-    # Step 4: Return the encoded lengths followed by the concatenated bits
-    return encoded_lengths, concatenated_bits
+    # Step 5: Convert the full bit sequence into 8-bit chunks
+    padded_sequence = '0' * ((8 - len(full_bit_sequence) % 8) % 8) + full_bit_sequence
+    chunked_sequence = [padded_sequence[i:i+8] for i in range(0, len(padded_sequence), 8)]
+    
+    # Step 6: Convert the 8-bit chunks to integers and concatenate with encoded lengths
+    final_sequence = encoded_lengths + [int(chunk, 2) for chunk in chunked_sequence]
+    
+    return final_sequence
 
-# length first decode
-def l1decode(encoded_lengths, concatenated_bits):
-    # Step 1: Decode the lengths using oldecode
+def l1decode(chunks):
+    # Step 1: Convert chunks to binary strings
+    binary_chunks = [bin(chunk)[2:].zfill(8) for chunk in chunks]
+    full_sequence = ''.join(binary_chunks)
+
+    # Step 2: Split by '101' delimiter to separate the encoded lengths and concatenated bits
+    parts = full_sequence.split('101')
+
+    # Step 3: Find the triple '101' sequence and determine the separation point
+    triple_101_idx = next(i for i in range(len(parts) - 2) if parts[i] == parts[i+1] == parts[i+2] == '')
+
+    # Step 4: Decode the lengths sequence using oldecode
+    encoded_lengths = [int(part, 2) for part in parts[:triple_101_idx]]
     lengths = oldecode(encoded_lengths)
 
-    # Step 2: Reconstruct the original numbers using the decoded lengths
+    # Step 5: The remaining part is the concatenated bits of the integers
+    concatenated_bits = ''.join(parts[triple_101_idx+3:])
+
+    # Step 6: Reconstruct the original numbers using the decoded lengths
     numbers = []
     pos = 0
     for length in lengths:
@@ -202,6 +224,6 @@ def l1decode(encoded_lengths, concatenated_bits):
         num = int(num_bits, 2)
         numbers.append(num)
         pos += length
-
+    
     return numbers
 
