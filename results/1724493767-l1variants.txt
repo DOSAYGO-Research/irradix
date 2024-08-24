@@ -1,0 +1,389 @@
+Running Original Test (L1 Variants)...
+Original Test 1: Seq Len: 437, Irradix Bits: 29496, L1 Bits: 23920, Benchmark Bits: 29776, % Expansion: -0.94%, L1 % Expansion: -19.67%
+Original Test 2: Seq Len: 607, Irradix Bits: 39056, L1 Bits: 31784, Benchmark Bits: 39648, % Expansion: -1.49%, L1 % Expansion: -19.83%
+Original Test 3: Seq Len: 863, Irradix Bits: 53808, L1 Bits: 43712, Benchmark Bits: 54451, % Expansion: -1.18%, L1 % Expansion: -19.72%
+Original Test 4: Seq Len: 177, Irradix Bits: 10272, L1 Bits: 8384, Benchmark Bits: 10438, % Expansion: -1.59%, L1 % Expansion: -19.68%
+Original Test 5: Seq Len: 200, Irradix Bits: 13808, L1 Bits: 11168, Benchmark Bits: 13815, % Expansion: -0.05%, L1 % Expansion: -19.16%
+Original Test 6: Seq Len: 417, Irradix Bits: 28544, L1 Bits: 23168, Benchmark Bits: 29005, % Expansion: -1.59%, L1 % Expansion: -20.12%
+Original Test 7: Seq Len: 189, Irradix Bits: 11088, L1 Bits: 9136, Benchmark Bits: 11694, % Expansion: -5.18%, L1 % Expansion: -21.87%
+Original Test 8: Seq Len: 963, Irradix Bits: 60552, L1 Bits: 49248, Benchmark Bits: 61263, % Expansion: -1.16%, L1 % Expansion: -19.61%
+Original Test 9: Seq Len: 168, Irradix Bits: 11200, L1 Bits: 9016, Benchmark Bits: 10992, % Expansion: 1.89%, L1 % Expansion: -17.98%
+Original Test 10: Seq Len: 143, Irradix Bits: 9096, L1 Bits: 7376, Benchmark Bits: 9157, % Expansion: -0.67%, L1 % Expansion: -19.45%
+Original Test 11: Seq Len: 292, Irradix Bits: 19304, L1 Bits: 15720, Benchmark Bits: 19468, % Expansion: -0.84%, L1 % Expansion: -19.25%
+Original Test 12: Seq Len: 931, Irradix Bits: 59200, L1 Bits: 47976, Benchmark Bits: 59540, % Expansion: -0.57%, L1 % Expansion: -19.42%
+Original Test 13: Seq Len: 499, Irradix Bits: 30656, L1 Bits: 24944, Benchmark Bits: 31269, % Expansion: -1.96%, L1 % Expansion: -20.23%
+Original Test 14: Seq Len: 392, Irradix Bits: 26544, L1 Bits: 21392, Benchmark Bits: 26453, % Expansion: 0.34%, L1 % Expansion: -19.13%
+Original Test 15: Seq Len: 358, Irradix Bits: 23096, L1 Bits: 18848, Benchmark Bits: 23465, % Expansion: -1.57%, L1 % Expansion: -19.68%
+Original Test 16: Seq Len: 563, Irradix Bits: 35144, L1 Bits: 28520, Benchmark Bits: 35583, % Expansion: -1.23%, L1 % Expansion: -19.85%
+Original Test 17: Seq Len: 597, Irradix Bits: 35904, L1 Bits: 29192, Benchmark Bits: 36335, % Expansion: -1.19%, L1 % Expansion: -19.66%
+Original Test 18: Seq Len: 858, Irradix Bits: 53736, L1 Bits: 43632, Benchmark Bits: 54355, % Expansion: -1.14%, L1 % Expansion: -19.73%
+Original Test 19: Seq Len: 249, Irradix Bits: 15056, L1 Bits: 12240, Benchmark Bits: 15241, % Expansion: -1.21%, L1 % Expansion: -19.69%
+Original Test 20: Seq Len: 682, Irradix Bits: 44736, L1 Bits: 36184, Benchmark Bits: 44954, % Expansion: -0.48%, L1 % Expansion: -19.51%
+Original Test 21: Seq Len: 312, Irradix Bits: 19496, L1 Bits: 15816, Benchmark Bits: 19798, % Expansion: -1.53%, L1 % Expansion: -20.11%
+Original Test 22: Seq Len: 288, Irradix Bits: 19392, L1 Bits: 15744, Benchmark Bits: 19483, % Expansion: -0.47%, L1 % Expansion: -19.19%
+Original Test 23: Seq Len: 661, Irradix Bits: 42016, L1 Bits: 34016, Benchmark Bits: 42124, % Expansion: -0.26%, L1 % Expansion: -19.25%
+Original Test 24: Seq Len: 819, Irradix Bits: 50720, L1 Bits: 41280, Benchmark Bits: 51610, % Expansion: -1.72%, L1 % Expansion: -20.02%
+Original Test 25: Seq Len: 271, Irradix Bits: 17800, L1 Bits: 14416, Benchmark Bits: 17892, % Expansion: -0.51%, L1 % Expansion: -19.43%
+Original Test 26: Seq Len: 779, Irradix Bits: 50376, L1 Bits: 40752, Benchmark Bits: 50455, % Expansion: -0.16%, L1 % Expansion: -19.23%
+Original Test 27: Seq Len: 728, Irradix Bits: 47032, L1 Bits: 38032, Benchmark Bits: 47167, % Expansion: -0.29%, L1 % Expansion: -19.37%
+Original Test 28: Seq Len: 633, Irradix Bits: 40008, L1 Bits: 32472, Benchmark Bits: 40384, % Expansion: -0.93%, L1 % Expansion: -19.59%
+Original Test 29: Seq Len: 132, Irradix Bits: 8792, L1 Bits: 7104, Benchmark Bits: 8845, % Expansion: -0.60%, L1 % Expansion: -19.68%
+Original Test 30: Seq Len: 262, Irradix Bits: 15512, L1 Bits: 12680, Benchmark Bits: 15967, % Expansion: -2.85%, L1 % Expansion: -20.59%
+Original Test 31: Seq Len: 127, Irradix Bits: 8544, L1 Bits: 6928, Benchmark Bits: 8592, % Expansion: -0.56%, L1 % Expansion: -19.37%
+Original Test 32: Seq Len: 442, Irradix Bits: 30720, L1 Bits: 24896, Benchmark Bits: 30820, % Expansion: -0.32%, L1 % Expansion: -19.22%
+Original Test 33: Seq Len: 568, Irradix Bits: 36368, L1 Bits: 29472, Benchmark Bits: 36770, % Expansion: -1.09%, L1 % Expansion: -19.85%
+Original Test 34: Seq Len: 469, Irradix Bits: 30544, L1 Bits: 24744, Benchmark Bits: 30753, % Expansion: -0.68%, L1 % Expansion: -19.54%
+Original Test 35: Seq Len: 153, Irradix Bits: 9912, L1 Bits: 8048, Benchmark Bits: 10000, % Expansion: -0.88%, L1 % Expansion: -19.52%
+Original Test 36: Seq Len: 306, Irradix Bits: 19864, L1 Bits: 16128, Benchmark Bits: 20199, % Expansion: -1.66%, L1 % Expansion: -20.15%
+Original Test 37: Seq Len: 399, Irradix Bits: 24008, L1 Bits: 19544, Benchmark Bits: 24310, % Expansion: -1.24%, L1 % Expansion: -19.61%
+Original Test 38: Seq Len: 927, Irradix Bits: 60376, L1 Bits: 48840, Benchmark Bits: 60857, % Expansion: -0.79%, L1 % Expansion: -19.75%
+Original Test 39: Seq Len: 267, Irradix Bits: 17264, L1 Bits: 14048, Benchmark Bits: 17662, % Expansion: -2.25%, L1 % Expansion: -20.46%
+Original Test 40: Seq Len: 871, Irradix Bits: 54376, L1 Bits: 44168, Benchmark Bits: 54991, % Expansion: -1.12%, L1 % Expansion: -19.68%
+Original Test 41: Seq Len: 764, Irradix Bits: 46944, L1 Bits: 38280, Benchmark Bits: 47708, % Expansion: -1.60%, L1 % Expansion: -19.76%
+Original Test 42: Seq Len: 936, Irradix Bits: 58544, L1 Bits: 47584, Benchmark Bits: 59497, % Expansion: -1.60%, L1 % Expansion: -20.02%
+Original Test 43: Seq Len: 866, Irradix Bits: 54072, L1 Bits: 43880, Benchmark Bits: 54522, % Expansion: -0.83%, L1 % Expansion: -19.52%
+Original Test 44: Seq Len: 157, Irradix Bits: 10464, L1 Bits: 8512, Benchmark Bits: 10590, % Expansion: -1.19%, L1 % Expansion: -19.62%
+Original Test 45: Seq Len: 821, Irradix Bits: 50752, L1 Bits: 41280, Benchmark Bits: 51465, % Expansion: -1.39%, L1 % Expansion: -19.79%
+Original Test 46: Seq Len: 999, Irradix Bits: 64008, L1 Bits: 51912, Benchmark Bits: 64673, % Expansion: -1.03%, L1 % Expansion: -19.73%
+Original Test 47: Seq Len: 899, Irradix Bits: 56584, L1 Bits: 45976, Benchmark Bits: 57411, % Expansion: -1.44%, L1 % Expansion: -19.92%
+Original Test 48: Seq Len: 682, Irradix Bits: 44472, L1 Bits: 36216, Benchmark Bits: 44963, % Expansion: -1.09%, L1 % Expansion: -19.45%
+Original Test 49: Seq Len: 820, Irradix Bits: 50744, L1 Bits: 41288, Benchmark Bits: 51348, % Expansion: -1.18%, L1 % Expansion: -19.59%
+Original Test 50: Seq Len: 118, Irradix Bits: 8616, L1 Bits: 6952, Benchmark Bits: 8640, % Expansion: -0.28%, L1 % Expansion: -19.54%
+Original Test 51: Seq Len: 479, Irradix Bits: 31520, L1 Bits: 25488, Benchmark Bits: 31689, % Expansion: -0.53%, L1 % Expansion: -19.57%
+Original Test 52: Seq Len: 269, Irradix Bits: 17056, L1 Bits: 13824, Benchmark Bits: 17232, % Expansion: -1.02%, L1 % Expansion: -19.78%
+Original Test 53: Seq Len: 140, Irradix Bits: 9256, L1 Bits: 7488, Benchmark Bits: 9256, % Expansion: 0.00%, L1 % Expansion: -19.10%
+Original Test 54: Seq Len: 707, Irradix Bits: 44224, L1 Bits: 35856, Benchmark Bits: 44656, % Expansion: -0.97%, L1 % Expansion: -19.71%
+Original Test 55: Seq Len: 815, Irradix Bits: 49008, L1 Bits: 39896, Benchmark Bits: 50129, % Expansion: -2.24%, L1 % Expansion: -20.41%
+Original Test 56: Seq Len: 974, Irradix Bits: 63624, L1 Bits: 51656, Benchmark Bits: 64108, % Expansion: -0.75%, L1 % Expansion: -19.42%
+Original Test 57: Seq Len: 130, Irradix Bits: 7504, L1 Bits: 6152, Benchmark Bits: 7811, % Expansion: -3.93%, L1 % Expansion: -21.24%
+Original Test 58: Seq Len: 153, Irradix Bits: 9400, L1 Bits: 7664, Benchmark Bits: 9556, % Expansion: -1.63%, L1 % Expansion: -19.80%
+Original Test 59: Seq Len: 598, Irradix Bits: 37616, L1 Bits: 30544, Benchmark Bits: 38124, % Expansion: -1.33%, L1 % Expansion: -19.88%
+Original Test 60: Seq Len: 146, Irradix Bits: 9568, L1 Bits: 7712, Benchmark Bits: 9550, % Expansion: 0.19%, L1 % Expansion: -19.25%
+Original Test 61: Seq Len: 224, Irradix Bits: 15944, L1 Bits: 12920, Benchmark Bits: 16003, % Expansion: -0.37%, L1 % Expansion: -19.27%
+Original Test 62: Seq Len: 486, Irradix Bits: 30560, L1 Bits: 24888, Benchmark Bits: 30922, % Expansion: -1.17%, L1 % Expansion: -19.51%
+Original Test 63: Seq Len: 891, Irradix Bits: 57224, L1 Bits: 46408, Benchmark Bits: 57775, % Expansion: -0.95%, L1 % Expansion: -19.67%
+Original Test 64: Seq Len: 759, Irradix Bits: 49360, L1 Bits: 40072, Benchmark Bits: 49870, % Expansion: -1.02%, L1 % Expansion: -19.65%
+Original Test 65: Seq Len: 210, Irradix Bits: 12496, L1 Bits: 10160, Benchmark Bits: 12623, % Expansion: -1.01%, L1 % Expansion: -19.51%
+Original Test 66: Seq Len: 445, Irradix Bits: 29312, L1 Bits: 23632, Benchmark Bits: 29475, % Expansion: -0.55%, L1 % Expansion: -19.82%
+Original Test 67: Seq Len: 308, Irradix Bits: 20232, L1 Bits: 16464, Benchmark Bits: 20428, % Expansion: -0.96%, L1 % Expansion: -19.40%
+Original Test 68: Seq Len: 833, Irradix Bits: 52872, L1 Bits: 43056, Benchmark Bits: 53459, % Expansion: -1.10%, L1 % Expansion: -19.46%
+Original Test 69: Seq Len: 249, Irradix Bits: 14824, L1 Bits: 12040, Benchmark Bits: 15047, % Expansion: -1.48%, L1 % Expansion: -19.98%
+Original Test 70: Seq Len: 297, Irradix Bits: 20112, L1 Bits: 16320, Benchmark Bits: 20290, % Expansion: -0.88%, L1 % Expansion: -19.57%
+Original Test 71: Seq Len: 197, Irradix Bits: 13560, L1 Bits: 11008, Benchmark Bits: 13598, % Expansion: -0.28%, L1 % Expansion: -19.05%
+Original Test 72: Seq Len: 593, Irradix Bits: 37752, L1 Bits: 30736, Benchmark Bits: 38406, % Expansion: -1.70%, L1 % Expansion: -19.97%
+Original Test 73: Seq Len: 176, Irradix Bits: 11792, L1 Bits: 9552, Benchmark Bits: 11838, % Expansion: -0.39%, L1 % Expansion: -19.31%
+Original Test 74: Seq Len: 106, Irradix Bits: 6880, L1 Bits: 5624, Benchmark Bits: 7046, % Expansion: -2.36%, L1 % Expansion: -20.18%
+Original Test 75: Seq Len: 637, Irradix Bits: 39208, L1 Bits: 31928, Benchmark Bits: 39790, % Expansion: -1.46%, L1 % Expansion: -19.76%
+Original Test 76: Seq Len: 124, Irradix Bits: 7248, L1 Bits: 5936, Benchmark Bits: 7437, % Expansion: -2.54%, L1 % Expansion: -20.18%
+Original Test 77: Seq Len: 668, Irradix Bits: 42080, L1 Bits: 34168, Benchmark Bits: 42430, % Expansion: -0.82%, L1 % Expansion: -19.47%
+Original Test 78: Seq Len: 229, Irradix Bits: 15056, L1 Bits: 12280, Benchmark Bits: 15260, % Expansion: -1.34%, L1 % Expansion: -19.53%
+Original Test 79: Seq Len: 441, Irradix Bits: 27472, L1 Bits: 22384, Benchmark Bits: 27774, % Expansion: -1.09%, L1 % Expansion: -19.41%
+Original Test 80: Seq Len: 441, Irradix Bits: 27944, L1 Bits: 22672, Benchmark Bits: 28310, % Expansion: -1.29%, L1 % Expansion: -19.92%
+Original Test 81: Seq Len: 462, Irradix Bits: 28856, L1 Bits: 23408, Benchmark Bits: 29097, % Expansion: -0.83%, L1 % Expansion: -19.55%
+Original Test 82: Seq Len: 489, Irradix Bits: 32672, L1 Bits: 26536, Benchmark Bits: 32863, % Expansion: -0.58%, L1 % Expansion: -19.25%
+Original Test 83: Seq Len: 611, Irradix Bits: 39432, L1 Bits: 31968, Benchmark Bits: 39673, % Expansion: -0.61%, L1 % Expansion: -19.42%
+Original Test 84: Seq Len: 357, Irradix Bits: 24056, L1 Bits: 19400, Benchmark Bits: 23980, % Expansion: 0.32%, L1 % Expansion: -19.10%
+Original Test 85: Seq Len: 160, Irradix Bits: 11080, L1 Bits: 8992, Benchmark Bits: 11153, % Expansion: -0.65%, L1 % Expansion: -19.38%
+Original Test 86: Seq Len: 618, Irradix Bits: 38416, L1 Bits: 31352, Benchmark Bits: 39145, % Expansion: -1.86%, L1 % Expansion: -19.91%
+Original Test 87: Seq Len: 915, Irradix Bits: 57936, L1 Bits: 47088, Benchmark Bits: 58561, % Expansion: -1.07%, L1 % Expansion: -19.59%
+Original Test 88: Seq Len: 835, Irradix Bits: 53800, L1 Bits: 43608, Benchmark Bits: 54247, % Expansion: -0.82%, L1 % Expansion: -19.61%
+Original Test 89: Seq Len: 325, Irradix Bits: 20896, L1 Bits: 16992, Benchmark Bits: 21271, % Expansion: -1.76%, L1 % Expansion: -20.12%
+Original Test 90: Seq Len: 245, Irradix Bits: 15096, L1 Bits: 12296, Benchmark Bits: 15336, % Expansion: -1.56%, L1 % Expansion: -19.82%
+Original Test 91: Seq Len: 834, Irradix Bits: 54072, L1 Bits: 43800, Benchmark Bits: 54654, % Expansion: -1.06%, L1 % Expansion: -19.86%
+Original Test 92: Seq Len: 112, Irradix Bits: 6224, L1 Bits: 5112, Benchmark Bits: 6333, % Expansion: -1.72%, L1 % Expansion: -19.28%
+Original Test 93: Seq Len: 772, Irradix Bits: 49592, L1 Bits: 40312, Benchmark Bits: 50210, % Expansion: -1.23%, L1 % Expansion: -19.71%
+Original Test 94: Seq Len: 752, Irradix Bits: 49384, L1 Bits: 40016, Benchmark Bits: 49687, % Expansion: -0.61%, L1 % Expansion: -19.46%
+Original Test 95: Seq Len: 977, Irradix Bits: 61944, L1 Bits: 50264, Benchmark Bits: 62391, % Expansion: -0.72%, L1 % Expansion: -19.44%
+Original Test 96: Seq Len: 537, Irradix Bits: 33824, L1 Bits: 27424, Benchmark Bits: 34202, % Expansion: -1.11%, L1 % Expansion: -19.82%
+Original Test 97: Seq Len: 878, Irradix Bits: 55968, L1 Bits: 45472, Benchmark Bits: 56668, % Expansion: -1.24%, L1 % Expansion: -19.76%
+Original Test 98: Seq Len: 335, Irradix Bits: 21288, L1 Bits: 17352, Benchmark Bits: 21607, % Expansion: -1.48%, L1 % Expansion: -19.69%
+Original Test 99: Seq Len: 832, Irradix Bits: 52600, L1 Bits: 42664, Benchmark Bits: 52993, % Expansion: -0.74%, L1 % Expansion: -19.49%
+Original Test 100: Seq Len: 563, Irradix Bits: 33200, L1 Bits: 27184, Benchmark Bits: 34119, % Expansion: -2.69%, L1 % Expansion: -20.33%
+
+Original Summary Statistics (Original):
+Average % Expansion: -1.10%
+Median % Expansion: -1.08%
+Min % Expansion: -5.18%
+Max % Expansion: 1.89%
+
+Min Expansion Sequence (Original):
+Seq Len: 189, Irradix Bits: 11088, Benchmark Bits: 11694, % Expansion: -5.18%
+Sequence: [3358330053, 76450999076919329621453, 926482859355, 724, 75547182279179154296269007607, 45220419743904, 742034544436, 0, 0, 0, 35728399360610871280839529, 153095721, 3131586493901018142214139, 335252323839, 695167753076, 730893, 0, 96621908, 94840216679084386774, 0, 0, 2, 872956235682420251216288212850, 7364324, 0, 41379632, 118580807, 5345836939, 3, 6975230933666613571, 9, 49385037810, 38898361612217315181381315242164, 7279990443053049499704075416813, 50150236121, 345908813674695052073584676, 727336664, 5508130281990926, 2451196569485877, 5152725254, 7152048963, 83752806226, 2013481764557405315280825883, 4792283353, 64000934401641790056036299289, 0, 0, 97040539, 50416120722674981781, 12012, 247521957929076, 0, 4027757166032682890781284632, 0, 0, 0, 807396632970682, 0, 0, 8241931875034667290, 0, 7922177160984396862066186002, 70905324353491883, 21407433917453610890101, 113604497038356, 0, 0, 192237093285165, 1043, 3655496376989686619682168448, 86467055498959, 44681157003646410, 1848415957763866305312, 101296708838781665989301, 92689602, 4174068009754051378238, 1593343610, 1578715987200751203760449841, 1222, 195855842137126886, 44068926935972766482951087301, 4751582, 0, 318507529860, 0, 0, 0, 1867502430207414, 0, 3166221243411, 5693941, 0, 976884822385454821501179209, 52803893620004112184, 697370166844519091, 40389024193044, 8388317320673445, 62, 3818521139134224518, 704928133045001284976903219, 7048510464797390, 0, 5405, 681368929315194821, 9829541552553922449583222, 10113951124010, 0, 1990020, 83821791990212207702217585870662, 43446583, 4634548, 9325944, 32831056175698089904992, 0, 92643504626977986, 93109497307794, 51772234, 0, 409578, 343916, 53674202, 0, 0, 4374480841, 429218, 0, 65354209172690215339, 3466472468036233, 29581, 3070943472, 889387862832436802850, 88823732343075575, 65407406859, 55677681638183955568, 946321, 17320144, 76725754624, 68584001865593949, 35912328739644301, 0, 0, 137742, 0, 7876074272445329431960301, 0, 0, 26887764205614098430164, 9945286664540372619, 187804157518175632532, 505345370481116951, 83, 88899983120845092, 7045924324566077135701830519515, 4489269096699263187807730746830, 85795105969501846321, 63476544891568, 89278066211552425873707, 748929629, 484741653772, 4524, 82054317200587, 0, 4968868570610572818824, 46653870969050709, 8445155, 53220663421375, 5260794339693250051716025484, 1675731901, 612481, 5913656547, 0, 88, 1, 750353283498, 18, 29113771322244405082145679803796, 0, 65154243997678297499887, 655, 0, 3178321752174, 146429024, 2411536766404803, 5198, 0, 0, 676626, 215, 79343482362637]
+
+Max Expansion Sequence (Original):
+Seq Len: 168, Irradix Bits: 11200, Benchmark Bits: 10992, % Expansion: 1.89%
+Sequence: [84285234958413975663011, 361295877271951761657884448, 83958860974181339715897985415615, 670033, 0, 39414891626, 1630732174993175116815, 1585127944910806, 3765154105179320026476512, 399, 811405626567932595, 95, 64025778433625378969825, 52, 0, 18747246356384660624430, 30716732829684948507, 0, 0, 7, 8535994904659893950453470311970, 258331810951, 0, 0, 0, 0, 19095290847499386058, 19040694961120630573436407015523, 493755007584983803, 504, 2794355976622924945860967103456, 7354507615824567353899545, 23321747830265583903768, 741, 5062, 0, 0, 4, 493592, 4923, 0, 0, 0, 0, 45560114157074684307045721457, 969158267576305499204671341267, 0, 213344283143180, 2323828765208906331, 2658292042, 0, 7648669915138531211719814209933, 2601565131599754629554255464226, 505852150560414673247829797552, 576861008498, 20027775205520949883, 0, 0, 643086854, 1515760378213465776286244296547, 492665219292329178886925780, 599532423187141649, 37541, 1507735783, 26, 740695213844938602682928055775, 22499314170634235815271772703173, 0, 865978149982096377511252688254, 23361214801585187885262, 68, 56932362885536876380847, 4806604891809188, 8233549679221142, 511201982900574866, 16713940, 76281559919421670821501240, 0, 34320083056600528649773939439, 5, 2248980259672394266316034963, 42493549155649, 0, 6427626287, 4609353717612196, 0, 667664311057129706192575614431, 8472604481669771496, 920346693136925393478022, 0, 1855, 0, 1441322223033054919138, 0, 339, 471077564868, 2856164493897085718199766691, 36088301515, 215586, 0, 49117941481579949384142, 0, 0, 35573135158322253328650, 20194554037147125, 0, 151, 0, 398249106572361647675971507757, 0, 0, 643972886641524129, 7564367118902310207, 936760810252842464807992, 3715149794004, 838979, 90874420745083574455, 6652518506415775847782902164, 7933059449526899008, 0, 0, 36017183719204029985044, 967038179010222, 0, 7346867090096871551, 48193757568327662153354, 13276215228038, 11126739797850141064534350, 0, 650851325061, 0, 7017039664792154, 0, 546913554394810095586867567, 4, 8139859285581735229539228252896, 383, 887617316477455015, 311814630378694870236, 1917105054535910443988321553, 850718764498055541619910733556, 0, 552593702802409157790, 8072296426396423934, 0, 0, 26461105499841101, 0, 42302121736910905, 600, 14149697047227022747290, 9944, 2592, 1194893980684627906266889247871, 0, 529, 97830715320524104910146, 90229394344467116582335977272, 391055638, 0, 8919967090824522296183947822, 43630714265209089017565, 0, 580404423617264456666444101, 0, 19786091525738643987174516542, 55165609628475740997213377, 14574153607040]
+
+Original Summary Statistics (L1):
+Average % Expansion: -19.67%
+Median % Expansion: -19.63%
+Min % Expansion: -21.87%
+Max % Expansion: -17.98%
+
+Min Expansion Sequence (L1):
+Seq Len: 189, L1 Bits: 9136, Benchmark Bits: 11694, % Expansion: -21.87%
+Sequence: [3358330053, 76450999076919329621453, 926482859355, 724, 75547182279179154296269007607, 45220419743904, 742034544436, 0, 0, 0, 35728399360610871280839529, 153095721, 3131586493901018142214139, 335252323839, 695167753076, 730893, 0, 96621908, 94840216679084386774, 0, 0, 2, 872956235682420251216288212850, 7364324, 0, 41379632, 118580807, 5345836939, 3, 6975230933666613571, 9, 49385037810, 38898361612217315181381315242164, 7279990443053049499704075416813, 50150236121, 345908813674695052073584676, 727336664, 5508130281990926, 2451196569485877, 5152725254, 7152048963, 83752806226, 2013481764557405315280825883, 4792283353, 64000934401641790056036299289, 0, 0, 97040539, 50416120722674981781, 12012, 247521957929076, 0, 4027757166032682890781284632, 0, 0, 0, 807396632970682, 0, 0, 8241931875034667290, 0, 7922177160984396862066186002, 70905324353491883, 21407433917453610890101, 113604497038356, 0, 0, 192237093285165, 1043, 3655496376989686619682168448, 86467055498959, 44681157003646410, 1848415957763866305312, 101296708838781665989301, 92689602, 4174068009754051378238, 1593343610, 1578715987200751203760449841, 1222, 195855842137126886, 44068926935972766482951087301, 4751582, 0, 318507529860, 0, 0, 0, 1867502430207414, 0, 3166221243411, 5693941, 0, 976884822385454821501179209, 52803893620004112184, 697370166844519091, 40389024193044, 8388317320673445, 62, 3818521139134224518, 704928133045001284976903219, 7048510464797390, 0, 5405, 681368929315194821, 9829541552553922449583222, 10113951124010, 0, 1990020, 83821791990212207702217585870662, 43446583, 4634548, 9325944, 32831056175698089904992, 0, 92643504626977986, 93109497307794, 51772234, 0, 409578, 343916, 53674202, 0, 0, 4374480841, 429218, 0, 65354209172690215339, 3466472468036233, 29581, 3070943472, 889387862832436802850, 88823732343075575, 65407406859, 55677681638183955568, 946321, 17320144, 76725754624, 68584001865593949, 35912328739644301, 0, 0, 137742, 0, 7876074272445329431960301, 0, 0, 26887764205614098430164, 9945286664540372619, 187804157518175632532, 505345370481116951, 83, 88899983120845092, 7045924324566077135701830519515, 4489269096699263187807730746830, 85795105969501846321, 63476544891568, 89278066211552425873707, 748929629, 484741653772, 4524, 82054317200587, 0, 4968868570610572818824, 46653870969050709, 8445155, 53220663421375, 5260794339693250051716025484, 1675731901, 612481, 5913656547, 0, 88, 1, 750353283498, 18, 29113771322244405082145679803796, 0, 65154243997678297499887, 655, 0, 3178321752174, 146429024, 2411536766404803, 5198, 0, 0, 676626, 215, 79343482362637]
+
+Max Expansion Sequence (L1):
+Seq Len: 168, L1 Bits: 9016, Benchmark Bits: 10992, % Expansion: -17.98%
+Sequence: [84285234958413975663011, 361295877271951761657884448, 83958860974181339715897985415615, 670033, 0, 39414891626, 1630732174993175116815, 1585127944910806, 3765154105179320026476512, 399, 811405626567932595, 95, 64025778433625378969825, 52, 0, 18747246356384660624430, 30716732829684948507, 0, 0, 7, 8535994904659893950453470311970, 258331810951, 0, 0, 0, 0, 19095290847499386058, 19040694961120630573436407015523, 493755007584983803, 504, 2794355976622924945860967103456, 7354507615824567353899545, 23321747830265583903768, 741, 5062, 0, 0, 4, 493592, 4923, 0, 0, 0, 0, 45560114157074684307045721457, 969158267576305499204671341267, 0, 213344283143180, 2323828765208906331, 2658292042, 0, 7648669915138531211719814209933, 2601565131599754629554255464226, 505852150560414673247829797552, 576861008498, 20027775205520949883, 0, 0, 643086854, 1515760378213465776286244296547, 492665219292329178886925780, 599532423187141649, 37541, 1507735783, 26, 740695213844938602682928055775, 22499314170634235815271772703173, 0, 865978149982096377511252688254, 23361214801585187885262, 68, 56932362885536876380847, 4806604891809188, 8233549679221142, 511201982900574866, 16713940, 76281559919421670821501240, 0, 34320083056600528649773939439, 5, 2248980259672394266316034963, 42493549155649, 0, 6427626287, 4609353717612196, 0, 667664311057129706192575614431, 8472604481669771496, 920346693136925393478022, 0, 1855, 0, 1441322223033054919138, 0, 339, 471077564868, 2856164493897085718199766691, 36088301515, 215586, 0, 49117941481579949384142, 0, 0, 35573135158322253328650, 20194554037147125, 0, 151, 0, 398249106572361647675971507757, 0, 0, 643972886641524129, 7564367118902310207, 936760810252842464807992, 3715149794004, 838979, 90874420745083574455, 6652518506415775847782902164, 7933059449526899008, 0, 0, 36017183719204029985044, 967038179010222, 0, 7346867090096871551, 48193757568327662153354, 13276215228038, 11126739797850141064534350, 0, 650851325061, 0, 7017039664792154, 0, 546913554394810095586867567, 4, 8139859285581735229539228252896, 383, 887617316477455015, 311814630378694870236, 1917105054535910443988321553, 850718764498055541619910733556, 0, 552593702802409157790, 8072296426396423934, 0, 0, 26461105499841101, 0, 42302121736910905, 600, 14149697047227022747290, 9944, 2592, 1194893980684627906266889247871, 0, 529, 97830715320524104910146, 90229394344467116582335977272, 391055638, 0, 8919967090824522296183947822, 43630714265209089017565, 0, 580404423617264456666444101, 0, 19786091525738643987174516542, 55165609628475740997213377, 14574153607040]
+
+Running 16-bit Test (L1 Variants)...
+16-bit Test 1: Seq Len: 851, Irradix Bits: 21536, L1 Bits: 22568, Benchmark Bits: 31268, % Expansion: -31.12%, L1 % Expansion: -27.82%
+16-bit Test 2: Seq Len: 150, Irradix Bits: 3816, L1 Bits: 4000, Benchmark Bits: 5518, % Expansion: -30.84%, L1 % Expansion: -27.51%
+16-bit Test 3: Seq Len: 888, Irradix Bits: 22368, L1 Bits: 23312, Benchmark Bits: 32256, % Expansion: -30.65%, L1 % Expansion: -27.73%
+16-bit Test 4: Seq Len: 811, Irradix Bits: 20544, L1 Bits: 21352, Benchmark Bits: 29851, % Expansion: -31.18%, L1 % Expansion: -28.47%
+16-bit Test 5: Seq Len: 449, Irradix Bits: 11280, L1 Bits: 11872, Benchmark Bits: 16380, % Expansion: -31.14%, L1 % Expansion: -27.52%
+16-bit Test 6: Seq Len: 554, Irradix Bits: 14008, L1 Bits: 14592, Benchmark Bits: 20158, % Expansion: -30.51%, L1 % Expansion: -27.61%
+16-bit Test 7: Seq Len: 157, Irradix Bits: 4032, L1 Bits: 4168, Benchmark Bits: 5816, % Expansion: -30.67%, L1 % Expansion: -28.34%
+16-bit Test 8: Seq Len: 204, Irradix Bits: 5168, L1 Bits: 5408, Benchmark Bits: 7498, % Expansion: -31.07%, L1 % Expansion: -27.87%
+16-bit Test 9: Seq Len: 779, Irradix Bits: 19736, L1 Bits: 20656, Benchmark Bits: 28776, % Expansion: -31.42%, L1 % Expansion: -28.22%
+16-bit Test 10: Seq Len: 201, Irradix Bits: 5112, L1 Bits: 5304, Benchmark Bits: 7310, % Expansion: -30.07%, L1 % Expansion: -27.44%
+16-bit Test 11: Seq Len: 953, Irradix Bits: 24216, L1 Bits: 25168, Benchmark Bits: 34976, % Expansion: -30.76%, L1 % Expansion: -28.04%
+16-bit Test 12: Seq Len: 709, Irradix Bits: 17872, L1 Bits: 18616, Benchmark Bits: 25811, % Expansion: -30.76%, L1 % Expansion: -27.88%
+16-bit Test 13: Seq Len: 974, Irradix Bits: 24536, L1 Bits: 25536, Benchmark Bits: 35494, % Expansion: -30.87%, L1 % Expansion: -28.06%
+16-bit Test 14: Seq Len: 457, Irradix Bits: 11560, L1 Bits: 12064, Benchmark Bits: 16748, % Expansion: -30.98%, L1 % Expansion: -27.97%
+16-bit Test 15: Seq Len: 386, Irradix Bits: 9936, L1 Bits: 10208, Benchmark Bits: 14194, % Expansion: -30.00%, L1 % Expansion: -28.08%
+16-bit Test 16: Seq Len: 776, Irradix Bits: 19728, L1 Bits: 20648, Benchmark Bits: 28548, % Expansion: -30.90%, L1 % Expansion: -27.67%
+16-bit Test 17: Seq Len: 825, Irradix Bits: 20896, L1 Bits: 21760, Benchmark Bits: 30280, % Expansion: -30.99%, L1 % Expansion: -28.14%
+16-bit Test 18: Seq Len: 504, Irradix Bits: 12872, L1 Bits: 13456, Benchmark Bits: 18648, % Expansion: -30.97%, L1 % Expansion: -27.84%
+16-bit Test 19: Seq Len: 614, Irradix Bits: 15696, L1 Bits: 16176, Benchmark Bits: 22543, % Expansion: -30.37%, L1 % Expansion: -28.24%
+16-bit Test 20: Seq Len: 943, Irradix Bits: 23968, L1 Bits: 25000, Benchmark Bits: 34669, % Expansion: -30.87%, L1 % Expansion: -27.89%
+16-bit Test 21: Seq Len: 142, Irradix Bits: 3632, L1 Bits: 3816, Benchmark Bits: 5237, % Expansion: -30.65%, L1 % Expansion: -27.13%
+16-bit Test 22: Seq Len: 754, Irradix Bits: 19144, L1 Bits: 19832, Benchmark Bits: 27588, % Expansion: -30.61%, L1 % Expansion: -28.11%
+16-bit Test 23: Seq Len: 749, Irradix Bits: 19032, L1 Bits: 19896, Benchmark Bits: 27635, % Expansion: -31.13%, L1 % Expansion: -28.00%
+16-bit Test 24: Seq Len: 418, Irradix Bits: 10664, L1 Bits: 11104, Benchmark Bits: 15392, % Expansion: -30.72%, L1 % Expansion: -27.86%
+16-bit Test 25: Seq Len: 509, Irradix Bits: 12904, L1 Bits: 13504, Benchmark Bits: 18786, % Expansion: -31.31%, L1 % Expansion: -28.12%
+16-bit Test 26: Seq Len: 687, Irradix Bits: 17464, L1 Bits: 18224, Benchmark Bits: 25279, % Expansion: -30.91%, L1 % Expansion: -27.91%
+16-bit Test 27: Seq Len: 347, Irradix Bits: 8776, L1 Bits: 9136, Benchmark Bits: 12733, % Expansion: -31.08%, L1 % Expansion: -28.25%
+16-bit Test 28: Seq Len: 263, Irradix Bits: 6608, L1 Bits: 6880, Benchmark Bits: 9567, % Expansion: -30.93%, L1 % Expansion: -28.09%
+16-bit Test 29: Seq Len: 662, Irradix Bits: 16704, L1 Bits: 17504, Benchmark Bits: 24241, % Expansion: -31.09%, L1 % Expansion: -27.79%
+16-bit Test 30: Seq Len: 164, Irradix Bits: 4128, L1 Bits: 4304, Benchmark Bits: 6069, % Expansion: -31.98%, L1 % Expansion: -29.08%
+16-bit Test 31: Seq Len: 308, Irradix Bits: 7880, L1 Bits: 8232, Benchmark Bits: 11457, % Expansion: -31.22%, L1 % Expansion: -28.15%
+16-bit Test 32: Seq Len: 496, Irradix Bits: 12624, L1 Bits: 13064, Benchmark Bits: 18100, % Expansion: -30.25%, L1 % Expansion: -27.82%
+16-bit Test 33: Seq Len: 694, Irradix Bits: 17584, L1 Bits: 18256, Benchmark Bits: 25413, % Expansion: -30.81%, L1 % Expansion: -28.16%
+16-bit Test 34: Seq Len: 893, Irradix Bits: 22728, L1 Bits: 23680, Benchmark Bits: 32881, % Expansion: -30.88%, L1 % Expansion: -27.98%
+16-bit Test 35: Seq Len: 226, Irradix Bits: 5704, L1 Bits: 5920, Benchmark Bits: 8220, % Expansion: -30.61%, L1 % Expansion: -27.98%
+16-bit Test 36: Seq Len: 290, Irradix Bits: 7416, L1 Bits: 7752, Benchmark Bits: 10758, % Expansion: -31.07%, L1 % Expansion: -27.94%
+16-bit Test 37: Seq Len: 200, Irradix Bits: 5160, L1 Bits: 5352, Benchmark Bits: 7498, % Expansion: -31.18%, L1 % Expansion: -28.62%
+16-bit Test 38: Seq Len: 150, Irradix Bits: 3808, L1 Bits: 3960, Benchmark Bits: 5533, % Expansion: -31.18%, L1 % Expansion: -28.43%
+16-bit Test 39: Seq Len: 746, Irradix Bits: 18808, L1 Bits: 19600, Benchmark Bits: 27220, % Expansion: -30.90%, L1 % Expansion: -27.99%
+16-bit Test 40: Seq Len: 139, Irradix Bits: 3544, L1 Bits: 3640, Benchmark Bits: 5102, % Expansion: -30.54%, L1 % Expansion: -28.66%
+16-bit Test 41: Seq Len: 694, Irradix Bits: 17640, L1 Bits: 18488, Benchmark Bits: 25522, % Expansion: -30.88%, L1 % Expansion: -27.56%
+16-bit Test 42: Seq Len: 524, Irradix Bits: 13248, L1 Bits: 13832, Benchmark Bits: 19149, % Expansion: -30.82%, L1 % Expansion: -27.77%
+16-bit Test 43: Seq Len: 954, Irradix Bits: 24200, L1 Bits: 25336, Benchmark Bits: 35352, % Expansion: -31.55%, L1 % Expansion: -28.33%
+16-bit Test 44: Seq Len: 206, Irradix Bits: 5192, L1 Bits: 5456, Benchmark Bits: 7562, % Expansion: -31.34%, L1 % Expansion: -27.85%
+16-bit Test 45: Seq Len: 534, Irradix Bits: 13576, L1 Bits: 14120, Benchmark Bits: 19598, % Expansion: -30.73%, L1 % Expansion: -27.95%
+16-bit Test 46: Seq Len: 449, Irradix Bits: 11400, L1 Bits: 11856, Benchmark Bits: 16407, % Expansion: -30.52%, L1 % Expansion: -27.74%
+16-bit Test 47: Seq Len: 440, Irradix Bits: 11088, L1 Bits: 11528, Benchmark Bits: 15960, % Expansion: -30.53%, L1 % Expansion: -27.77%
+16-bit Test 48: Seq Len: 315, Irradix Bits: 7912, L1 Bits: 8184, Benchmark Bits: 11386, % Expansion: -30.51%, L1 % Expansion: -28.12%
+16-bit Test 49: Seq Len: 127, Irradix Bits: 3232, L1 Bits: 3360, Benchmark Bits: 4711, % Expansion: -31.39%, L1 % Expansion: -28.68%
+16-bit Test 50: Seq Len: 723, Irradix Bits: 18368, L1 Bits: 19264, Benchmark Bits: 26729, % Expansion: -31.28%, L1 % Expansion: -27.93%
+16-bit Test 51: Seq Len: 313, Irradix Bits: 7920, L1 Bits: 8288, Benchmark Bits: 11572, % Expansion: -31.56%, L1 % Expansion: -28.38%
+16-bit Test 52: Seq Len: 840, Irradix Bits: 21328, L1 Bits: 22192, Benchmark Bits: 30802, % Expansion: -30.76%, L1 % Expansion: -27.95%
+16-bit Test 53: Seq Len: 326, Irradix Bits: 8328, L1 Bits: 8680, Benchmark Bits: 12070, % Expansion: -31.00%, L1 % Expansion: -28.09%
+16-bit Test 54: Seq Len: 263, Irradix Bits: 6672, L1 Bits: 6912, Benchmark Bits: 9530, % Expansion: -29.99%, L1 % Expansion: -27.47%
+16-bit Test 55: Seq Len: 322, Irradix Bits: 8216, L1 Bits: 8552, Benchmark Bits: 11941, % Expansion: -31.20%, L1 % Expansion: -28.38%
+16-bit Test 56: Seq Len: 752, Irradix Bits: 19176, L1 Bits: 19936, Benchmark Bits: 27722, % Expansion: -30.83%, L1 % Expansion: -28.09%
+16-bit Test 57: Seq Len: 486, Irradix Bits: 12304, L1 Bits: 12856, Benchmark Bits: 17659, % Expansion: -30.32%, L1 % Expansion: -27.20%
+16-bit Test 58: Seq Len: 417, Irradix Bits: 10488, L1 Bits: 10968, Benchmark Bits: 15187, % Expansion: -30.94%, L1 % Expansion: -27.78%
+16-bit Test 59: Seq Len: 127, Irradix Bits: 3248, L1 Bits: 3400, Benchmark Bits: 4764, % Expansion: -31.82%, L1 % Expansion: -28.63%
+16-bit Test 60: Seq Len: 207, Irradix Bits: 5200, L1 Bits: 5432, Benchmark Bits: 7539, % Expansion: -31.03%, L1 % Expansion: -27.95%
+16-bit Test 61: Seq Len: 200, Irradix Bits: 4976, L1 Bits: 5192, Benchmark Bits: 7162, % Expansion: -30.52%, L1 % Expansion: -27.51%
+16-bit Test 62: Seq Len: 278, Irradix Bits: 7008, L1 Bits: 7360, Benchmark Bits: 10165, % Expansion: -31.06%, L1 % Expansion: -27.59%
+16-bit Test 63: Seq Len: 782, Irradix Bits: 19712, L1 Bits: 20544, Benchmark Bits: 28395, % Expansion: -30.58%, L1 % Expansion: -27.65%
+16-bit Test 64: Seq Len: 605, Irradix Bits: 15320, L1 Bits: 15984, Benchmark Bits: 22255, % Expansion: -31.16%, L1 % Expansion: -28.18%
+16-bit Test 65: Seq Len: 151, Irradix Bits: 3784, L1 Bits: 3920, Benchmark Bits: 5430, % Expansion: -30.31%, L1 % Expansion: -27.81%
+16-bit Test 66: Seq Len: 161, Irradix Bits: 4096, L1 Bits: 4304, Benchmark Bits: 5974, % Expansion: -31.44%, L1 % Expansion: -27.95%
+16-bit Test 67: Seq Len: 994, Irradix Bits: 25248, L1 Bits: 26248, Benchmark Bits: 36496, % Expansion: -30.82%, L1 % Expansion: -28.08%
+16-bit Test 68: Seq Len: 499, Irradix Bits: 12744, L1 Bits: 13408, Benchmark Bits: 18630, % Expansion: -31.59%, L1 % Expansion: -28.03%
+16-bit Test 69: Seq Len: 544, Irradix Bits: 13864, L1 Bits: 14472, Benchmark Bits: 20214, % Expansion: -31.41%, L1 % Expansion: -28.41%
+16-bit Test 70: Seq Len: 851, Irradix Bits: 21568, L1 Bits: 22440, Benchmark Bits: 31218, % Expansion: -30.91%, L1 % Expansion: -28.12%
+16-bit Test 71: Seq Len: 992, Irradix Bits: 25160, L1 Bits: 26160, Benchmark Bits: 36519, % Expansion: -31.10%, L1 % Expansion: -28.37%
+16-bit Test 72: Seq Len: 938, Irradix Bits: 23808, L1 Bits: 24712, Benchmark Bits: 34397, % Expansion: -30.78%, L1 % Expansion: -28.16%
+16-bit Test 73: Seq Len: 684, Irradix Bits: 17424, L1 Bits: 18128, Benchmark Bits: 25196, % Expansion: -30.85%, L1 % Expansion: -28.05%
+16-bit Test 74: Seq Len: 775, Irradix Bits: 19496, L1 Bits: 20344, Benchmark Bits: 28206, % Expansion: -30.88%, L1 % Expansion: -27.87%
+16-bit Test 75: Seq Len: 108, Irradix Bits: 2760, L1 Bits: 2888, Benchmark Bits: 4075, % Expansion: -32.27%, L1 % Expansion: -29.13%
+16-bit Test 76: Seq Len: 815, Irradix Bits: 20696, L1 Bits: 21520, Benchmark Bits: 29896, % Expansion: -30.77%, L1 % Expansion: -28.02%
+16-bit Test 77: Seq Len: 730, Irradix Bits: 18608, L1 Bits: 19304, Benchmark Bits: 26916, % Expansion: -30.87%, L1 % Expansion: -28.28%
+16-bit Test 78: Seq Len: 663, Irradix Bits: 16776, L1 Bits: 17480, Benchmark Bits: 24184, % Expansion: -30.63%, L1 % Expansion: -27.72%
+16-bit Test 79: Seq Len: 301, Irradix Bits: 7608, L1 Bits: 7872, Benchmark Bits: 10994, % Expansion: -30.80%, L1 % Expansion: -28.40%
+16-bit Test 80: Seq Len: 970, Irradix Bits: 24528, L1 Bits: 25720, Benchmark Bits: 35507, % Expansion: -30.92%, L1 % Expansion: -27.56%
+16-bit Test 81: Seq Len: 551, Irradix Bits: 14008, L1 Bits: 14704, Benchmark Bits: 20479, % Expansion: -31.60%, L1 % Expansion: -28.20%
+16-bit Test 82: Seq Len: 879, Irradix Bits: 22248, L1 Bits: 23032, Benchmark Bits: 32103, % Expansion: -30.70%, L1 % Expansion: -28.26%
+16-bit Test 83: Seq Len: 673, Irradix Bits: 16928, L1 Bits: 17688, Benchmark Bits: 24493, % Expansion: -30.89%, L1 % Expansion: -27.78%
+16-bit Test 84: Seq Len: 120, Irradix Bits: 3064, L1 Bits: 3200, Benchmark Bits: 4428, % Expansion: -30.80%, L1 % Expansion: -27.73%
+16-bit Test 85: Seq Len: 357, Irradix Bits: 9000, L1 Bits: 9368, Benchmark Bits: 13055, % Expansion: -31.06%, L1 % Expansion: -28.24%
+16-bit Test 86: Seq Len: 528, Irradix Bits: 13424, L1 Bits: 14032, Benchmark Bits: 19489, % Expansion: -31.12%, L1 % Expansion: -28.00%
+16-bit Test 87: Seq Len: 420, Irradix Bits: 10584, L1 Bits: 11064, Benchmark Bits: 15354, % Expansion: -31.07%, L1 % Expansion: -27.94%
+16-bit Test 88: Seq Len: 530, Irradix Bits: 13360, L1 Bits: 13832, Benchmark Bits: 19267, % Expansion: -30.66%, L1 % Expansion: -28.21%
+16-bit Test 89: Seq Len: 582, Irradix Bits: 14864, L1 Bits: 15416, Benchmark Bits: 21404, % Expansion: -30.56%, L1 % Expansion: -27.98%
+16-bit Test 90: Seq Len: 517, Irradix Bits: 13080, L1 Bits: 13680, Benchmark Bits: 18955, % Expansion: -30.99%, L1 % Expansion: -27.83%
+16-bit Test 91: Seq Len: 582, Irradix Bits: 14776, L1 Bits: 15368, Benchmark Bits: 21364, % Expansion: -30.84%, L1 % Expansion: -28.07%
+16-bit Test 92: Seq Len: 687, Irradix Bits: 17360, L1 Bits: 18128, Benchmark Bits: 25143, % Expansion: -30.95%, L1 % Expansion: -27.90%
+16-bit Test 93: Seq Len: 271, Irradix Bits: 6952, L1 Bits: 7168, Benchmark Bits: 10035, % Expansion: -30.72%, L1 % Expansion: -28.57%
+16-bit Test 94: Seq Len: 951, Irradix Bits: 24224, L1 Bits: 25144, Benchmark Bits: 35014, % Expansion: -30.82%, L1 % Expansion: -28.19%
+16-bit Test 95: Seq Len: 340, Irradix Bits: 8616, L1 Bits: 8944, Benchmark Bits: 12375, % Expansion: -30.38%, L1 % Expansion: -27.73%
+16-bit Test 96: Seq Len: 500, Irradix Bits: 12672, L1 Bits: 13320, Benchmark Bits: 18629, % Expansion: -31.98%, L1 % Expansion: -28.50%
+16-bit Test 97: Seq Len: 860, Irradix Bits: 21992, L1 Bits: 22976, Benchmark Bits: 31802, % Expansion: -30.85%, L1 % Expansion: -27.75%
+16-bit Test 98: Seq Len: 322, Irradix Bits: 8120, L1 Bits: 8520, Benchmark Bits: 11768, % Expansion: -31.00%, L1 % Expansion: -27.60%
+16-bit Test 99: Seq Len: 168, Irradix Bits: 4216, L1 Bits: 4384, Benchmark Bits: 6073, % Expansion: -30.58%, L1 % Expansion: -27.81%
+16-bit Test 100: Seq Len: 362, Irradix Bits: 9224, L1 Bits: 9640, Benchmark Bits: 13439, % Expansion: -31.36%, L1 % Expansion: -28.27%
+
+16-bit Summary Statistics (Original):
+Average % Expansion: -30.93%
+Median % Expansion: -30.88%
+Min % Expansion: -32.27%
+Max % Expansion: -29.99%
+
+Min Expansion Sequence (Original):
+Seq Len: 108, Irradix Bits: 2760, Benchmark Bits: 4075, % Expansion: -32.27%
+Sequence: [62912, 37960, 4094, 25966, 26587, 25888, 41479, 42951, 47466, 59082, 4634, 18450, 29777, 14796, 1063, 19010, 52043, 25510, 26739, 15126, 51033, 39825, 41963, 59787, 56262, 19512, 55822, 36614, 25959, 16932, 39929, 46286, 10594, 50156, 25468, 188, 56960, 23860, 21853, 43959, 64020, 62629, 48717, 4777, 23858, 18632, 43312, 56058, 54298, 45217, 58507, 18531, 20640, 38748, 50861, 48173, 13113, 50203, 58777, 22278, 10529, 320, 60635, 27065, 26508, 37511, 26933, 19834, 61696, 50192, 28995, 10133, 16500, 5098, 23991, 31011, 26205, 62011, 49384, 8889, 59237, 62253, 45417, 19459, 11007, 6299, 33497, 12872, 30917, 29033, 31915, 57115, 29227, 45459, 11945, 55422, 42734, 61401, 16569, 11609, 61402, 40109, 20107, 60843, 38492, 51500, 41437, 34664]
+
+Max Expansion Sequence (Original):
+Seq Len: 263, Irradix Bits: 6672, Benchmark Bits: 9530, % Expansion: -29.99%
+Sequence: [44403, 4747, 28055, 44231, 34623, 65474, 11370, 54472, 26824, 41939, 25398, 59615, 28011, 62321, 14695, 641, 38891, 46373, 3517, 59305, 20130, 19504, 9846, 5231, 6027, 59672, 55806, 55744, 39357, 41891, 24193, 51464, 22632, 14646, 33897, 16122, 8498, 61622, 47749, 46283, 19218, 19715, 47994, 43877, 45865, 4406, 54633, 31151, 48700, 4762, 38214, 63940, 12038, 53250, 38891, 2682, 64773, 29855, 21336, 0, 22731, 6312, 30986, 4652, 0, 46895, 52073, 33818, 13287, 36784, 64515, 9955, 33772, 12574, 36440, 62464, 54980, 43723, 14872, 44814, 21835, 14784, 5846, 38388, 63819, 33407, 33035, 39788, 16121, 50454, 40284, 3985, 22728, 55482, 42226, 7649, 16886, 27640, 57480, 34643, 28651, 9427, 2971, 42619, 11818, 42105, 17556, 14718, 52100, 47689, 6023, 21530, 57062, 55643, 52037, 43786, 11818, 16707, 55026, 601, 28616, 62375, 51811, 11886, 26865, 62959, 13813, 63959, 58185, 36638, 61474, 11379, 41790, 6608, 16975, 45460, 3284, 53873, 30736, 25963, 9476, 6576, 6950, 61321, 20195, 13825, 14039, 18105, 42121, 60024, 31114, 12246, 55168, 24926, 22963, 12588, 4234, 5641, 18531, 1638, 16320, 60610, 63122, 33827, 19019, 31455, 50393, 27068, 11573, 46399, 12005, 65024, 19392, 31848, 22000, 13620, 0, 26327, 38395, 39775, 34639, 42735, 6719, 38749, 35857, 20413, 17523, 13877, 57132, 43756, 18533, 48482, 39283, 21431, 41758, 19586, 65354, 24775, 47352, 9604, 34213, 31648, 60542, 61620, 36064, 11591, 13517, 28277, 57004, 13533, 52092, 42007, 2420, 2249, 51520, 51361, 24627, 24564, 7897, 47281, 6858, 8240, 16139, 9088, 9909, 14461, 42896, 44796, 63078, 36090, 48534, 6854, 17244, 6877, 59496, 16372, 31603, 57127, 44902, 3959, 20762, 40734, 4556, 41451, 44740, 29955, 18283, 53267, 60673, 60961, 6196, 31201, 7660, 43445, 15254, 1958, 54593, 806, 63993, 38470, 15237, 63393, 41187]
+
+16-bit Summary Statistics (L1):
+Average % Expansion: -28.01%
+Median % Expansion: -27.99%
+Min % Expansion: -29.13%
+Max % Expansion: -27.13%
+
+Min Expansion Sequence (L1):
+Seq Len: 108, L1 Bits: 2888, Benchmark Bits: 4075, % Expansion: -29.13%
+Sequence: [62912, 37960, 4094, 25966, 26587, 25888, 41479, 42951, 47466, 59082, 4634, 18450, 29777, 14796, 1063, 19010, 52043, 25510, 26739, 15126, 51033, 39825, 41963, 59787, 56262, 19512, 55822, 36614, 25959, 16932, 39929, 46286, 10594, 50156, 25468, 188, 56960, 23860, 21853, 43959, 64020, 62629, 48717, 4777, 23858, 18632, 43312, 56058, 54298, 45217, 58507, 18531, 20640, 38748, 50861, 48173, 13113, 50203, 58777, 22278, 10529, 320, 60635, 27065, 26508, 37511, 26933, 19834, 61696, 50192, 28995, 10133, 16500, 5098, 23991, 31011, 26205, 62011, 49384, 8889, 59237, 62253, 45417, 19459, 11007, 6299, 33497, 12872, 30917, 29033, 31915, 57115, 29227, 45459, 11945, 55422, 42734, 61401, 16569, 11609, 61402, 40109, 20107, 60843, 38492, 51500, 41437, 34664]
+
+Max Expansion Sequence (L1):
+Seq Len: 142, L1 Bits: 3816, Benchmark Bits: 5237, % Expansion: -27.13%
+Sequence: [22646, 38457, 13572, 22505, 20093, 33424, 8, 39844, 3196, 52278, 56884, 63087, 39602, 57917, 62062, 59369, 8084, 18849, 50039, 19192, 63072, 57645, 8867, 41335, 18798, 32658, 56621, 17401, 6115, 306, 46687, 31424, 25578, 6, 9336, 61848, 59249, 28061, 10105, 63804, 49443, 32579, 15811, 22534, 46126, 7322, 29360, 49668, 58568, 32801, 4265, 58178, 47136, 48063, 53298, 61718, 8294, 49543, 22089, 40303, 46517, 14327, 61286, 11696, 60668, 40239, 60146, 2305, 46391, 60061, 44722, 64377, 28689, 23418, 50062, 23645, 37248, 52762, 34997, 63874, 21884, 4720, 3789, 25255, 3815, 24050, 5156, 10281, 5437, 45827, 25551, 15872, 60234, 44072, 64354, 49460, 47244, 8348, 30814, 15244, 35611, 14235, 41006, 59935, 39647, 61604, 23103, 32120, 39741, 17781, 40559, 39601, 42332, 2846, 58247, 45540, 53513, 34489, 53118, 37421, 15825, 45206, 41817, 25046, 2956, 20362, 43526, 4448, 31316, 14765, 50478, 51560, 36701, 11756, 38394, 44984, 17977, 57703, 52914, 34910, 8806, 6868]
+
+Running 1 Million Test (L1 Variants)...
+1 Million Test 1: Seq Len: 791, Irradix Bits: 24736, L1 Bits: 23016, Benchmark Bits: 33878, % Expansion: -26.99%, L1 % Expansion: -32.06%
+1 Million Test 2: Seq Len: 793, Irradix Bits: 24592, L1 Bits: 22968, Benchmark Bits: 33909, % Expansion: -27.48%, L1 % Expansion: -32.27%
+1 Million Test 3: Seq Len: 571, Irradix Bits: 17760, L1 Bits: 16632, Benchmark Bits: 24450, % Expansion: -27.36%, L1 % Expansion: -31.98%
+1 Million Test 4: Seq Len: 320, Irradix Bits: 9968, L1 Bits: 9328, Benchmark Bits: 13699, % Expansion: -27.24%, L1 % Expansion: -31.91%
+1 Million Test 5: Seq Len: 596, Irradix Bits: 18624, L1 Bits: 17328, Benchmark Bits: 25522, % Expansion: -27.03%, L1 % Expansion: -32.11%
+1 Million Test 6: Seq Len: 166, Irradix Bits: 5176, L1 Bits: 4824, Benchmark Bits: 7093, % Expansion: -27.03%, L1 % Expansion: -31.99%
+1 Million Test 7: Seq Len: 409, Irradix Bits: 12800, L1 Bits: 11912, Benchmark Bits: 17571, % Expansion: -27.15%, L1 % Expansion: -32.21%
+1 Million Test 8: Seq Len: 480, Irradix Bits: 14896, L1 Bits: 13928, Benchmark Bits: 20527, % Expansion: -27.43%, L1 % Expansion: -32.15%
+1 Million Test 9: Seq Len: 910, Irradix Bits: 28288, L1 Bits: 26352, Benchmark Bits: 38832, % Expansion: -27.15%, L1 % Expansion: -32.14%
+1 Million Test 10: Seq Len: 274, Irradix Bits: 8552, L1 Bits: 7952, Benchmark Bits: 11722, % Expansion: -27.04%, L1 % Expansion: -32.16%
+1 Million Test 11: Seq Len: 471, Irradix Bits: 14752, L1 Bits: 13744, Benchmark Bits: 20234, % Expansion: -27.09%, L1 % Expansion: -32.07%
+1 Million Test 12: Seq Len: 435, Irradix Bits: 13600, L1 Bits: 12664, Benchmark Bits: 18650, % Expansion: -27.08%, L1 % Expansion: -32.10%
+1 Million Test 13: Seq Len: 787, Irradix Bits: 24512, L1 Bits: 22832, Benchmark Bits: 33609, % Expansion: -27.07%, L1 % Expansion: -32.07%
+1 Million Test 14: Seq Len: 453, Irradix Bits: 14152, L1 Bits: 13176, Benchmark Bits: 19394, % Expansion: -27.03%, L1 % Expansion: -32.06%
+1 Million Test 15: Seq Len: 975, Irradix Bits: 30592, L1 Bits: 28408, Benchmark Bits: 41871, % Expansion: -26.94%, L1 % Expansion: -32.15%
+1 Million Test 16: Seq Len: 156, Irradix Bits: 4824, L1 Bits: 4528, Benchmark Bits: 6688, % Expansion: -27.87%, L1 % Expansion: -32.30%
+1 Million Test 17: Seq Len: 978, Irradix Bits: 30456, L1 Bits: 28464, Benchmark Bits: 41924, % Expansion: -27.35%, L1 % Expansion: -32.11%
+1 Million Test 18: Seq Len: 864, Irradix Bits: 27032, L1 Bits: 25120, Benchmark Bits: 37003, % Expansion: -26.95%, L1 % Expansion: -32.11%
+1 Million Test 19: Seq Len: 244, Irradix Bits: 7600, L1 Bits: 7104, Benchmark Bits: 10460, % Expansion: -27.34%, L1 % Expansion: -32.08%
+1 Million Test 20: Seq Len: 409, Irradix Bits: 12752, L1 Bits: 11936, Benchmark Bits: 17549, % Expansion: -27.33%, L1 % Expansion: -31.98%
+1 Million Test 21: Seq Len: 242, Irradix Bits: 7592, L1 Bits: 7064, Benchmark Bits: 10387, % Expansion: -26.91%, L1 % Expansion: -31.99%
+1 Million Test 22: Seq Len: 741, Irradix Bits: 23112, L1 Bits: 21552, Benchmark Bits: 31749, % Expansion: -27.20%, L1 % Expansion: -32.12%
+1 Million Test 23: Seq Len: 425, Irradix Bits: 13256, L1 Bits: 12360, Benchmark Bits: 18187, % Expansion: -27.11%, L1 % Expansion: -32.04%
+1 Million Test 24: Seq Len: 921, Irradix Bits: 28760, L1 Bits: 26816, Benchmark Bits: 39454, % Expansion: -27.10%, L1 % Expansion: -32.03%
+1 Million Test 25: Seq Len: 538, Irradix Bits: 16816, L1 Bits: 15656, Benchmark Bits: 23019, % Expansion: -26.95%, L1 % Expansion: -31.99%
+1 Million Test 26: Seq Len: 842, Irradix Bits: 26176, L1 Bits: 24432, Benchmark Bits: 36005, % Expansion: -27.30%, L1 % Expansion: -32.14%
+1 Million Test 27: Seq Len: 822, Irradix Bits: 25672, L1 Bits: 23912, Benchmark Bits: 35231, % Expansion: -27.13%, L1 % Expansion: -32.13%
+1 Million Test 28: Seq Len: 628, Irradix Bits: 19552, L1 Bits: 18264, Benchmark Bits: 26857, % Expansion: -27.20%, L1 % Expansion: -32.00%
+1 Million Test 29: Seq Len: 419, Irradix Bits: 13032, L1 Bits: 12208, Benchmark Bits: 17967, % Expansion: -27.47%, L1 % Expansion: -32.05%
+1 Million Test 30: Seq Len: 885, Irradix Bits: 27664, L1 Bits: 25736, Benchmark Bits: 37945, % Expansion: -27.09%, L1 % Expansion: -32.18%
+1 Million Test 31: Seq Len: 274, Irradix Bits: 8560, L1 Bits: 8000, Benchmark Bits: 11774, % Expansion: -27.30%, L1 % Expansion: -32.05%
+1 Million Test 32: Seq Len: 739, Irradix Bits: 23192, L1 Bits: 21520, Benchmark Bits: 31711, % Expansion: -26.86%, L1 % Expansion: -32.14%
+1 Million Test 33: Seq Len: 408, Irradix Bits: 12784, L1 Bits: 11840, Benchmark Bits: 17476, % Expansion: -26.85%, L1 % Expansion: -32.25%
+1 Million Test 34: Seq Len: 137, Irradix Bits: 4280, L1 Bits: 3992, Benchmark Bits: 5885, % Expansion: -27.27%, L1 % Expansion: -32.17%
+1 Million Test 35: Seq Len: 533, Irradix Bits: 16560, L1 Bits: 15480, Benchmark Bits: 22779, % Expansion: -27.30%, L1 % Expansion: -32.04%
+1 Million Test 36: Seq Len: 691, Irradix Bits: 21560, L1 Bits: 20136, Benchmark Bits: 29616, % Expansion: -27.20%, L1 % Expansion: -32.01%
+1 Million Test 37: Seq Len: 278, Irradix Bits: 8672, L1 Bits: 8056, Benchmark Bits: 11882, % Expansion: -27.02%, L1 % Expansion: -32.20%
+1 Million Test 38: Seq Len: 504, Irradix Bits: 15760, L1 Bits: 14664, Benchmark Bits: 21547, % Expansion: -26.86%, L1 % Expansion: -31.94%
+1 Million Test 39: Seq Len: 744, Irradix Bits: 23152, L1 Bits: 21624, Benchmark Bits: 31855, % Expansion: -27.32%, L1 % Expansion: -32.12%
+1 Million Test 40: Seq Len: 362, Irradix Bits: 11232, L1 Bits: 10480, Benchmark Bits: 15442, % Expansion: -27.26%, L1 % Expansion: -32.13%
+1 Million Test 41: Seq Len: 577, Irradix Bits: 17936, L1 Bits: 16728, Benchmark Bits: 24654, % Expansion: -27.25%, L1 % Expansion: -32.15%
+1 Million Test 42: Seq Len: 213, Irradix Bits: 6560, L1 Bits: 6136, Benchmark Bits: 9044, % Expansion: -27.47%, L1 % Expansion: -32.15%
+1 Million Test 43: Seq Len: 817, Irradix Bits: 25352, L1 Bits: 23744, Benchmark Bits: 34971, % Expansion: -27.51%, L1 % Expansion: -32.10%
+1 Million Test 44: Seq Len: 631, Irradix Bits: 19672, L1 Bits: 18320, Benchmark Bits: 27011, % Expansion: -27.17%, L1 % Expansion: -32.18%
+1 Million Test 45: Seq Len: 307, Irradix Bits: 9560, L1 Bits: 8928, Benchmark Bits: 13128, % Expansion: -27.18%, L1 % Expansion: -31.99%
+1 Million Test 46: Seq Len: 441, Irradix Bits: 13752, L1 Bits: 12824, Benchmark Bits: 18912, % Expansion: -27.28%, L1 % Expansion: -32.19%
+1 Million Test 47: Seq Len: 334, Irradix Bits: 10320, L1 Bits: 9664, Benchmark Bits: 14237, % Expansion: -27.51%, L1 % Expansion: -32.12%
+1 Million Test 48: Seq Len: 814, Irradix Bits: 25448, L1 Bits: 23656, Benchmark Bits: 34801, % Expansion: -26.88%, L1 % Expansion: -32.02%
+1 Million Test 49: Seq Len: 755, Irradix Bits: 23480, L1 Bits: 21944, Benchmark Bits: 32326, % Expansion: -27.36%, L1 % Expansion: -32.12%
+1 Million Test 50: Seq Len: 682, Irradix Bits: 21256, L1 Bits: 19872, Benchmark Bits: 29273, % Expansion: -27.39%, L1 % Expansion: -32.11%
+1 Million Test 51: Seq Len: 899, Irradix Bits: 28040, L1 Bits: 26168, Benchmark Bits: 38482, % Expansion: -27.13%, L1 % Expansion: -32.00%
+1 Million Test 52: Seq Len: 544, Irradix Bits: 17000, L1 Bits: 15808, Benchmark Bits: 23310, % Expansion: -27.07%, L1 % Expansion: -32.18%
+1 Million Test 53: Seq Len: 517, Irradix Bits: 16240, L1 Bits: 15024, Benchmark Bits: 22193, % Expansion: -26.82%, L1 % Expansion: -32.30%
+1 Million Test 54: Seq Len: 291, Irradix Bits: 9000, L1 Bits: 8440, Benchmark Bits: 12401, % Expansion: -27.43%, L1 % Expansion: -31.94%
+1 Million Test 55: Seq Len: 972, Irradix Bits: 30080, L1 Bits: 28200, Benchmark Bits: 41525, % Expansion: -27.56%, L1 % Expansion: -32.09%
+1 Million Test 56: Seq Len: 441, Irradix Bits: 13752, L1 Bits: 12824, Benchmark Bits: 18909, % Expansion: -27.27%, L1 % Expansion: -32.18%
+1 Million Test 57: Seq Len: 719, Irradix Bits: 22384, L1 Bits: 20920, Benchmark Bits: 30783, % Expansion: -27.28%, L1 % Expansion: -32.04%
+1 Million Test 58: Seq Len: 583, Irradix Bits: 18216, L1 Bits: 16944, Benchmark Bits: 24989, % Expansion: -27.10%, L1 % Expansion: -32.19%
+1 Million Test 59: Seq Len: 895, Irradix Bits: 27752, L1 Bits: 25960, Benchmark Bits: 38261, % Expansion: -27.47%, L1 % Expansion: -32.15%
+1 Million Test 60: Seq Len: 927, Irradix Bits: 28928, L1 Bits: 26944, Benchmark Bits: 39766, % Expansion: -27.25%, L1 % Expansion: -32.24%
+1 Million Test 61: Seq Len: 519, Irradix Bits: 16376, L1 Bits: 15144, Benchmark Bits: 22316, % Expansion: -26.62%, L1 % Expansion: -32.14%
+1 Million Test 62: Seq Len: 632, Irradix Bits: 19776, L1 Bits: 18368, Benchmark Bits: 27113, % Expansion: -27.06%, L1 % Expansion: -32.25%
+1 Million Test 63: Seq Len: 509, Irradix Bits: 15816, L1 Bits: 14792, Benchmark Bits: 21758, % Expansion: -27.31%, L1 % Expansion: -32.02%
+1 Million Test 64: Seq Len: 907, Irradix Bits: 28296, L1 Bits: 26408, Benchmark Bits: 38880, % Expansion: -27.22%, L1 % Expansion: -32.08%
+1 Million Test 65: Seq Len: 983, Irradix Bits: 30544, L1 Bits: 28552, Benchmark Bits: 42024, % Expansion: -27.32%, L1 % Expansion: -32.06%
+1 Million Test 66: Seq Len: 928, Irradix Bits: 29080, L1 Bits: 27016, Benchmark Bits: 39808, % Expansion: -26.95%, L1 % Expansion: -32.13%
+1 Million Test 67: Seq Len: 134, Irradix Bits: 4240, L1 Bits: 3912, Benchmark Bits: 5763, % Expansion: -26.43%, L1 % Expansion: -32.12%
+1 Million Test 68: Seq Len: 800, Irradix Bits: 24840, L1 Bits: 23168, Benchmark Bits: 34053, % Expansion: -27.05%, L1 % Expansion: -31.96%
+1 Million Test 69: Seq Len: 673, Irradix Bits: 20992, L1 Bits: 19560, Benchmark Bits: 28836, % Expansion: -27.20%, L1 % Expansion: -32.17%
+1 Million Test 70: Seq Len: 438, Irradix Bits: 13728, L1 Bits: 12752, Benchmark Bits: 18781, % Expansion: -26.90%, L1 % Expansion: -32.10%
+1 Million Test 71: Seq Len: 255, Irradix Bits: 8016, L1 Bits: 7416, Benchmark Bits: 10928, % Expansion: -26.65%, L1 % Expansion: -32.14%
+1 Million Test 72: Seq Len: 972, Irradix Bits: 30416, L1 Bits: 28280, Benchmark Bits: 41690, % Expansion: -27.04%, L1 % Expansion: -32.17%
+1 Million Test 73: Seq Len: 990, Irradix Bits: 30896, L1 Bits: 28800, Benchmark Bits: 42420, % Expansion: -27.17%, L1 % Expansion: -32.11%
+1 Million Test 74: Seq Len: 700, Irradix Bits: 21776, L1 Bits: 20296, Benchmark Bits: 29894, % Expansion: -27.16%, L1 % Expansion: -32.11%
+1 Million Test 75: Seq Len: 786, Irradix Bits: 24608, L1 Bits: 22904, Benchmark Bits: 33676, % Expansion: -26.93%, L1 % Expansion: -31.99%
+1 Million Test 76: Seq Len: 930, Irradix Bits: 28984, L1 Bits: 26984, Benchmark Bits: 39795, % Expansion: -27.17%, L1 % Expansion: -32.19%
+1 Million Test 77: Seq Len: 278, Irradix Bits: 8712, L1 Bits: 8104, Benchmark Bits: 11948, % Expansion: -27.08%, L1 % Expansion: -32.17%
+1 Million Test 78: Seq Len: 527, Irradix Bits: 16504, L1 Bits: 15336, Benchmark Bits: 22586, % Expansion: -26.93%, L1 % Expansion: -32.10%
+1 Million Test 79: Seq Len: 944, Irradix Bits: 29400, L1 Bits: 27408, Benchmark Bits: 40376, % Expansion: -27.18%, L1 % Expansion: -32.12%
+1 Million Test 80: Seq Len: 513, Irradix Bits: 16040, L1 Bits: 14920, Benchmark Bits: 21982, % Expansion: -27.03%, L1 % Expansion: -32.13%
+1 Million Test 81: Seq Len: 369, Irradix Bits: 11448, L1 Bits: 10728, Benchmark Bits: 15783, % Expansion: -27.47%, L1 % Expansion: -32.03%
+1 Million Test 82: Seq Len: 522, Irradix Bits: 16288, L1 Bits: 15232, Benchmark Bits: 22400, % Expansion: -27.29%, L1 % Expansion: -32.00%
+1 Million Test 83: Seq Len: 271, Irradix Bits: 8448, L1 Bits: 7896, Benchmark Bits: 11598, % Expansion: -27.16%, L1 % Expansion: -31.92%
+1 Million Test 84: Seq Len: 914, Irradix Bits: 28384, L1 Bits: 26552, Benchmark Bits: 39098, % Expansion: -27.40%, L1 % Expansion: -32.09%
+1 Million Test 85: Seq Len: 521, Irradix Bits: 16344, L1 Bits: 15152, Benchmark Bits: 22342, % Expansion: -26.85%, L1 % Expansion: -32.18%
+1 Million Test 86: Seq Len: 100, Irradix Bits: 3112, L1 Bits: 2912, Benchmark Bits: 4271, % Expansion: -27.14%, L1 % Expansion: -31.82%
+1 Million Test 87: Seq Len: 190, Irradix Bits: 5928, L1 Bits: 5536, Benchmark Bits: 8162, % Expansion: -27.37%, L1 % Expansion: -32.17%
+1 Million Test 88: Seq Len: 252, Irradix Bits: 7856, L1 Bits: 7312, Benchmark Bits: 10765, % Expansion: -27.02%, L1 % Expansion: -32.08%
+1 Million Test 89: Seq Len: 387, Irradix Bits: 12024, L1 Bits: 11248, Benchmark Bits: 16560, % Expansion: -27.39%, L1 % Expansion: -32.08%
+1 Million Test 90: Seq Len: 551, Irradix Bits: 17184, L1 Bits: 16008, Benchmark Bits: 23611, % Expansion: -27.22%, L1 % Expansion: -32.20%
+1 Million Test 91: Seq Len: 995, Irradix Bits: 31168, L1 Bits: 28952, Benchmark Bits: 42650, % Expansion: -26.92%, L1 % Expansion: -32.12%
+1 Million Test 92: Seq Len: 860, Irradix Bits: 26720, L1 Bits: 24968, Benchmark Bits: 36759, % Expansion: -27.31%, L1 % Expansion: -32.08%
+1 Million Test 93: Seq Len: 946, Irradix Bits: 29520, L1 Bits: 27456, Benchmark Bits: 40505, % Expansion: -27.12%, L1 % Expansion: -32.22%
+1 Million Test 94: Seq Len: 760, Irradix Bits: 23688, L1 Bits: 22088, Benchmark Bits: 32527, % Expansion: -27.17%, L1 % Expansion: -32.09%
+1 Million Test 95: Seq Len: 532, Irradix Bits: 16680, L1 Bits: 15512, Benchmark Bits: 22851, % Expansion: -27.01%, L1 % Expansion: -32.12%
+1 Million Test 96: Seq Len: 416, Irradix Bits: 12952, L1 Bits: 12072, Benchmark Bits: 17802, % Expansion: -27.24%, L1 % Expansion: -32.19%
+1 Million Test 97: Seq Len: 799, Irradix Bits: 24832, L1 Bits: 23192, Benchmark Bits: 34179, % Expansion: -27.35%, L1 % Expansion: -32.15%
+1 Million Test 98: Seq Len: 203, Irradix Bits: 6320, L1 Bits: 5912, Benchmark Bits: 8677, % Expansion: -27.16%, L1 % Expansion: -31.87%
+1 Million Test 99: Seq Len: 838, Irradix Bits: 26208, L1 Bits: 24344, Benchmark Bits: 35865, % Expansion: -26.93%, L1 % Expansion: -32.12%
+1 Million Test 100: Seq Len: 405, Irradix Bits: 12720, L1 Bits: 11816, Benchmark Bits: 17388, % Expansion: -26.85%, L1 % Expansion: -32.05%
+
+1 Million Summary Statistics (Original):
+Average % Expansion: -27.16%
+Median % Expansion: -27.17%
+Min % Expansion: -27.87%
+Max % Expansion: -26.43%
+
+Min Expansion Sequence (Original):
+Seq Len: 156, Irradix Bits: 4824, Benchmark Bits: 6688, % Expansion: -27.87%
+Sequence: [259588, 208496, 786927, 792557, 230517, 265071, 197906, 652590, 74756, 948512, 195614, 295288, 826620, 668523, 157125, 444562, 202100, 575174, 423870, 206487, 16995, 180903, 61984, 613294, 745848, 643778, 491984, 455732, 764308, 496661, 756826, 829559, 270302, 449423, 586383, 143264, 134258, 986168, 859898, 581318, 662160, 680190, 529054, 875924, 476259, 458011, 857345, 330083, 489491, 519145, 957833, 903409, 666443, 144334, 594805, 512941, 34572, 368199, 449673, 525672, 102077, 489754, 264996, 610765, 48705, 317487, 311118, 530583, 538655, 918315, 980648, 517273, 324590, 976691, 229529, 173839, 43139, 280465, 691973, 342300, 135873, 408367, 289208, 166177, 403533, 597320, 121042, 144619, 516249, 646577, 783724, 646529, 216286, 756311, 85051, 27784, 547512, 554934, 336662, 726568, 211430, 901971, 289732, 71510, 812190, 204878, 422016, 304892, 241196, 465998, 15053, 748993, 627112, 339503, 449564, 675752, 152830, 775169, 571397, 399427, 347097, 105430, 645151, 402377, 588671, 327177, 727286, 224650, 446185, 28641, 442505, 636883, 969126, 568597, 269723, 339565, 627100, 206740, 737391, 201335, 437534, 123554, 858986, 378803, 958898, 367553, 480524, 93144, 78113, 943547, 492498, 218160, 595879, 537266, 123797, 568532]
+
+Max Expansion Sequence (Original):
+Seq Len: 134, Irradix Bits: 4240, Benchmark Bits: 5763, % Expansion: -26.43%
+Sequence: [940354, 629985, 274824, 670122, 975904, 143301, 372257, 683948, 15956, 517101, 809864, 134977, 518491, 479209, 976367, 442449, 777452, 214480, 439783, 559645, 904824, 815760, 38690, 791919, 80544, 851170, 334030, 324302, 636379, 894081, 173802, 23856, 708327, 438895, 546950, 187110, 732104, 955947, 241062, 151965, 455700, 998215, 450011, 698649, 852943, 143212, 992551, 106359, 405127, 81012, 805756, 469559, 684993, 595360, 899752, 341520, 695015, 558789, 116296, 497072, 576363, 538646, 857920, 822007, 421382, 66451, 286975, 912719, 151742, 618227, 585839, 258271, 841466, 151958, 208323, 430513, 106718, 159814, 935914, 438206, 846300, 808922, 356518, 962972, 127169, 920112, 459234, 245868, 890585, 8034, 484423, 624916, 837732, 918207, 993427, 427988, 660337, 756681, 500823, 464095, 995561, 358242, 192409, 415589, 474386, 436887, 315265, 371695, 117848, 792982, 169218, 592523, 796911, 653889, 790023, 994390, 718724, 328646, 546952, 450625, 885605, 461698, 936260, 829203, 883584, 815433, 181718, 735652, 776078, 152363, 584901, 558134, 637622, 717747]
+
+1 Million Summary Statistics (L1):
+Average % Expansion: -32.10%
+Median % Expansion: -32.11%
+Min % Expansion: -32.30%
+Max % Expansion: -31.82%
+
+Min Expansion Sequence (L1):
+Seq Len: 517, L1 Bits: 15024, Benchmark Bits: 22193, % Expansion: -32.30%
+Sequence: [365289, 576685, 602560, 247612, 142707, 532605, 175786, 729895, 798655, 228958, 733089, 620232, 292976, 868300, 200299, 716185, 864654, 654110, 453460, 914822, 867058, 584180, 685207, 928319, 197320, 276905, 242217, 820883, 760315, 93852, 133279, 527812, 96179, 182858, 192261, 883466, 906582, 560433, 28124, 417949, 218409, 790026, 166978, 549192, 252731, 924073, 70152, 146982, 963263, 283596, 83020, 614479, 116366, 595082, 909775, 120277, 996549, 507608, 764489, 955055, 279703, 999102, 873498, 451068, 604042, 564828, 5127, 567020, 381443, 377717, 52755, 492487, 852982, 670953, 411596, 956553, 450382, 446733, 260780, 400529, 273767, 828185, 937724, 663858, 968845, 81183, 958612, 125440, 98119, 192830, 902528, 338328, 77636, 398220, 647587, 138616, 690788, 716758, 895423, 434647, 258408, 140335, 359739, 622757, 96559, 980993, 113382, 991954, 497813, 367339, 664462, 562617, 116501, 516137, 547588, 1589, 426945, 155727, 294188, 420566, 125976, 280018, 160859, 987120, 962776, 563263, 77381, 102609, 31088, 925286, 301880, 415294, 87323, 751794, 164700, 923834, 249056, 250906, 550990, 659505, 980820, 762238, 977182, 351594, 299007, 378787, 673659, 994556, 719404, 667413, 858761, 370758, 121155, 767700, 369357, 708639, 285653, 499285, 797025, 458415, 796396, 887635, 959583, 392912, 660654, 681336, 509068, 499812, 695106, 143305, 707244, 670859, 815601, 992301, 503159, 960304, 872023, 409690, 458295, 962106, 681731, 605061, 898277, 225507, 992703, 804010, 857991, 196199, 954114, 176494, 371105, 270966, 273060, 207030, 345284, 827990, 833115, 813320, 197773, 435723, 384534, 23796, 392840, 26726, 644187, 162953, 927757, 251085, 669041, 874259, 550578, 942010, 636096, 961300, 362410, 78524, 897255, 766710, 173870, 524479, 372759, 300547, 791140, 861922, 878379, 377731, 60330, 911242, 438789, 446488, 529631, 643347, 428512, 476961, 315102, 297770, 789535, 751006, 115127, 654382, 452490, 454509, 933004, 788846, 283545, 562730, 118218, 829352, 213971, 942211, 696255, 190548, 404936, 610205, 735746, 135901, 59501, 817827, 421911, 720047, 309496, 18211, 422966, 939688, 381777, 929850, 610727, 898976, 320379, 85407, 410239, 176319, 519685, 683484, 980043, 551231, 430418, 187184, 162282, 596904, 744620, 677849, 495428, 780295, 366718, 573391, 175049, 834744, 839523, 634622, 573555, 588333, 631190, 514690, 199527, 201176, 201183, 493460, 699433, 818159, 6520, 869093, 210706, 786240, 487008, 547752, 779866, 220354, 977179, 72612, 798958, 618551, 296499, 523223, 180551, 52897, 908109, 772006, 491099, 909257, 99712, 838789, 375952, 130271, 840237, 276308, 883380, 713499, 265421, 916591, 16690, 708822, 318722, 638618, 762247, 873712, 921762, 761834, 686428, 786355, 393920, 87274, 233262, 676783, 25779, 612185, 28852, 286486, 198927, 998844, 392020, 297504, 297782, 889243, 152250, 874806, 122402, 943122, 617979, 488105, 679597, 390169, 611392, 209201, 599712, 889180, 138740, 327192, 414272, 110909, 360999, 143342, 856989, 545739, 145271, 151243, 24090, 117522, 610606, 459058, 235713, 970067, 214553, 932280, 388035, 219313, 436940, 37280, 691033, 629738, 944687, 53882, 493250, 540515, 181641, 659359, 466819, 412725, 506038, 94047, 921079, 428936, 780108, 187519, 667802, 206353, 638378, 642464, 837707, 76980, 133337, 622739, 647201, 408395, 480380, 91790, 541888, 828335, 513349, 580891, 80138, 992391, 430389, 714179, 640938, 476191, 450738, 305822, 865807, 688809, 796490, 563367, 240767, 4064, 97550, 522474, 924296, 294332, 724851, 589358, 977038, 565519, 664537, 698800, 572643, 83017, 474744, 12027, 585998, 665088, 201553, 756413, 236699, 546102, 150831, 985081, 809664, 955699, 575778, 379864, 740489, 738122, 801672, 324738, 222848, 855800, 604210, 413357, 587427, 228564, 76114, 679417, 848010, 720055, 721530, 16317, 899071, 362425, 505052, 564407, 847305, 813023, 384000, 258645, 313494, 911156, 835679, 521848, 915283, 612829, 103948, 329619, 105421, 735333, 983647, 908130, 32132, 219601, 254987, 235291, 853767, 966056, 915596, 737604, 711992, 902159, 304929, 612719, 47877, 388158, 893618, 606068, 830976, 86400, 373298, 514703, 393000]
+
+Max Expansion Sequence (L1):
+Seq Len: 100, L1 Bits: 2912, Benchmark Bits: 4271, % Expansion: -31.82%
+Sequence: [487169, 871815, 694714, 571179, 711830, 805102, 669348, 726484, 765992, 717737, 804336, 373928, 282073, 920965, 905791, 335056, 918612, 780720, 783108, 476839, 871469, 535894, 956576, 535554, 856348, 356938, 49746, 548306, 229652, 59989, 710044, 973562, 577837, 862470, 520596, 831670, 137115, 351751, 38812, 137825, 327905, 956158, 712036, 450600, 216708, 48523, 207534, 13270, 973035, 71688, 228474, 799284, 75661, 755749, 98890, 457264, 197057, 207700, 674845, 384336, 398661, 266673, 757379, 553473, 523645, 931526, 406463, 364371, 631640, 8464, 93492, 633871, 335151, 244059, 531630, 397342, 413913, 179529, 321733, 432307, 881626, 659111, 236915, 882019, 752698, 28315, 124690, 89223, 249148, 102883, 45001, 505697, 767734, 593864, 18783, 682185, 954857, 522023, 237189, 896905]
