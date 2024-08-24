@@ -7,7 +7,7 @@ set_precision(100)  # enough to cover the 32 digits below
 
 # Generate a random integer with logarithmic bias
 def generate_random_integer():
-    if random.random() < 0.25:
+    if random.random() < 0.05:
         return 0
     # Generate a random number of digits
     num_digits = random.randint(1, 32)

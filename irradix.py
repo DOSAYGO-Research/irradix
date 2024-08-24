@@ -5,6 +5,7 @@ from mpmath import mp, mpf, sqrt, floor, ceil, log, log10
 current_bigphi_dps = 100
 mp.dps = current_bigphi_dps
 _bigphi_value = (mpf(1) + sqrt(mpf(5))) / 2
+delim = '1010101'
 
 # Getter for BigPHI in VALS
 def get_bigphi():
@@ -93,7 +94,7 @@ def derradix(rep):
 
     return int(num * S)
 
-def encode(nums):
+def encode(nums, bits=False):
     encoded_list = []
     for num in nums:
         binary_rep = irradix((num + 1) * 2)
@@ -111,8 +112,12 @@ def encode(nums):
     if DEBUG:
         print(f"Concatenated Sequence Before Padding: {concatenated}")
 
+    if bits:
+      return concatenated
+
     padding_length = (8 - len(concatenated) % 8) % 8
     padded_sequence = '0' * padding_length + concatenated
+
     if DEBUG:
         print(f"Padded Sequence (left padding with zeros): {padded_sequence} (Padding Length: {padding_length})")
 
@@ -126,23 +131,26 @@ def encode(nums):
 
     return chunk_values
 
-def decode(chunks):
-    binary_chunks = [bin(chunk)[2:].zfill(8) for chunk in chunks]
-    if DEBUG:
-        print(f"Binary Chunks: {binary_chunks}")
+def decode(chunks, bits=False):
+    if not bits:
+        binary_chunks = [bin(chunk)[2:].zfill(8) for chunk in chunks]
+        if DEBUG:
+            print(f"Binary Chunks: {binary_chunks}")
 
-    reconstructed = ''.join(binary_chunks)
-    if DEBUG:
-        print(f"Reconstructed Sequence Before Removing Padding: {reconstructed}")
+        reconstructed = ''.join(binary_chunks)
+        if DEBUG:
+            print(f"Reconstructed Sequence Before Removing Padding: {reconstructed}")
 
-    leading_zeros = len(reconstructed) - len(reconstructed.lstrip('0'))
-    if DEBUG:
-        print(f"Identified Leading Zeros (Padding Length): {leading_zeros}")
+        leading_zeros = len(reconstructed) - len(reconstructed.lstrip('0'))
+        if DEBUG:
+            print(f"Identified Leading Zeros (Padding Length): {leading_zeros}")
 
-    reconstructed = reconstructed[leading_zeros:]
-    if DEBUG:
-        print(f"Reconstructed Sequence (after removing leading zeros): {reconstructed}")
-
+        reconstructed = reconstructed[leading_zeros:]
+        if DEBUG:
+            print(f"Reconstructed Sequence (after removing leading zeros): {reconstructed}")
+    else:
+      reconstructed = chunks
+    
     rep_strings = reconstructed.split('101')
     if DEBUG:
         print(f"Split Representation Strings: {rep_strings}")
@@ -166,36 +174,35 @@ def decode(chunks):
 
 # online variants, suitable for streaming
 # online encode
-def olencode(nums):
-  return encode(nums)
+def olencode(nums, bits):
+  return encode(nums, bits)
 
 # online decode 
-def oldecode(chunks):
-  return decode(chunks)
+def oldecode(chunks, bits):
+  return decode(chunks, bits)
 
 # l1 - length first variants, suitable when numbers are known ahead of time
 # length first encode and decode
 def l1encode(nums):
     # Step 1: Calculate the bit lengths of the numbers in base-2
-    lengths = [num.bit_length() for num in nums]
+    lengths = [len(bin(num)[2:]) for num in nums]
     
     # Step 2: Encode the lengths using olencode
-    encoded_lengths = olencode(lengths)
-    
+    encoded_lengths_bits = olencode(lengths, bits=True)
+
     # Step 3: Concatenate the bit strings of the numbers themselves
     concatenated_bits = ''.join(bin(num)[2:] for num in nums)
     
     # Step 4: Append the triple '101' sequence and the concatenated bits
-    triple_101 = '101101101'
-    full_bit_sequence = triple_101 + concatenated_bits
+    full_bit_sequence = encoded_lengths_bits + delim + concatenated_bits
 
     # Step 5: Convert the full bit sequence into 8-bit chunks
-    padded_sequence = '0' * ((8 - len(full_bit_sequence) % 8) % 8) + full_bit_sequence
+    pad_amount = (8- (len(full_bit_sequence)%8))%8
+    padded_sequence = full_bit_sequence + '0' * pad_amount
     chunked_sequence = [padded_sequence[i:i+8] for i in range(0, len(padded_sequence), 8)]
     
     # Step 6: Convert the 8-bit chunks to integers and concatenate with encoded lengths
-    final_sequence = encoded_lengths + [int(chunk, 2) for chunk in chunked_sequence]
-    
+    final_sequence = [int(chunk, 2) for chunk in chunked_sequence]
     return final_sequence
 
 def l1decode(chunks):
@@ -203,27 +210,20 @@ def l1decode(chunks):
     binary_chunks = [bin(chunk)[2:].zfill(8) for chunk in chunks]
     full_sequence = ''.join(binary_chunks)
 
-    # Step 2: Split by '101' delimiter to separate the encoded lengths and concatenated bits
-    parts = full_sequence.split('101')
+    # Step 2: Split by delim delimiter to separate the encoded lengths and concatenated bits
+    encoded_lengths_bits, concatenated_bits = full_sequence.split(delim, 1)
 
-    # Step 3: Find the triple '101' sequence and determine the separation point
-    triple_101_idx = next(i for i in range(len(parts) - 2) if parts[i] == parts[i+1] == parts[i+2] == '')
-
-    # Step 4: Decode the lengths sequence using oldecode
-    encoded_lengths = [int(part, 2) for part in parts[:triple_101_idx]]
-    lengths = oldecode(encoded_lengths)
-
-    # Step 5: The remaining part is the concatenated bits of the integers
-    concatenated_bits = ''.join(parts[triple_101_idx+3:])
+    # Step 5: Decode the length chunks using oldecode to get the lengths of the original numbers
+    lengths = oldecode(encoded_lengths_bits, bits=True)
 
     # Step 6: Reconstruct the original numbers using the decoded lengths
     numbers = []
     pos = 0
     for length in lengths:
         num_bits = concatenated_bits[pos:pos + length]
-        num = int(num_bits, 2)
+        num = int(num_bits, 2)  # Convert the binary string back to an integer
         numbers.append(num)
         pos += length
-    
+
     return numbers
 
