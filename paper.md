@@ -40,7 +40,6 @@ Below are the results of the 50 to 100 Digit Test:
 - **Average Irradix Expansion:** 45.58%
 - **Average L1 Expansion:** 6.41%
 - **Average VByte Expansion:** 15.67%
-```
 
 ## Discussion
 
