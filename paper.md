@@ -39,7 +39,7 @@ Below are the results of the 50 to 100 Digit Test:
 - **Average L1 Expansion:** 2.93%
 - **Average VByte Expansion:** 11.87%
 
-*Results generated with: `./run_experiment.py`*
+    *Results generated with: [`./run_experiment.py`](run_experiment.py)*
 
 ## Discussion
 
