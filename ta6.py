@@ -2,6 +2,7 @@
 
 import random
 from irradix import encode, decode, set_precision, l1encode, l1decode
+from vbyte import vbyte_encode, vbyte_decode  # Import the VByte functions
 
 set_precision(100)  # enough to cover the 32 digits below
 
@@ -36,6 +37,12 @@ def test_random_integers_small():
         print(f"\nDecoded Numbers with l1 (length: {len(decoded_numbers_l1)}): {decoded_numbers_l1}")
         assert decoded_numbers_l1 == original_numbers, f"Small L1 Test {i+1} failed! Decoded numbers do not match the original."
 
+        # Encode the list of integers using the VByte encode/decode
+        encoded_chunks_vbyte = vbyte_encode(original_numbers)
+        decoded_numbers_vbyte = vbyte_decode(encoded_chunks_vbyte)
+        print(f"\nDecoded Numbers with VByte (length: {len(decoded_numbers_vbyte)}): {decoded_numbers_vbyte}")
+        assert decoded_numbers_vbyte == original_numbers, f"Small VByte Test {i+1} failed! Decoded numbers do not match the original."
+
     print(f"All {num_tests} small tests passed successfully!")
 
 # Test function to encode and decode a list of random integers (large sequences)
@@ -59,6 +66,12 @@ def test_random_integers_large():
         decoded_numbers_l1 = l1decode(encoded_chunks_l1)
         print(f"\nDecoded Numbers with l1 (length: {len(decoded_numbers_l1)}): {decoded_numbers_l1[:5]}...")
         assert decoded_numbers_l1 == original_numbers, f"Large L1 Test {i+1} failed! Decoded numbers do not match the original."
+
+        # Encode the list of integers using the VByte encode/decode
+        encoded_chunks_vbyte = vbyte_encode(original_numbers)
+        decoded_numbers_vbyte = vbyte_decode(encoded_chunks_vbyte)
+        print(f"\nDecoded Numbers with VByte (length: {len(decoded_numbers_vbyte)}): {decoded_numbers_vbyte[:5]}...")
+        assert decoded_numbers_vbyte == original_numbers, f"Large VByte Test {i+1} failed! Decoded numbers do not match the original."
 
     print(f"All {num_tests} large tests passed successfully!")
 
