@@ -1,7 +1,3 @@
-Your draft is clear and well-structured! Here are a few minor edits and suggestions to enhance clarity and ensure consistency throughout the document:
-
----
-
 # Outperforming VByte for Very Large Integers using Phi-Based Encoding
 
 ## Abstract
