@@ -13,7 +13,7 @@ Integer compression is critical in various applications, particularly when deali
 - **L1 - (Length-first Irradix):** Use irradix to encode the integer bit lengths, and prepend the encoded lengths to the concatenated bits of all the integers.
 
 ### Test Procedure
-We generated random integers with 50 to 100 digits and compared the bit lengths required by each encoding method. The tests were conducted over 10 runs, with sequence lengths ranging from 100 to 1000 integers per test. A benchmark (but endecoable) "perfect encoding" is constructed by summing the bit length of the integers in each sequence with the bit length of their bit lengths.
+We generated random integers with 50 to 100 digits and compared the bit lengths required by each encoding method. The tests were conducted over 10 runs, with sequence lengths ranging from 100 to 1000 integers per test. A benchmark (but endecoable) "perfect encoding" that should approach the information-theoretic entropy limit, is constructed by summing the bit lengths of the integers in each test with the bit lengths of their bit lengths.
 
 ## Results
 Below are the results of the 50 to 100 Digit Test:
