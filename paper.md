@@ -9,11 +9,11 @@ Integer compression is critical in various applications, particularly when deali
 ## Methods
 ### Algorithms
 - **VByte:** A simple, fast integer compression algorithm that encodes integers using variable-length bytes.
-- **Irradix - (Phi-Based Encoding):** A custom method that utilizes the mathematical properties of the golden ratio (Phi) to encode integers. See [irradix.py](irradix.py) for implementation.
+- **Irradix - (Phi-Based Encoding):** A custom method that utilizes the mathematical properties of the golden ratio (Phi) to encode integers. See [irradix.py](irradix.py) for implementation, and [README.md](the README) for the math and properties that enable this encoding.
 - **L1 - (Length-first Irradix):** Use irradix to encode the integer bit lengths, and prepend the encoded lengths to the concatenated bits of all the integers.
 
 ### Test Procedure
-We generated random integers with 50 to 100 digits and compared the bit lengths required by each encoding method. The tests were conducted over 10 runs, with sequence lengths ranging from 100 to 1000 integers per test.
+We generated random integers with 50 to 100 digits and compared the bit lengths required by each encoding method. The tests were conducted over 10 runs, with sequence lengths ranging from 100 to 1000 integers per test. A benchmark (but endecoable) "perfect encoding" is constructed by summing the bit length of the integers in each sequence with the bit length of their bit lengths.
 
 ## Results
 Below are the results of the 50 to 100 Digit Test:
@@ -22,16 +22,22 @@ Below are the results of the 50 to 100 Digit Test:
 
 | Test | Sequence Length | Irradix Bits | L1 Bits | VByte Bits | Benchmark Bits | Irradix % Expansion | L1 % Expansion | VByte % Expansion |
 |------|-----------------|--------------|---------|------------|----------------|--------------------|----------------|-------------------|
-| 1 | 517 | 188216 | 137616 | 149472 | 129318 | 45.55% | 6.42% | 15.58% |
-| 2 | 697 | 253600 | 185312 | 201408 | 174209 | 45.57% | 6.37% | 15.61% |
-| 3 | 226 | 82064 | 59920 | 65232 | 56327 | 45.69% | 6.38% | 15.81% |
-| 4 | 291 | 106264 | 77696 | 84416 | 73002 | 45.56% | 6.43% | 15.64% |
-| 5 | 998 | 362672 | 265112 | 288136 | 249112 | 45.59% | 6.42% | 15.67% |
-| 6 | 135 | 48592 | 35536 | 38640 | 33387 | 45.54% | 6.44% | 15.73% |
-| 7 | 519 | 189016 | 138104 | 150144 | 129798 | 45.62% | 6.40% | 15.68% |
-| 8 | 363 | 131312 | 95992 | 104256 | 90204 | 45.57% | 6.42% | 15.58% |
-| 9 | 548 | 196448 | 143720 | 156176 | 134935 | 45.59% | 6.51% | 15.74% |
-| 10 | 128 | 47000 | 34360 | 37368 | 32305 | 45.49% | 6.36% | 15.67% |
+| 1 | 568 | 207424 | 151656 | 164712 | 147305 | 40.81% | 2.95% | 11.82% |
+| 2 | 411 | 147600 | 107976 | 117224 | 104823 | 40.81% | 3.01% | 11.83% |
+| 3 | 437 | 159056 | 116264 | 126272 | 112974 | 40.79% | 2.91% | 11.77% |
+| 4 | 325 | 117056 | 85544 | 92968 | 83133 | 40.81% | 2.90% | 11.83% |
+| 5 | 786 | 286752 | 209632 | 227952 | 203664 | 40.80% | 2.93% | 11.93% |
+| 6 | 182 | 64768 | 47336 | 51504 | 45983 | 40.85% | 2.94% | 12.01% |
+| 7 | 217 | 78488 | 57408 | 62400 | 55754 | 40.78% | 2.97% | 11.92% |
+| 8 | 676 | 244816 | 178968 | 194576 | 173902 | 40.78% | 2.91% | 11.89% |
+| 9 | 287 | 106248 | 77600 | 84432 | 75447 | 40.82% | 2.85% | 11.91% |
+| 10 | 405 | 146672 | 107232 | 116496 | 104187 | 40.78% | 2.92% | 11.81% |
+
+## Summary Statistics
+
+- **Average Irradix Expansion:** 40.80%
+- **Average L1 Expansion:** 2.93%
+- **Average VByte Expansion:** 11.87%
 
 *Results generated with: `./run_experiment.py`*
 
