@@ -1,7 +1,7 @@
-# A Comparative Study of Integer Compression: VByte vs. Phi-Based Encoding for Large Numbers
+# Outperforming VByte for Very Large Integers using Phi-Based Encoding 
 
 ## Abstract
-This study compares the efficiency of two integer compression algorithms—VByte and a Phi-based encoding method—specifically targeting large numbers ranging from 50 to 100 digits. The results demonstrate that the Phi-based method outperforms VByte in terms of bit expansion for large integers, highlighting its potential for specialized applications.
+VByte[^1] is a widely-used integer compression algorithm known for its speed and simplicity. This study compares the efficiency of two integer compression algorithms—VByte and a Phi-based encoding method—specifically targeting large numbers ranging from 50 to 100 digits. The results demonstrate that the Phi-based method outperforms VByte in terms of bit expansion for large integers, highlighting its potential for specialized applications.
 
 ## Introduction
 Integer compression is critical in various applications, particularly when dealing with large datasets. This study explores the performance of VByte, a widely-used compression algorithm, against a custom Phi-based encoding algorithm. The hypothesis is that the Phi-based method would perform better with large numbers due to its unique structure.
@@ -43,10 +43,15 @@ Below are the results of the 50 to 100 Digit Test:
 ```
 
 ## Discussion
+
 The results show that the Phi-based encoding consistently outperforms VByte in terms of bit expansion for large integers. This suggests that the Phi-based method is better suited for applications dealing with very large numbers, where minimizing storage is crucial.
 
 ## Conclusion
+
 The Phi-based encoding method demonstrates superior performance over VByte for large numbers. Future work could explore further optimizations or applications of this method in specialized fields.
 
+----
+
 ## References
-- [1] Your References Here.
+[^1]: Daniel Lemire, Nathan Kurz, Christoph Rupp. "STREAM VBYTE: Faster Byte-Oriented Integer Compression." *arXiv preprint arXiv:1709.08990*, 2017. Available at: [https://arxiv.org/pdf/1709.08990](https://arxiv.org/pdf/1709.08990).
+
