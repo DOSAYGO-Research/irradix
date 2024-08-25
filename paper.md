@@ -18,7 +18,6 @@ We generated random integers with 50 to 100 digits and compared the bit lengths 
 ## Results
 Below are the results of the 50 to 100 Digit Test:
 
-```markdown
 # 50 to 100 Digit Test Results
 
 | Test | Sequence Length | Irradix Bits | L1 Bits | VByte Bits | Benchmark Bits | Irradix % Expansion | L1 % Expansion | VByte % Expansion |
@@ -33,6 +32,8 @@ Below are the results of the 50 to 100 Digit Test:
 | 8 | 363 | 131312 | 95992 | 104256 | 90204 | 45.57% | 6.42% | 15.58% |
 | 9 | 548 | 196448 | 143720 | 156176 | 134935 | 45.59% | 6.51% | 15.74% |
 | 10 | 128 | 47000 | 34360 | 37368 | 32305 | 45.49% | 6.36% | 15.67% |
+
+*Results generated with: `./run_experiment.py`*
 
 ## Summary Statistics
 
