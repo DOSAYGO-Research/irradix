@@ -146,9 +146,14 @@ It must be included in any revised prime-density baseline.
 The same cancellation works when the word is evaluated in any integer
 base `b>=2`, using modulus `b+1` instead of 3.
 
-## Concrete questions worth pursuing
+## Original research questions and their current status
 
-1. **Finite-state arithmetic on the existing representation.** Does the
+**Arithmetic update:** [ARITHMETIC.md](ARITHMETIC.md) now gives implemented
+signed addition, multiplication, and increment/decrement, a bounded carry proof, and a
+bounded-delay impossibility result. The questions below motivated that
+work; the fixed-modulus residue question is answered later in this note.
+
+1. **Finite-state arithmetic on the existing representation (now implemented).** Does the
    explicit negative-base correspondence give a small adder or incrementer
    for Irradix? The cited normalization theorems suggest a route; they do
    not supply a finished implementation for this format. In the fractional
@@ -312,7 +317,7 @@ between -2 and 0, hence -1. Therefore `beta^2-beta-1=0`.
 This singles out the quadratic contraction mechanism in the binary
 range; it does not classify every irrational quotient language.
 
-The most concrete next projects are a finite-state arithmetic prototype
-with exact endpoint handling, and quantitative spectral bounds as the
-modulus grows. Neither is completed here. Infinitely many prime binary
+The finite-state arithmetic prototype with exact endpoint handling is now
+implemented and proved in [ARITHMETIC.md](ARITHMETIC.md). Quantitative
+spectral bounds as the modulus grows remain a research target. Infinitely many prime binary
 images and a prime-counting asymptotic are not established by these proofs.

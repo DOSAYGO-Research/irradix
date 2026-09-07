@@ -1,0 +1,127 @@
+{
+  "seed": 20260907,
+  "python": "3.14.4",
+  "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+  "carry_states": 19,
+  "output_language_states": 5,
+  "combined_state_bound": 95,
+  "frontier_certificate": {
+    "add": {
+      "reachable_subsets": 41,
+      "max_active_states": 5
+    },
+    "subtract": {
+      "reachable_subsets": 39,
+      "max_active_states": 5
+    }
+  },
+  "terminal_carries": [
+    [
+      -1,
+      2
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      2,
+      -1
+    ]
+  ],
+  "checks": {
+    "successor_predecessor_pairs": 100001,
+    "unsigned_addition_pairs": 65536,
+    "signed_addition_pairs": 16641,
+    "exhaustive_relation_triples": 8192,
+    "random_signed_pairs": 1000,
+    "max_random_input_bits": 4096,
+    "fibonacci_boundaries": 300,
+    "malformed_strings": 11
+  },
+  "long_additions": [
+    {
+      "input_digits": 1000,
+      "output_digits": 1002,
+      "seconds": 0.002514916006475687,
+      "columns": 1003,
+      "max_frontier": 5,
+      "history_entries": 3709
+    },
+    {
+      "input_digits": 10000,
+      "output_digits": 10001,
+      "seconds": 0.02717866702005267,
+      "columns": 10003,
+      "max_frontier": 5,
+      "history_entries": 36895
+    },
+    {
+      "input_digits": 100000,
+      "output_digits": 100001,
+      "seconds": 0.3440452078357339,
+      "columns": 100003,
+      "max_frontier": 5,
+      "history_entries": 369152
+    }
+  ],
+  "timings": [
+    {
+      "input_bits": 64,
+      "pairs": 10,
+      "carry_adder_seconds": 0.0020197080448269844,
+      "decode_add_encode_seconds": 0.0007589168380945921
+    },
+    {
+      "input_bits": 256,
+      "pairs": 10,
+      "carry_adder_seconds": 0.007700917078182101,
+      "decode_add_encode_seconds": 0.0036981250159442425
+    },
+    {
+      "input_bits": 1024,
+      "pairs": 10,
+      "carry_adder_seconds": 0.03319254098460078,
+      "decode_add_encode_seconds": 0.01663774996995926
+    },
+    {
+      "input_bits": 4096,
+      "pairs": 10,
+      "carry_adder_seconds": 0.14147087512537837,
+      "decode_add_encode_seconds": 0.12632875004783273
+    }
+  ],
+  "increment_timings": {
+    "seed": 20260908,
+    "runs": [
+      {
+        "input_bits": 64,
+        "words": 10,
+        "incrementer_seconds": 0.00015370897017419338,
+        "decode_increment_encode_seconds": 0.000604917062446475
+      },
+      {
+        "input_bits": 256,
+        "words": 10,
+        "incrementer_seconds": 0.000389833003282547,
+        "decode_increment_encode_seconds": 0.001953833969309926
+      },
+      {
+        "input_bits": 1024,
+        "words": 10,
+        "incrementer_seconds": 0.0017955000512301922,
+        "decode_increment_encode_seconds": 0.012044500093907118
+      },
+      {
+        "input_bits": 4096,
+        "words": 10,
+        "incrementer_seconds": 0.007860332960262895,
+        "decode_increment_encode_seconds": 0.0970737081952393
+      }
+    ]
+  }
+}

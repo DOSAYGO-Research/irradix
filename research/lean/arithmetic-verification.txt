@@ -1,0 +1,21 @@
+Verified September 7, 2026.
+Lean: leanprover/lean4:v4.34.0-rc2
+mathlib: 0383a80e644c8b14e66fd137516001534006077f
+SHA256 PhiArithmetic.lean: 2e9c4ab38dc92f8c0e97a3be489703f42204fdddb26e3b827ceec9115676054f
+
+Working directory: /tmp/irradix-mathlib
+Command:
+ELAN_HOME=/tmp/irradix-elan /tmp/irradix-elan/bin/lake env lean /Users/crisd/Creative/irradix/research/lean/PhiArithmetic.lean
+
+Exit status: 0
+Compiler output (no warnings or errors):
+'PhiArithmetic.run_value' depends on axioms: [propext]
+'PhiArithmetic.weighted_difference' depends on axioms: [propext, Quot.sound]
+'PhiArithmetic.addition_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PhiArithmetic.multiply_run_value' depends on axioms: [propext]
+'PhiArithmetic.multiplication_value' depends on axioms: [propext]
+
+Scope: unrestricted integer carry invariant, conditional addition acceptance,
+and scaled Fibonacci Horner multiplication including the augmentation offset.
+The finite carry bound, canonical-word identity, and Python implementation are
+not formalized by this companion. See ../ARITHMETIC.md for written proofs.

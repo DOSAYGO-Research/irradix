@@ -38,7 +38,10 @@ codewords, an exact integer-only encoder, and the practical consequences
 for packing. An explicit negative-base correspondence explains the same
 Fibonacci weights. Residue formulas force prime-free length blocks;
 a separate theorem gives equidistribution at fixed moduli coprime to 6.
-Prime counts are compared with a heuristic, not a prime asymptotic.
+A 19-state carry relation constructs exact sums, with a bounded-delay
+obstruction for canonical streaming output; scaled Fibonacci Horner
+evaluation constructs products using the adder. Prime counts are compared
+with a heuristic, not a prime asymptotic.
 Finite-precision implementations are distinguished from
 the mathematical encoding throughout.
 \end{abstract}
@@ -479,19 +482,236 @@ many prime images. Maynard's restricted-decimal-digit theorem
 \cite{maynard} concerns different hypotheses and is not a theorem for
 this language.
 
+\section{Finite-state integer arithmetic}\label{sec:arithmetic}
+The negative-base correspondence now gives a working digit adder and multiplier,
+as well as a direct incrementer and decrementer. The implementation
+\texttt{research/phi\_arithmetic.py} supports signed canonical words and
+uses neither whole-value integer decoding nor Fibonacci tables. Earlier
+finite-state and multipass Fibonacci arithmetic is substantial prior art
+\cite{online,zeckendorf}; the construction below handles this repository's
+particular even-shift representation.
+
+\subsection{Successor and predecessor}
+To increment a positive word, scan after its leading one and locate the
+rightmost zero read from the even state. Replace it by one and replace
+the entire following suffix by zeros. If there is no such position, the
+input is all ones; return one followed by as many zeros as the old word
+had digits. Treat $\texttt{0}\mapsto\texttt{1}$ separately.
+
+\begin{theorem}[Successor correctness]
+This algorithm maps $\E(n)$ to $\E(n+1)$ for every nonnegative integer $n$.
+\end{theorem}
+\begin{proof}
+The earlier order argument identifies integer order with shortlex order
+on the canonical language. A zero can change to one exactly in the even
+state. Choosing its rightmost possible occurrence selects the next
+lexicographic branch; all zeros give that branch's least continuation.
+If no such zero exists, there cannot be any zero, since the first would
+have been in an even state. The input is therefore the last word of its
+length, and its successor is the first word of the next length.
+\end{proof}
+The predecessor changes the rightmost nonleading one to zero, then fills
+the remaining positions with their greatest legal continuation: one
+forced zero, if space remains, followed by ones. A word consisting of a
+one and only zeros moves to all ones of the previous length, with
+$\texttt{1}\mapsto\texttt{0}$. The reverse lexicographic argument proves
+correctness. Signed operations apply these rules to the magnitude,
+reversing increment and decrement for negative inputs. All require
+$O(k)$ digit work for an input of length $k$.
+
+\subsection{Augmented Fibonacci weights and a finite carry bound}
+For $w=\E(n)$ prefix an extra one and write $U(n)=\texttt{1}w$.
+If $W(d_k\cdots d_0)=\sum_j d_jF_{j+1}$, the decoder gives
+\[
+W(U(n))=n+1.
+\]
+This includes $U(0)=\texttt{10}$, with weight $F_2=1$, and is unchanged
+by leading-zero padding. Consequently, for three aligned augmented words,
+\[
+a+b=c\quad\Longleftrightarrow\quad
+W(U(a)+U(b)-U(c))=1,
+\]
+where word addition and subtraction mean digitwise operations.
+Each difference digit $e$ belongs to $\{-1,0,1,2\}$.
+
+Evaluate the difference polynomial by Horner's rule in $\mathbb Z[\ph]$.
+For $C=u+v\ph$, the next difference digit gives
+\[
+C\longmapsto\ph C+e,\qquad
+\boxed{\ (u,v)\longmapsto(v+e,u+v).\ }
+\]
+Start at $(0,0)$. The sum of the coefficients of $\ph^j$ is $F_{j+1}$,
+including the constant case $j=0$. Thus the final sum $u+v$ is exactly
+$W$, and the acceptance condition is $u+v=1$, not zero.
+
+\begin{theorem}[A finite rectangle contains every successful carry path]
+Every prefix of a successful difference word has
+$-5\le u\le5$ and $-4\le v\le4$.
+\end{theorem}
+\begin{proof}
+Set $\psi=1-\ph=-1/\ph$ and $C'=u+v\psi$. For every prefix,
+\[
+|C'|\le 2\sum_{j\ge0}|\psi|^j=\frac{2}{1-1/\ph}<6.
+\]
+At an accepting endpoint, $u+v=1$, hence $C'=1-\ph v$.
+This confines integer $v$ to $-3,\ldots,4$ and gives
+$|C|=|1+v/\ph|<4$. If a prefix has $r$ digits remaining, unwinding the
+remaining Horner steps yields
+\[
+|C_{\rm prefix}|<4\ph^{-r}
+ +\frac{2(1-\ph^{-r})}{\ph-1}\le4.
+\]
+Since $2/(\ph-1)<4$, the bound holds for every prefix. Finally
+\[
+v=\frac{C-C'}{\sqrt5},\qquad
+u=\frac{\ph C'-\psi C}{\sqrt5}
+\]
+give $|v|<5$ and $|u|<6$, proving the integer bounds.
+\end{proof}
+Generate transitions inside this 99-state rectangle. There are 67 states
+reachable from the start. Removing states with no path to acceptance
+leaves \textbf{19 carry states}, with terminals
+$(-1,2),(0,1),(1,0),(2,-1)$. These finite counts are reproduced by the
+implementation; no minimality claim is made. Reachability and backward
+trimming preserve every accepting path.
+
+\subsection{Constructing the output, not merely recognizing a sum}
+Given a pair of input digits, try both output bits and combine the carry
+machine with the five-state automaton for padded augmented outputs
+\[
+\texttt{0}^*(\texttt{10}\mid
+\texttt{11}(\texttt{1}\mid\texttt{00})^*(\varepsilon\mid\texttt{0})).
+\]
+Its states distinguish padding, the augmentation one, the special zero
+word, and the positive even/odd states. The product has at most 95 states.
+
+The solver retains reachable product states for each column, storing one
+predecessor and output bit per state. At the end it selects an accepting
+state and recovers the word by tracing the path backward. Merging paths
+at a state loses no possible completion: both paths have the same carry
+and language state, and future constraints depend only on those states.
+
+\begin{theorem}[Adder soundness and completeness]
+The solver returns the unique canonical representation of the sum.
+\end{theorem}
+\begin{proof}
+An accepting path has a canonical augmented output and satisfies the
+carry equation, proving soundness. Conversely, the canonical sum exists.
+If the longer input has $k$ digits, the sum has at most $k+2$ digits:
+\[
+a+b\le2(F_{k+3}-2)<F_{k+5}-1,
+\]
+where the right side is the first value of length $k+3$; zero operands
+cause no difficulty. Using $k+3$ columns including augmentation therefore
+fits the correct output. Its carries lie in the proved rectangle and
+survive trimming, establishing completeness. The encoding's bijection
+gives uniqueness.
+\end{proof}
+For subtraction $c=a-b\ge0$, use differences $b_i+c_i-a_i$ in the same
+machine, solving $c+b=a$. Signed addition compares magnitudes by shortlex
+order, chooses addition or subtraction, and applies the sign.
+
+Time and path-history space are $O(k)$, with bounded small-integer carry
+operations. Exhausting the reachable subset graph gives 41 frontier
+subsets for addition and 39 for subtraction, each of size at most five.
+Thus the implementation has at most five active candidate states per
+column, even on arbitrary input bit pairs. This is a checked finite
+enumeration, not a Lean theorem. A separate unsigned relation checker
+can validate supplied operands and result by a single deterministic
+carry pass without storing path history.
+
+\subsection{Multiplication by scaled Fibonacci Horner evaluation}
+The multiplier uses the carry adder as a building block. For nonnegative
+operands $a,b$, scan the augmented multiplier $U(b)$ from most significant
+first, maintaining two values represented as Irradix words:
+\[
+(x,y)=(0,0),\qquad
+(x,y)\longmapsto(x+y+da,x)
+\]
+for each multiplier digit $d$. At the end return $x-a$.
+The implementation starts after the prefixed augmentation one, at
+$(a,0)$, and chooses the shorter operand as the multiplier.
+
+\begin{theorem}[Multiplier correctness]
+Scaled Fibonacci Horner evaluation returns $\E(ab)$ when its operations
+are carried out by the exact digit adder and subtractor.
+\end{theorem}
+\begin{proof}
+For a processed prefix with digits $d_j$ indexed from the right, the
+invariant is
+\[
+x=a\sum_j d_jF_{j+1},\qquad y=a\sum_j d_jF_j.
+\]
+Appending a digit shifts the old Fibonacci indices up by one. The
+recurrence $F_{j+2}=F_{j+1}+F_j$ therefore gives $x+y+da$ as the new
+first value and $x$ as the new second value. After the entire augmented
+word, $x=aW(U(b))=a(b+1)$; the final subtraction gives $ab$.
+\end{proof}
+Zero and one have explicit shortcuts. Signs are handled by multiplying
+magnitudes and applying the exclusive-or of operand signs. For input
+lengths $k,l$, the number of iterations is $\min(k,l)$ and intermediate
+words have $O(k+l)$ digits. Thus the implementation takes
+$O(\min(k,l)(k+l))$ digit work and $O(k+l)$ working space. It is quadratic
+for equally sized operands; the full multiplier is not claimed to be a
+finite-state transducer.
+
+This is the Fibonacci-weight analogue of shift-and-add. It never decodes
+the operands into their whole integer values. Tests include 16,384
+unsigned and 4,225 signed pairs, random products, distributivity, 64
+Fibonacci boundaries, a product of two 1,000-digit words, and a
+20,000-digit word multiplied by 6. An independent unbounded weight oracle
+checks the long results. Decode/multiply/re-encode remains substantially
+faster in the measured samples; details are recorded in
+\texttt{research/multiplication\_measurements.json}.
+
+\subsection{An obstruction to bounded-delay output}
+\begin{theorem}[No deterministic bounded-delay one-way incrementer]
+When input and canonical output are read in the same direction, neither
+most-significant-first nor least-significant-first incrementing can emit
+successive digits with a fixed lookahead independent of input length.
+\end{theorem}
+\begin{proof}
+For most-significant-first reading, compare $\texttt{1}^k$ with
+$\texttt{1}^{k-1}\texttt{0}$. They share $k-1$ initial digits, but their
+increments are $\texttt{1}\texttt{0}^k$ and $\texttt{1}^k$, whose second
+digits differ. With a common padded output width, the first digits differ.
+For least-significant-first reading, compare
+$\texttt{1}\texttt{0}^{k-1}$ and $\texttt{11}\texttt{0}^{k-2}$, for
+$k\ge3$. They share $k-2$ initial digits in this direction. An input
+ending in $t>0$ zeros increments to an odd binary image exactly when
+$t$ is odd. The two trailing-zero counts have opposite parity, so the
+first output digits differ. In both cases the common input prefix can
+be arbitrarily long, even when the common input length is known.
+\end{proof}
+A general adder inherits this obstruction by fixing one operand to one.
+This excludes neither multipass or two-way machines nor the offline
+finite-state solver above. Online results for other Fibonacci normal
+forms \cite{online} concern a different canonical output language.
+
+\paragraph{Measurements.}
+The arithmetic checks include 100,001 successor/predecessor pairs,
+65,536 unsigned and 16,641 signed addition pairs, 1,000 random signed
+pairs up to 4,096 bits, and 300 Fibonacci boundaries. A 100,000-digit
+addition is checked against an independent unbounded Fibonacci-weight
+oracle. The prototype demonstrates finite carries and linear digit work;
+in the recorded small-size benchmarks the generic carry solver remains
+slower than decoding, adding with Python integers, and re-encoding.
+The direct incrementer is faster on those sampled workloads.
+Machine and workload details are recorded in
+\texttt{research/arithmetic\_measurements.json}.
+
 \section{Generalization and concrete further questions}
-Frougny and Lai's finite-transducer normalization results for negative
-Pisot bases \cite{negative} suggest an arithmetic implementation to
-pursue. For the coordinates above, direct expansion of fractional parts
-shows
+The construction in Section~\ref{sec:arithmetic} resolves the finite-state
+arithmetic question for this representation. The original fractional
+coordinate identity remains informative:
 \[
 x(n+m)=x(n)+x(m)-c+\fl{\fr{\ph n}+\fr{\ph m}}.
 \]
-The correction is zero or one. An Irradix adder still needs explicit
-normalization, direction of reading, output length, and boundary
-handling; no such transducer is constructed here. Quantitative spectral
-bounds as the residue modulus grows are a separate target toward a
-sieve for prime images.
+Its correction is zero or one. The augmented-word construction accounts
+for this arithmetic without computing fractional coordinates. Improving
+the adder's table representation and storage is a concrete engineering
+target; quantitative spectral bounds as the residue modulus grows remain
+a separate target toward a sieve for prime images.
 
 \paragraph{A graph eigenvalue alone is insufficient.}
 Consider zero gaps divisible by 3. Its graph has return paths of lengths
@@ -511,6 +731,7 @@ $\beta(1-\beta)$ strictly between $-2$ and 0, so the norm is $-1$ and
 $\beta^2-\beta-1=0$. This singles out the quadratic contraction in the
 binary range; it does not classify all irrational quotient languages.
 
+\clearpage
 \section{Verification and scope}
 The mathematical theorem concerns \emph{exact} quotient and ceiling
 operations. The repository's fixed-precision \texttt{mpmath} code and
@@ -533,12 +754,20 @@ cover 10,000 negative-base expansions and 100,000 modular identities.
 A residue automaton checks counting formulas through length 100 and is
 compared with direct enumeration through length 13 for eight moduli.
 The prime experiment uses a sieve through 6,692,032 for 100,000 inputs.
+The new \texttt{PhiArithmetic.lean} companion separately verifies the
+integer carry invariant and proves the acceptance condition equivalent
+to addition, assuming the augmented words have the prescribed Fibonacci
+weights. It does not formalize the finite rectangle bound, graph trimming,
+canonical augmentation identity, incrementer, or output recovery.
+It also verifies scaled Fibonacci Horner evaluation and the final
+subtraction that converts the augmented weight to the product. Those
+integer invariants do not formally verify the Python multiplier.
 The Python implementation and the packing formats themselves are not
 formally verified by that Lean proof. Numerical tests are supplementary
 evidence, not a substitute for the all-integers theorem.
 
 \clearpage
-\begin{thebibliography}{9}
+\begin{thebibliography}{99}
 \bibitem{lind}
 D. Lind and B. Marcus,
 \emph{An Introduction to Symbolic Dynamics and Coding},
@@ -582,5 +811,15 @@ preprint (2017). \url{https://arxiv.org/abs/1709.08990}.
 \bibitem{maynard}
 J. Maynard, \emph{Primes with restricted digits}, preprint (2016).
 \url{https://arxiv.org/abs/1604.01041}.
+\bibitem{online}
+C. Frougny, \emph{On-line finite automata for addition in some numeration
+systems}, RAIRO--Theoretical Informatics and Applications 33(1), 79--101
+(1999). \url{https://www.numdam.org/item/ITA_1999__33_1_79_0.pdf}.
+
+\bibitem{zeckendorf}
+C. Ahlbach, J. Usatine, C. Frougny, and N. Pippenger,
+\emph{Efficient Algorithms for Zeckendorf Arithmetic},
+Fibonacci Quarterly 51(3), 249--255 (2013).
+\url{https://www.fq.math.ca/Papers1/51-3/AhlbachUsatineFrougnyPippenger.pdf}.
 \end{thebibliography}
 \end{document}

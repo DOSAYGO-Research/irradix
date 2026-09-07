@@ -1,6 +1,6 @@
 name = "phi_packing"
 version = "0.1.0"
-defaultTargets = ["PhiPacking"]
+defaultTargets = ["PhiPacking", "PhiArithmetic"]
 
 [[require]]
 name = "mathlib"
@@ -9,3 +9,6 @@ rev = "0383a80e644c8b14e66fd137516001534006077f"
 
 [[lean_lib]]
 name = "PhiPacking"
+
+[[lean_lib]]
+name = "PhiArithmetic"

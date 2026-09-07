@@ -1,0 +1,48 @@
+{
+  "seed": 20260909,
+  "python": "3.14.4",
+  "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+  "checks": {
+    "unsigned_pairs": 16384,
+    "signed_pairs": 4225,
+    "random_signed_pairs": 100,
+    "max_random_input_bits": 256,
+    "distributivity_cases": 20,
+    "fibonacci_boundaries": 64,
+    "malformed_words": 10
+  },
+  "long_products": [
+    {
+      "left_digits": 1000,
+      "right_digits": 1000,
+      "result_digits": 2000,
+      "seconds": 5.327016416937113
+    },
+    {
+      "left_digits": 20000,
+      "right_digits": 3,
+      "result_digits": 20003,
+      "seconds": 0.4475785419344902
+    }
+  ],
+  "timings": [
+    {
+      "input_bits": 32,
+      "pairs": 1,
+      "digit_multiplier_seconds": 0.009629000211134553,
+      "decode_multiply_encode_seconds": 4.12908848375082e-05
+    },
+    {
+      "input_bits": 128,
+      "pairs": 1,
+      "digit_multiplier_seconds": 0.18711012485437095,
+      "decode_multiply_encode_seconds": 0.00023950007744133472
+    },
+    {
+      "input_bits": 512,
+      "pairs": 1,
+      "digit_multiplier_seconds": 2.207563417032361,
+      "decode_multiply_encode_seconds": 0.0009479578584432602
+    }
+  ]
+}

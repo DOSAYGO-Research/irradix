@@ -55,3 +55,18 @@ python3 research/analyze_phi.py --legacy
 [phi_measurements.json](phi_measurements.json) records the seeded run. Checks cover 100,001 encodings against the independent Fibonacci method, 10,001 signed round-trip magnitudes, 500 Fibonacci length thresholds, 4,369 short sequences per experimental codec, and large random sequences. With `--legacy`, the original packing is also round-tripped using exact arithmetic, isolating framing from numerical error. Fixed 100-decimal-digit precision fails on examples near `10**100`; the theorem applies to exact arithmetic.
 
 The PDF cites the primary literature for the even shift and related universal integer codes. The new derivation is supplied in full; no novelty priority claim is made for the encoding.
+
+## Direct digit arithmetic
+
+[phi_arithmetic.py](phi_arithmetic.py) now implements signed increment,
+decrement, addition, and multiplication. The adder follows a 19-state carry
+relation, with at most five active product states, without whole-value
+decoding. The multiplier composes carry additions using scaled Fibonacci
+Horner steps. [ARITHMETIC.md](ARITHMETIC.md) supplies the correctness and
+finite-bound proofs, a bounded-delay streaming obstruction, API examples,
+measurements, and the exact scope of the new Lean invariants.
+
+The direct incrementer beats decode/increment/re-encode on the recorded
+samples. The generic adder and multiplier do not beat their conversion-based
+baselines on those samples. These arithmetic results do not change the
+packing format or the representation's asymptotic expansion.

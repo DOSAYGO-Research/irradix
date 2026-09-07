@@ -3,7 +3,7 @@
 Integer packing through the golden ratio: an experimental codec, an exact Fibonacci implementation, and a study of the even-shift language and its arithmetic.
 
 > **[Read the mathematical paper (PDF)](output/pdf/phi-proof.pdf)**
-> The complete even-gap proof, exact algorithms, negative-φ correspondence, and prime/residue consequences.
+> The complete even-gap proof, exact addition and multiplication, negative-φ correspondence, and prime/residue consequences.
 >
 > [TeX source](output/pdf/phi-proof.tex) · [Lean proof](research/lean/PhiPacking.lean) · [Formal verification record](research/lean/README.md)
 
@@ -138,6 +138,47 @@ The factor 3 is not fitted. These are nested samples, and agreement is not a pri
 
 [Proofs and research questions](research/NEGATIVE_PHI_CONNECTION.md) · [Reproducible residue and prime measurements](research/residue_measurements.json)
 
+## Arithmetic directly on the digits
+
+[phi_arithmetic.py](research/phi_arithmetic.py) implements exact signed addition,
+multiplication, increment, and decrement without decoding whole integer values:
+
+```python
+from research.phi_arithmetic import add, increment, decrement, multiply, is_sum
+
+assert increment("1001") == "1100"       # 8 + 1 = 9
+assert decrement("1000") == "111"        # 7 - 1 = 6
+assert add("110", "1001") == "10010"     # 5 + 8 = 13
+assert add("-1001", "110") == "-11"      # -8 + 5 = -3
+assert multiply("110", "1001") == "1001111"  # 5 * 8 = 40
+assert is_sum("110", "1001", "10010")
+```
+
+Prefixing a codeword with one extra `1` gives Fibonacci weight `n+1`.
+The adder uses that identity and a **19-state carry machine**, combined
+with the output-language automaton. It performs linear digit work, with
+at most five active candidate states per column. An independent weight
+oracle checked a 100,000-digit sum. The incrementer follows the next word
+in language order and is simpler still. Multiplication uses the adder in
+a Fibonacci-weight version of shift-and-add, with quadratic digit work
+for equally sized operands. It also handles signed values.
+
+The multiplier is substantially slower than decode/multiply/re-encode
+on the recorded samples. The adder constructs its output by retaining
+paths and tracing back at the end; it is not an online emitter. In fact, even canonical incrementing
+cannot emit digits with bounded delay in either direction. The generic
+adder remains slower than decode/add/re-encode in the recorded smaller
+benchmarks; the direct incrementer is faster on those samples.
+
+[Arithmetic proofs, streaming limitation, and API](research/ARITHMETIC.md) ·
+[Addition measurements](research/arithmetic_measurements.json) ·
+[Multiplication measurements](research/multiplication_measurements.json) ·
+[Lean carry invariant](research/lean/PhiArithmetic.lean)
+
+Finite-state Fibonacci arithmetic has established prior art [9, 10].
+This construction handles Irradix's particular representation. It supplies
+no cryptographic trapdoor: decoding still exposes the underlying integer.
+
 ## Packing and practical tradeoffs
 
 The original [irradix.py](irradix.py) offers single-value conversion, direct byte packing (`encode`/`decode`), and length-first packing (`l1encode`/`l1decode`). Packed inputs are nonnegative integers. Install its dependencies with `python3 -m pip install -r requirements.txt`.
@@ -176,6 +217,8 @@ Run from the repository root:
 python3 research/analyze_phi.py
 python3 research/check_negative_phi.py
 python3 research/analyze_residues.py
+python3 research/check_arithmetic.py
+python3 research/check_multiplication.py
 # Optional comparison with the original code; requires requirements.txt:
 python3 research/analyze_phi.py --legacy
 ```
@@ -186,6 +229,7 @@ The core run compares 100,001 encodings across independent exact algorithms, che
 | :--- | :--- |
 | Exact quotient/ceiling model; complete even-gap language; exclusion of `101` | Compiled Lean proof, pinned toolchain; no `sorry` |
 | Fibonacci formulas; negative-φ identity; residue theorems | Written proofs, supplemented by exact Python checks |
+| Arithmetic carry/acceptance equations and scaled multiplication invariant under augmented-weight hypotheses | Compiled Lean proof; finite bounds and implementation have written proofs and executable checks |
 | Packing implementations and size/timing measurements | Executable checks and experiments; not formally verified |
 | Prime-density formula | Heuristic, compared with exact sieve counts |
 
@@ -193,7 +237,7 @@ See [Lean build instructions and theorem inventory](research/lean/README.md). Th
 
 ## What is worth pursuing next?
 
-A finite-state adder or incrementer is a concrete engineering target: the negative-base correspondence supplies a route, but normalization, direction of reading, and endpoint handling still need an implementation and proof. Quantitative residue estimates as the modulus grows are a more difficult mathematical target toward understanding primes.
+Addition, multiplication, increment, and decrement are now implemented. The next engineering targets are reducing the adder’s table and path-storage overhead and comparing specialized multipass implementations. Canonical bounded-delay streaming in either direction is ruled out by the incrementer counterexamples. Quantitative residue estimates as the modulus grows remain a more difficult mathematical target toward understanding primes.
 
 Generalizing by merely replacing φ with another graph's growth rate does not work. For the graph allowing zero gaps divisible by 3, its growth rate satisfies `β³=β²+1`, yet repeated quotient encoding gives `Eβ(4)=101`. The [research note](research/NEGATIVE_PHI_CONNECTION.md) proves this counterexample and the limited uniqueness statement that φ is the only quadratic Pisot number between 1 and 2.
 
@@ -209,3 +253,5 @@ The maintainer dates Irradix's original development to approximately 2018. The e
 6. **Debra A. Lelewer and Daniel S. Hirschberg.** *Data Compression.* [Authors' survey, section 3](https://ics.uci.edu/~dhirschb/pubs/DC-Sec3.html). Universal integer codes and the Elias/Fibonacci baselines.
 7. **Daniel Lemire, Nathan Kurz, and Christoph Rupp.** *Stream VByte: Faster Byte-Oriented Integer Compression.* Preprint, 2017. [arXiv](https://arxiv.org/abs/1709.08990). Context for fast byte-oriented codecs, distinct from this repository's VByte baseline.
 8. **James Maynard.** *Primes with restricted digits.* Preprint, 2016. [arXiv](https://arxiv.org/abs/1604.01041). A prime theorem for a different digital restriction; it is not a theorem about Irradix.
+9. **Christiane Frougny.** *On-line finite automata for addition in some numeration systems.* RAIRO–Theoretical Informatics and Applications 33(1), 79–101, 1999. [Paper](https://www.numdam.org/item/ITA_1999__33_1_79_0.pdf). Online addition for golden-ratio and Fibonacci representations, with different canonical conventions.
+10. **Connor Ahlbach, Jeremy Usatine, Christiane Frougny, and Nicholas Pippenger.** *Efficient Algorithms for Zeckendorf Arithmetic.* Fibonacci Quarterly 51(3), 249–255, 2013. [Paper](https://www.fq.math.ca/Papers1/51-3/AhlbachUsatineFrougnyPippenger.pdf). Linear-time, three-pass addition in Zeckendorf representation.

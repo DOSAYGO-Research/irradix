@@ -40,3 +40,26 @@ For an existing checkout of the pinned mathlib revision with its cache installed
 ```sh
 lake env lean /absolute/path/to/irradix/research/lean/PhiPacking.lean
 ```
+
+## Arithmetic companion
+
+[PhiArithmetic.lean](PhiArithmetic.lean) additionally proves the integer
+carry invariant used by the [digit adder](../phi_arithmetic.py).
+`run_value` expresses the final coefficient sum as Fibonacci weights;
+`weighted_difference` proves linearity for aligned digit columns; and
+`addition_iff` proves that the final condition `u+v=1` is equivalent to
+`a+b=c`, assuming the augmented words have weights `a+1`, `b+1`, and `c+1`.
+
+This source also compiled successfully with the pinned toolchain, without
+warnings, errors, or `sorryAx`. See [arithmetic-verification.txt](arithmetic-verification.txt).
+`lake build` builds both companions. The finite carry bound, graph trimming,
+canonical augmentation identity, incrementer, bounded-delay obstruction,
+and Python path recovery are outside this formal proof; written proofs
+and executable checks are in [ARITHMETIC.md](../ARITHMETIC.md).
+
+`multiply_run_value` proves scaled Fibonacci Horner evaluation, and
+`multiplication_value` proves that subtracting the augmentation offset
+gives the integer product. `multiplication_initial` verifies the initial
+state used after reading the prefixed one. These are integer-value
+invariants; the Python multiplier's calls to the digit adder and sign
+handling are covered by written arguments and executable checks.
