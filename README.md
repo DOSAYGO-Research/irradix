@@ -1,10 +1,18 @@
 # Properties of a Novel Binary Representation of Integers using Base $\phi$
 
+> **[Read the proof (PDF, 5 pages)](output/pdf/phi-proof.pdf)**
+>
+> Why `101` never occurs: the complete even-gap theorem, proved in Lean, with exact algorithms and packing consequences.
+
+[TeX source](output/pdf/phi-proof.tex) · [Verified Lean proof](research/lean/PhiPacking.lean) · [Verification and build instructions](research/lean/README.md) · [Optimizations and measurements](research/PHI_ANALYSIS.md)
+
+**Proof and updated analysis (September 2026):** in exact arithmetic, the positive representations are precisely the words beginning with `1` whose zero runs between successive ones have even length. Thus `101` is forbidden, along with every `1` + odd number of zeros + `1`. The research notes include exact Fibonacci-based algorithms and reproducible measurements. They correct the historical positional-value, prime-density, and compression interpretations below.
+
 ## Introduction
 
 This project explores a novel method for encoding integers using a representation based on the golden ratio ($\phi$), known as the irrational base $\phi$. This encoding method leverages the unique mathematical properties of $\phi$ to create a binary-like representation that inherently avoids certain binary sequences. The exploration focuses on analyzing the characteristics of this representation, particularly when reinterpreted as standard binary numbers, and the unexpected findings related to prime density in the transformed number set.
 
-It's conjectured the binary sequence `101` never occurs in this representation. This has been experimentally verified on millions of values.
+The binary sequence `101` never occurs in the exact representation. This is now [proved as a corollary of the even-gap theorem](output/pdf/phi-proof.pdf), strengthening the earlier experimental evidence.
 
 You can run the available tests on this function by cloning this repository, installing the required dependencies and running:
 
@@ -192,4 +200,3 @@ The Python API provided here leverages the mathematical properties of the golden
 - **`encode(nums)`**: Packs a list of arbitrarily-sized integers using the base $\phi$ encoding scheme. This function concatenates the encoded integers, handles padding, and converts the final sequence into an array of bytes.
 
 - **`decode(chunks)`**: Unpacks a sequence of encoded integers from an input of bytes, by reconstructing the original sequence, and decoding it back into the list of integers.
-

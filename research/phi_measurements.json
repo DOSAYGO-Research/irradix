@@ -1,0 +1,105 @@
+{
+  "checks": {
+    "no_101_and_monotonic_values": 100001,
+    "signed_roundtrip_magnitudes": 10001,
+    "fibonacci_length_thresholds": 500,
+    "sequences_per_experimental_codec": 4369
+  },
+  "benchmarks": [
+    {
+      "dataset": "uniform_8_bit",
+      "count": 1000,
+      "raw_payload_bits": 8000,
+      "irradix_bits": 15472,
+      "l1_bits": 20008,
+      "guarded_phi_bits": 15072,
+      "fibonacci_bits": 12056,
+      "elias_delta_bits": 14016,
+      "vbyte_bits": 16000
+    },
+    {
+      "dataset": "uniform_32_bit",
+      "count": 1000,
+      "raw_payload_bits": 32000,
+      "irradix_bits": 49944,
+      "l1_bits": 43008,
+      "guarded_phi_bits": 49624,
+      "fibonacci_bits": 46624,
+      "elias_delta_bits": 42000,
+      "vbyte_bits": 40000
+    },
+    {
+      "dataset": "uniform_256_bit",
+      "count": 1000,
+      "raw_payload_bits": 256000,
+      "irradix_bits": 372504,
+      "l1_bits": 271008,
+      "guarded_phi_bits": 372344,
+      "fibonacci_bits": 369344,
+      "elias_delta_bits": 272000,
+      "vbyte_bits": 296000
+    },
+    {
+      "dataset": "uniform_512_bit",
+      "count": 1000,
+      "raw_payload_bits": 512000,
+      "irradix_bits": 741488,
+      "l1_bits": 533008,
+      "guarded_phi_bits": 741008,
+      "fibonacci_bits": 738008,
+      "elias_delta_bits": 530000,
+      "vbyte_bits": 592000
+    },
+    {
+      "dataset": "decimal_50_to_100_digits",
+      "count": 1000,
+      "raw_payload_bits": 248161,
+      "irradix_bits": 361216,
+      "l1_bits": 264240,
+      "guarded_phi_bits": 360896,
+      "fibonacci_bits": 357896,
+      "elias_delta_bits": 263072,
+      "vbyte_bits": 286984
+    }
+  ],
+  "prime_measurements": {
+    "count": 1000,
+    "max_mapped_value": 8258,
+    "original_primes": 168,
+    "mapped_primes": 94,
+    "mapped_odd_count": 382,
+    "naive_log_expected_count": 139.79320863419855,
+    "parity_adjusted_heuristic_count": 107.28199899596778
+  },
+  "legacy": {
+    "small_encodings_agree": 10001,
+    "precision_cases": [
+      {
+        "input": "9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999",
+        "exact_encoding_matches": false,
+        "legacy_roundtrip_matches": false
+      },
+      {
+        "input": "10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "exact_encoding_matches": false,
+        "legacy_roundtrip_matches": false
+      },
+      {
+        "input": "10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001",
+        "exact_encoding_matches": true,
+        "legacy_roundtrip_matches": true
+      },
+      {
+        "input": "100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000012345",
+        "exact_encoding_matches": false,
+        "legacy_roundtrip_matches": false
+      }
+    ],
+    "timing_100_values_256_bits": {
+      "legacy_seconds_best_of_3": 0.49289933405816555,
+      "exact_seconds_best_of_3": 0.043895083013921976,
+      "fibonacci_seconds_best_of_3": 0.0076751250308007
+    },
+    "exact_arithmetic_legacy_framing_roundtrips": "passed"
+  }
+}

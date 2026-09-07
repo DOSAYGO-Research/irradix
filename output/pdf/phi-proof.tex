@@ -1,0 +1,343 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype,booktabs}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small Irradix: the even-gap theorem}
+\fancyhead[R]{\small Mathematical analysis}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{14pt}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}
+\newcommand{\ph}{\varphi}
+\newcommand{\fl}[1]{\left\lfloor #1\right\rfloor}
+\newcommand{\cl}[1]{\left\lceil #1\right\rceil}
+\newcommand{\fr}[1]{\left\{#1\right\}}
+\newcommand{\E}{\mathcal E}
+\title{Why Irradix Never Contains \texttt{101}\\[5pt]
+\large A stronger characterization, a proof, and exact algorithms}
+\author{Analysis of the \texttt{irradix} repository}
+\date{September 7, 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+The exact integer-quotient version of this repository's golden-ratio
+encoding has a complete and simple description: its positive codewords
+are exactly the binary strings beginning with \texttt{1} in which every
+run of zeros between successive ones has even length. Thus \texttt{101}
+is forbidden, as are \texttt{10001}, \texttt{1000001}, and all longer
+odd-zero gaps. The proof comes from a contracting, sign-reversing map
+whose fixed point is $\ph^{-2}$. We derive the Fibonacci count of
+codewords, an exact integer-only encoder, and the practical consequences
+for packing. Finite-precision implementations are distinguished from
+the mathematical encoding throughout.
+\end{abstract}
+
+\section{The precise object being proved}
+Put $\ph=(1+\sqrt5)/2$. For a nonnegative integer $n$, the code's
+modulo operation, interpreted in exact arithmetic, performs
+\begin{equation}\label{eq:forward}
+q=\fl{n/\ph},\qquad d=\fl{n-\ph q},\qquad
+\E(n)=\E(q)\,d.
+\end{equation}
+Use the empty word for $\E(0)$ while recursing. The public representation
+of zero is the special string \texttt{0}. For positive inputs the recursion
+terminates because $0\le q<n$, and $d\in\{0,1\}$ because
+$0\le n-\ph q<\ph<2$.
+
+This is \emph{not} the ordinary positional base-$\ph$ expansion.
+For example, the repository represents $2$ by \texttt{10}, whose ordinary
+positional value would be $\ph$, not $2$. The correct inverse is
+\begin{equation}\label{eq:inverse}
+A(q)=\cl{\ph q},\qquad n=A(q)+d.
+\end{equation}
+Indeed, since $n$ is an integer,
+$\fl{n-\ph q}=n-\cl{\ph q}$. Decoding therefore applies a ceiling
+at \emph{each} digit. One ceiling around a sum of powers is not equivalent.
+
+\begin{definition}
+A digit $d$ is admissible after a prefix with decoded value $q$ if
+$\fl{(A(q)+d)/\ph}=q$.
+\end{definition}
+Appending \texttt{0} is always admissible. For $q>0$, $\ph q$ is
+irrational; write $t(q)=\fr{\ph q}\in(0,1)$. Then
+\begin{equation}\label{eq:admission}
+\texttt{1}\text{ is admissible after }q
+\quad\Longleftrightarrow\quad t(q)>2-\ph.
+\end{equation}
+To see this, $A(q)=\ph q+1-t(q)$, so the upper quotient bound is
+$\ph q+2-t(q)<\ph(q+1)$. The lower quotient bound is automatic.
+At $q=0$, the first \texttt{1} is admissible and produces $q=1$.
+
+\section{The phase identity: where the golden ratio enters}
+Set
+\[
+a=\ph-1=\ph^{-1},\qquad c=1-a=2-\ph=a^2.
+\]
+Thus $0<a<1$, $a^2+a=1$, and $c\approx0.381966$.
+The threshold in \eqref{eq:admission} is exactly $c$.
+
+\begin{lemma}[Effect of appending a zero]\label{lem:zero}
+For every positive integer $q$,
+\[
+t(A(q))=a(1-t(q)).
+\]
+Equivalently, the zero transition $T(t)=a(1-t)$ satisfies
+\begin{equation}\label{eq:reflection}
+T(t)-c=-a(t-c).
+\end{equation}
+\end{lemma}
+\begin{proof}
+Let $m=\fl{\ph q}$, so $A(q)=m+1$ and $\ph q=m+t$.
+Using $\ph^2=\ph+1$ gives
+\[
+\ph A(q)=(m+q+1)+a(1-t).
+\]
+The parenthesized expression is an integer and $0<a(1-t)<1$,
+so the final term is the fractional part. Finally,
+$a(1-c)=c$ follows from $a^2+a=1$, proving
+\eqref{eq:reflection}.
+\end{proof}
+
+\begin{lemma}[Effect of appending a one]\label{lem:one}
+After any admissible \texttt{1}, the phase lies in $[a,1)$, hence
+strictly above $c$.
+\end{lemma}
+\begin{proof}
+The initial \texttt{1} has phase $t(1)=\ph-1=a>c$.
+For a positive prefix, an admissible \texttt{1} means $t>c$.
+From the previous calculation,
+\[
+\ph(A(q)+1)=(m+q+2)+a(2-t).
+\]
+Here $a<a(2-t)<1$: the upper bound is precisely $t>c$, since
+$a(2-c)=1$. Thus the new fractional part is $a(2-t)$.
+\end{proof}
+
+\begin{theorem}[The even-gap characterization]\label{thm:even}
+A nonempty binary word is $\E(n)$ for some positive integer $n$
+if and only if it starts with \texttt{1} and every zero run between
+successive \texttt{1}s has even length. Trailing zeros may have either parity.
+\end{theorem}
+\begin{proof}
+Immediately after a \texttt{1}, let the phase be $t_0>c$.
+After $j$ zeros, repeated use of \eqref{eq:reflection} gives
+\begin{equation}\label{eq:iterate}
+t_j-c=(-a)^j(t_0-c).
+\end{equation}
+Because $a>0$, this is positive for even $j$ and negative for odd $j$.
+By \eqref{eq:admission}, the next \texttt{1} is admissible exactly
+when $j$ is even. This proves necessity.
+
+Conversely, start with \texttt{1} and read a word satisfying the stated
+condition. Every zero is admissible. Before each subsequent one the
+number of zeros since the previous one is even, so \eqref{eq:iterate}
+makes that one admissible as well. Each inverse step has exactly the
+quotient and remainder in \eqref{eq:forward}; reversing the steps
+therefore recovers the word from its decoded integer. This proves
+sufficiency. No further digit needs to follow trailing zeros, so they
+have no parity restriction.
+\end{proof}
+
+\begin{corollary}
+For every $j\ge0$, no exact codeword contains $1\,0^{2j+1}\,1$.
+In particular, \texttt{101} never occurs.
+\end{corollary}
+
+\paragraph{A short version of the proof.}
+A \texttt{1} puts the phase above $c$; a \texttt{0} reflects it below
+$c$; a following \texttt{1} would require it to be above $c$.
+That contradiction excludes \texttt{101}. Equation
+\eqref{eq:reflection} is the exact reason $\ph^2=\ph+1$ matters.
+Irrationality alone does not imply this property: for base $\sqrt2$,
+the same quotient algorithm maps $4$ to \texttt{101}.
+We do not claim here that $\ph$ is the only real base with this exclusion.
+
+\section{Fibonacci counts and an exact arithmetic replacement}
+The permitted suffixes after the initial \texttt{1} are precisely
+\[
+(\texttt{1}\mid\texttt{00})^*(\varepsilon\mid\texttt{0}).
+\]
+Equivalently, remember whether the zero count since the last one is even
+or odd. From even, a one stays even and a zero goes odd; from odd, only
+a zero is permitted, returning to even. This is the classical
+\emph{even shift} language \cite{glasscock}. The equivalence between
+the repository's quotient algorithm and that language was established
+above; the language itself is not new.
+
+Let $F_0=0$, $F_1=1$, and $F_{j+2}=F_{j+1}+F_j$.
+There are exactly $F_{k+1}$ positive codewords of length $k$.
+Indeed, if $C_r$ counts suffixes of length $r$ from the even state,
+then $C_0=1$, $C_1=2$, and $C_r=C_{r-1}+C_{r-2}$.
+Consequently
+\begin{equation}\label{eq:length}
+|\E(n)|=k\quad\Longleftrightarrow\quad
+F_{k+2}-1\le n\le F_{k+3}-2.
+\end{equation}
+Here is an independent verification that these counts occur in integer
+order. The quotient $\fl{n/\ph}$ is nondecreasing in $n$; each quotient
+has either a zero child or a zero child followed by a one child.
+Induction therefore shows that the binary values of $\E(n)$ are strictly
+increasing. Summing the length counts yields \eqref{eq:length}.
+
+\begin{center}
+\begin{tabular}{rrrr}
+\toprule
+Length $k$ & Smallest $n$ & Largest $n$ & Codewords \\
+\midrule
+1&1&1&1\\2&2&3&2\\3&4&6&3\\4&7&11&5\\5&12&19&8\\6&20&32&13\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{A direct Fibonacci formula}
+For a valid word $w=1d_{k-2}\cdots d_0$ of length $k$,
+\begin{equation}\label{eq:weights}
+\boxed{\quad D(w)=F_{k+2}-1+\sum_{j=0}^{k-2}d_jF_{j+1}.\quad}
+\end{equation}
+To prove this, rank the length-$k$ words lexicographically, starting at
+rank zero. Whenever a one is chosen with $r$ positions remaining,
+the skipped zero branch contains exactly $F_r$ completions. At an odd
+state a zero is forced and skips nothing. Thus the rank is the sum in
+\eqref{eq:weights}; add the smallest integer of that length.
+For example, \texttt{1001} decodes to $F_6-1+F_1=7+1=8$.
+
+Encoding reverses this ranking procedure: locate $k$ using
+\eqref{eq:length}, subtract $F_{k+2}-1$, and at each even state choose
+zero if the remaining rank is below $F_r$, otherwise choose one and
+subtract $F_r$. At an odd state output the forced zero.
+This uses $O(k)$ integer additions, comparisons and subtractions, with
+$O(k)$ Fibonacci table entries. This is an arithmetic-operation count;
+large-integer operations are not constant-time.
+
+\subsection{An independent square-root reference}
+An exact version of the original algorithm is also available from
+integer square roots:
+\[
+\fl{n/\ph}=\frac{\operatorname{isqrt}(5n^2)-n}{2}\ \text{rounded down},
+\]
+\[
+A(0)=0,\qquad
+A(q)=\fl{\frac{q+\operatorname{isqrt}(5q^2)}{2}}+1\quad(q>0).
+\]
+These formulas follow from $\ph=(1+\sqrt5)/2$ and the fact that
+$\sqrt5\,q$ is irrational for positive integer $q$. They provide an
+independent reference against which the faster Fibonacci implementation
+can be tested, without choosing floating-point precision.
+
+\section{Consequences for packing}
+\paragraph{The expansion is structural.}
+The Fibonacci counts imply
+\[
+|\E(n)|=\log_\ph n+O(1)
+=1.440420\ldots\log_2n+O(1).
+\]
+This is not compression of unrestricted integers. Its redundancy buys
+a constrained bit language. The even-shift transition matrix
+$\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$ has
+largest eigenvalue $\ph$, explaining the same constant combinatorially.
+
+\paragraph{If only \texttt{101} must be forbidden, a denser code is possible.}
+Allowing all \texttt{101}-free words discards the extra odd-gap
+restrictions. Its three-state prefix automaton has characteristic
+polynomial $\lambda^3-2\lambda^2+\lambda-1$ and largest root
+$\lambda\approx1.754878$. Enumerative block coding can approach
+$1/\log_2\lambda\approx1.232$ output bits per input bit before framing.
+This is a different code and requires a separate boundary design.
+
+\paragraph{Delimiters still need boundary handling.}
+The absence of \texttt{101} inside each payload does not alone prove that
+joining payloads with \texttt{101} is safe: a payload ending in
+\texttt{10} can create an earlier crossing occurrence. The repository
+uses doubling and a suffix repair. A simple alternative prototype is
+\[
+\E(n+1)\ \texttt{00}\ \texttt{101}.
+\]
+The two guard zeros prevent a premature crossing delimiter; decoding
+splits at \texttt{101}, removes exactly two zeros, validates the payload,
+and subtracts one. It costs five framing bits per value, including a
+terminal delimiter. It is a new format, not a compatible replacement.
+Neither this delimiter nor the even-gap rule is a checksum.
+
+\paragraph{Length-first packing remains the useful large-integer variant.}
+Writing raw binary payloads and encoding only their lengths changes
+the per-value cost to $B+O(\log B)$ for a $B$-bit integer. That explains
+the repository's large-integer advantage over VByte; direct Irradix
+still pays approximately $1.44B$. Elias delta and Fibonacci coding are
+relevant established baselines \cite{apostolico,compression}.
+For a deterministic sample of 1,000 integers of 50--100 decimal digits,
+the reproduced storage counts were:
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+Method & Stored bits, including byte rounding\\
+\midrule
+Raw payload only (not a framed code)&248,161\\
+Direct Irradix&361,216\\
+Length-first Irradix&264,240\\
+Elias delta, applied to $n+1$&263,072\\
+VByte&286,984\\
+\bottomrule
+\end{tabular}
+\end{center}
+These are sample-dependent sizes, not an entropy bound or a throughput
+comparison. If many lengths repeat, block widths or compressed length
+runs are further opportunities.
+
+\paragraph{The prime-density claim needs a different baseline.}
+Interpreting codewords as binary gives a sparse, biased integer set.
+Among $n=1,\ldots,1000$ the repository's 94 mapped primes are reproducible,
+but only 382 mapped values are odd. Asymptotically the odd proportion is
+$1-1/\ph=\ph^{-2}$: each quotient contributes one zero-ending child,
+and any second child ends in one. Prime density scales roughly with
+inverse logarithmic magnitude, not inverse magnitude; dividing 16.8\%
+by eight is unjustified. A parity-adjusted logarithmic heuristic gives
+about 107 primes for this sample, rather than 21. This is a heuristic,
+not a prime-distribution theorem; other residue biases remain.
+
+\section{Verification and scope}
+The mathematical theorem concerns \emph{exact} quotient and ceiling
+operations. The repository's fixed-precision \texttt{mpmath} code and
+its C++ floating-point version are approximations. The reproduced run
+finds round-trip failures near $10^{100}$ at the configured precision
+of 100 decimal digits. Such numerical failures do not contradict the
+theorem, but they matter for an implementation claiming arbitrary-size
+integers.
+
+The accompanying Python reference independently checks the original
+integer-square-root construction and the Fibonacci construction on
+100,001 values; checks 500 Fibonacci length thresholds; and tests
+4,369 short sequences per experimental codec. The machine-checked Lean companion
+formalizes the exact ceiling-step model, the phase transition argument,
+and the forbidden odd-gap result. Its build instructions and precise
+theorem inventory are in \texttt{research/lean/README.md}.
+The Python implementation and the packing formats themselves are not
+formally verified by that Lean proof. Numerical tests are supplementary
+evidence, not a substitute for the all-integers theorem.
+
+\begin{thebibliography}{9}
+\bibitem{glasscock}
+D. Glasscock, J. Moreira, and F. K. Richter,
+\emph{Additive and geometric transversality of fractal sets in the integers},
+Journal of the London Mathematical Society (2024).
+\href{https://doi.org/10.1112/jlms.12902}{doi:10.1112/jlms.12902}.
+The even shift is discussed as a binary digit restriction.
+
+\bibitem{apostolico}
+A. Apostolico and A. S. Fraenkel,
+\emph{Robust Transmission of Unbounded Strings Using Fibonacci
+Representations}, Purdue technical report 85-545 (1985).
+\url{https://docs.lib.purdue.edu/cstech/464/}.
+
+\bibitem{compression}
+D. A. Lelewer and D. S. Hirschberg,
+\emph{Data Compression}, section 3, universal codes.
+\url{https://ics.uci.edu/~dhirschb/pubs/DC-Sec3.html}.
+\end{thebibliography}
+\end{document}

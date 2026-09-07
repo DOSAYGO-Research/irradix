@@ -1,0 +1,14 @@
+Verified 2026-09-07; process exit code 0.
+Lean: leanprover/lean4:v4.34.0-rc2
+mathlib: 0383a80e644c8b14e66fd137516001534006077f
+PhiPacking.lean SHA-256: 56046628a42eb4d719c9d2a43b6cd1643ee22e16dafe34766fb0c2ffa2ba732a
+Working directory: /tmp/irradix-mathlib
+Command:
+ELAN_HOME=/tmp/irradix-elan /tmp/irradix-elan/bin/lake env lean /Users/crisd/Creative/irradix/research/lean/PhiPacking.lean
+
+'PhiPacking.no_101' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PhiPacking.no_odd_gap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PhiPacking.trace_iff_accept' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PhiPacking.quotient_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PhiPacking.exists_encoded' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PhiPacking.language_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
