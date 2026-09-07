@@ -1,0 +1,289 @@
+{
+  "checks": {
+    "length_formulas": 100,
+    "enumerated_max_length": 13,
+    "enumerated_moduli": [
+      2,
+      3,
+      5,
+      6,
+      7,
+      11,
+      13,
+      35
+    ],
+    "prime_sieve_inputs": 100000,
+    "sieve_max": 6692032
+  },
+  "candidate_density_blocks": [
+    {
+      "length": 13,
+      "inputs": 985,
+      "coprime_to_6": 233,
+      "candidate_fraction": 0.2365482233502538
+    },
+    {
+      "length": 14,
+      "inputs": 1595,
+      "coprime_to_6": 233,
+      "candidate_fraction": 0.14608150470219436
+    },
+    {
+      "length": 29,
+      "inputs": 2178307,
+      "coprime_to_6": 514229,
+      "candidate_fraction": 0.23606819424442926
+    },
+    {
+      "length": 30,
+      "inputs": 3524576,
+      "coprime_to_6": 514229,
+      "candidate_fraction": 0.14589811653940787
+    },
+    {
+      "length": 59,
+      "inputs": 4052739537879,
+      "coprime_to_6": 956722026041,
+      "candidate_fraction": 0.23606797749990618
+    },
+    {
+      "length": 60,
+      "inputs": 6557470319840,
+      "coprime_to_6": 956722026041,
+      "candidate_fraction": 0.14589803375035995
+    }
+  ],
+  "fixed_modulus_uniformity": [
+    {
+      "modulus": 5,
+      "length": 20,
+      "max_relative_deviation": 0.0026493696327425545
+    },
+    {
+      "modulus": 5,
+      "length": 60,
+      "max_relative_deviation": 3.553276090227959e-11
+    },
+    {
+      "modulus": 5,
+      "length": 100,
+      "max_relative_deviation": 2.599678277711675e-19
+    },
+    {
+      "modulus": 7,
+      "length": 20,
+      "max_relative_deviation": 0.004019733235885255
+    },
+    {
+      "modulus": 7,
+      "length": 60,
+      "max_relative_deviation": 9.438140086852692e-10
+    },
+    {
+      "modulus": 7,
+      "length": 100,
+      "max_relative_deviation": 4.297442668109595e-16
+    },
+    {
+      "modulus": 11,
+      "length": 20,
+      "max_relative_deviation": 0.003928375662342408
+    },
+    {
+      "modulus": 11,
+      "length": 60,
+      "max_relative_deviation": 5.230103009211939e-11
+    },
+    {
+      "modulus": 11,
+      "length": 100,
+      "max_relative_deviation": 3.8210036430795766e-19
+    },
+    {
+      "modulus": 13,
+      "length": 20,
+      "max_relative_deviation": 0.017814726840855107
+    },
+    {
+      "modulus": 13,
+      "length": 60,
+      "max_relative_deviation": 1.5531409714836859e-07
+    },
+    {
+      "modulus": 13,
+      "length": 100,
+      "max_relative_deviation": 1.7270429930748152e-12
+    },
+    {
+      "modulus": 35,
+      "length": 20,
+      "max_relative_deviation": 0.04238991412388087
+    },
+    {
+      "modulus": 35,
+      "length": 60,
+      "max_relative_deviation": 1.9834706531256082e-07
+    },
+    {
+      "modulus": 35,
+      "length": 100,
+      "max_relative_deviation": 1.231179063779203e-12
+    }
+  ],
+  "prime_samples": [
+    {
+      "inputs": 19,
+      "max_binary_image": 31,
+      "mapped_primes": 5,
+      "coprime_to_6": 5,
+      "mod_6_logarithmic_heuristic": 6.366187273293884
+    },
+    {
+      "inputs": 32,
+      "max_binary_image": 63,
+      "mapped_primes": 5,
+      "coprime_to_6": 5,
+      "mod_6_logarithmic_heuristic": 6.366187273293884
+    },
+    {
+      "inputs": 53,
+      "max_binary_image": 127,
+      "mapped_primes": 11,
+      "coprime_to_6": 13,
+      "mod_6_logarithmic_heuristic": 11.645654459465765
+    },
+    {
+      "inputs": 87,
+      "max_binary_image": 255,
+      "mapped_primes": 11,
+      "coprime_to_6": 13,
+      "mod_6_logarithmic_heuristic": 11.645654459465765
+    },
+    {
+      "inputs": 100,
+      "max_binary_image": 295,
+      "mapped_primes": 12,
+      "coprime_to_6": 18,
+      "mod_6_logarithmic_heuristic": 14.31565828492482
+    },
+    {
+      "inputs": 142,
+      "max_binary_image": 511,
+      "mapped_primes": 19,
+      "coprime_to_6": 34,
+      "mod_6_logarithmic_heuristic": 22.27103859681692
+    },
+    {
+      "inputs": 231,
+      "max_binary_image": 1023,
+      "mapped_primes": 19,
+      "coprime_to_6": 34,
+      "mod_6_logarithmic_heuristic": 22.27103859681692
+    },
+    {
+      "inputs": 375,
+      "max_binary_image": 2047,
+      "mapped_primes": 40,
+      "coprime_to_6": 89,
+      "mod_6_logarithmic_heuristic": 44.82390118315791
+    },
+    {
+      "inputs": 608,
+      "max_binary_image": 4095,
+      "mapped_primes": 40,
+      "coprime_to_6": 89,
+      "mod_6_logarithmic_heuristic": 44.82390118315791
+    },
+    {
+      "inputs": 985,
+      "max_binary_image": 8191,
+      "mapped_primes": 94,
+      "coprime_to_6": 233,
+      "mod_6_logarithmic_heuristic": 94.45962574667992
+    },
+    {
+      "inputs": 1000,
+      "max_binary_image": 8258,
+      "mapped_primes": 94,
+      "coprime_to_6": 233,
+      "mod_6_logarithmic_heuristic": 94.45962574667992
+    },
+    {
+      "inputs": 1595,
+      "max_binary_image": 16383,
+      "mapped_primes": 94,
+      "coprime_to_6": 233,
+      "mod_6_logarithmic_heuristic": 94.45962574667992
+    },
+    {
+      "inputs": 2582,
+      "max_binary_image": 32767,
+      "mapped_primes": 212,
+      "coprime_to_6": 610,
+      "mod_6_logarithmic_heuristic": 206.54504689753168
+    },
+    {
+      "inputs": 4179,
+      "max_binary_image": 65535,
+      "mapped_primes": 212,
+      "coprime_to_6": 610,
+      "mod_6_logarithmic_heuristic": 206.54504689753168
+    },
+    {
+      "inputs": 6763,
+      "max_binary_image": 131071,
+      "mapped_primes": 466,
+      "coprime_to_6": 1597,
+      "mod_6_logarithmic_heuristic": 464.5290576078232
+    },
+    {
+      "inputs": 10000,
+      "max_binary_image": 245984,
+      "mapped_primes": 466,
+      "coprime_to_6": 1597,
+      "mod_6_logarithmic_heuristic": 464.5290576078232
+    },
+    {
+      "inputs": 10944,
+      "max_binary_image": 262143,
+      "mapped_primes": 466,
+      "coprime_to_6": 1597,
+      "mod_6_logarithmic_heuristic": 464.5290576078232
+    },
+    {
+      "inputs": 17709,
+      "max_binary_image": 524287,
+      "mapped_primes": 1103,
+      "coprime_to_6": 4181,
+      "mod_6_logarithmic_heuristic": 1067.1288483231929
+    },
+    {
+      "inputs": 28655,
+      "max_binary_image": 1048575,
+      "mapped_primes": 1103,
+      "coprime_to_6": 4181,
+      "mod_6_logarithmic_heuristic": 1067.1288483231929
+    },
+    {
+      "inputs": 46366,
+      "max_binary_image": 2097151,
+      "mapped_primes": 2520,
+      "coprime_to_6": 10946,
+      "mod_6_logarithmic_heuristic": 2491.242927072555
+    },
+    {
+      "inputs": 75023,
+      "max_binary_image": 4194303,
+      "mapped_primes": 2520,
+      "coprime_to_6": 10946,
+      "mod_6_logarithmic_heuristic": 2491.242927072555
+    },
+    {
+      "inputs": 100000,
+      "max_binary_image": 6692032,
+      "mapped_primes": 4319,
+      "coprime_to_6": 20486,
+      "mod_6_logarithmic_heuristic": 4342.724679434869
+    }
+  ]
+}

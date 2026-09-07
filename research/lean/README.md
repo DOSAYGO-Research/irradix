@@ -33,7 +33,7 @@ The closing `#print axioms` commands expose the logical dependencies of the prin
 
 ## Scope
 
-This formalizes the exact mathematical algorithm and its bit language. It does not formally verify Python/C++ floating-point execution, the integer-square-root or Fibonacci implementations, byte packing, delimiter repairs, timing measurements, the Fibonacci counting formula, or the prime-density discussion. Those are distinguished in the [readable PDF](../../output/pdf/phi-proof.pdf) and independently exercised where applicable by [analyze_phi.py](../analyze_phi.py).
+This formalizes the exact mathematical algorithm and its bit language. It does not formally verify Python/C++ floating-point execution, the integer-square-root or Fibonacci implementations, byte packing, delimiter repairs, timing measurements, the Fibonacci counting formula, the negative-phi correspondence, the residue and equidistribution theorems, or the prime-density discussion. Those are distinguished in the [readable PDF](../../output/pdf/phi-proof.pdf) and independently exercised where applicable by [analyze_phi.py](../analyze_phi.py).
 
 For an existing checkout of the pinned mathlib revision with its cache installed, the source can also be checked directly from that checkout:
 

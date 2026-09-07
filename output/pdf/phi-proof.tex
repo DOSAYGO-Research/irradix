@@ -21,7 +21,7 @@
 \newcommand{\fr}[1]{\left\{#1\right\}}
 \newcommand{\E}{\mathcal E}
 \title{Why Irradix Never Contains \texttt{101}\\[5pt]
-\large A stronger characterization, a proof, and exact algorithms}
+\large Exact algorithms, negative bases, and arithmetic of the even shift}
 \author{Analysis of the \texttt{irradix} repository}
 \date{September 7, 2026}
 \begin{document}
@@ -35,7 +35,11 @@ is forbidden, as are \texttt{10001}, \texttt{1000001}, and all longer
 odd-zero gaps. The proof comes from a contracting, sign-reversing map
 whose fixed point is $\ph^{-2}$. We derive the Fibonacci count of
 codewords, an exact integer-only encoder, and the practical consequences
-for packing. Finite-precision implementations are distinguished from
+for packing. An explicit negative-base correspondence explains the same
+Fibonacci weights. Residue formulas force prime-free length blocks;
+a separate theorem gives equidistribution at fixed moduli coprime to 6.
+Prime counts are compared with a heuristic, not a prime asymptotic.
+Finite-precision implementations are distinguished from
 the mathematical encoding throughout.
 \end{abstract}
 
@@ -167,7 +171,7 @@ The permitted suffixes after the initial \texttt{1} are precisely
 Equivalently, remember whether the zero count since the last one is even
 or odd. From even, a one stays even and a zero goes odd; from odd, only
 a zero is permitted, returning to even. This is the classical
-\emph{even shift} language \cite{glasscock}. The equivalence between
+\emph{even shift} language \cite{lind,pivato,glasscock}. The equivalence between
 the repository's quotient algorithm and that language was established
 above; the language itself is not new.
 
@@ -287,19 +291,225 @@ VByte&286,984\\
 \end{tabular}
 \end{center}
 These are sample-dependent sizes, not an entropy bound or a throughput
-comparison. If many lengths repeat, block widths or compressed length
+comparison. The repository baseline is ordinary VByte, not the
+Stream VByte implementation studied in \cite{streamvbyte}. If many lengths repeat, block widths or compressed length
 runs are further opportunities.
 
-\paragraph{The prime-density claim needs a different baseline.}
-Interpreting codewords as binary gives a sparse, biased integer set.
-Among $n=1,\ldots,1000$ the repository's 94 mapped primes are reproducible,
-but only 382 mapped values are odd. Asymptotically the odd proportion is
-$1-1/\ph=\ph^{-2}$: each quotient contributes one zero-ending child,
-and any second child ends in one. Prime density scales roughly with
-inverse logarithmic magnitude, not inverse magnitude; dividing 16.8\%
-by eight is unjustified. A parity-adjusted logarithmic heuristic gives
-about 107 primes for this sample, rather than 21. This is a heuristic,
-not a prime-distribution theorem; other residue biases remain.
+\section{The negative-golden-ratio correspondence}
+The even shift predates this project \cite{lind,pivato}. More specifically,
+Frougny and Lai \cite{negative}, Examples 2--3, explicitly identify the
+$(-\ph)$-shift with the even shift. We now relate the repository's
+integer construction to that negative-base expansion. This is a derivation
+for this map, not a claim of novelty priority.
+
+Put $a=\ph-1$, $c=2-\ph$, and, for $n\ge1$, define
+\[
+x(n)=c-\fr{\ph n}=(\fl{\ph n}+2)-(n+1)\ph\in(-a,c).
+\]
+The greedy negative-base map on $[-a,c)$ has digit and remainder
+\[
+D_-(x)=\fl{-\ph x+a},\qquad T_-(x)=-\ph x-D_-(x).
+\]
+\begin{theorem}[An exact negative-base identity]
+If $\E(n)=d_{k-1}\cdots d_0$, the greedy fractional expansion of $x(n)$
+in base $-\ph$ is
+\[
+\boxed{\quad x(n)=(.\,d_0d_1\cdots d_{k-1}1\,000\cdots)_{-\ph}.\quad}
+\]
+\end{theorem}
+\begin{proof}
+For an admissible step $n=\cl{\ph q}+d$ with $q\ge1$, the phase identity
+gives $t(n)=a(1+d-t(q))$. Since $a(1-c)=c$, this becomes
+\[
+x(n)=-\frac{x(q)+d}{\ph}.
+\]
+Because $0<x(q)+a<1$, the next greedy digit is $d$ and the remainder
+is exactly $x(q)$. Thus the map reads the Irradix word from right to
+left until it reaches $n=1$. The boundary calculation is
+\[
+3-2\ph\ \xrightarrow{\ 1\ }\ -a\
+\xrightarrow{\ 1\ }\ 0\ \xrightarrow{\ 0\ }\ 0.
+\]
+The first digit here is the leading one of $\E(n)$; the second is the
+extra terminal one in the stated expansion. This also explains why the
+recurrence must not be extended naively through $n=0$.
+\end{proof}
+For example, $\E(2)=\texttt{10}$ and $x(2)=5-3\ph=(.011)_{-\ph}$.
+The positional expansion represents $x(n)$, not $n$.
+
+\paragraph{One quadratic algebra, two roles.}
+Let $\psi=1-\ph=-1/\ph$. The identity reads
+\[
+x(n)=\sum_{j=0}^{k-1}d_j\psi^{j+1}+\psi^{k+1}.
+\]
+Induction gives $\psi^r=F_{r+1}-F_r\ph$. Equating coefficients of $\ph$
+in the irrational basis $1,\ph$ yields
+\[
+n=F_{k+1}-1+\sum_{j=0}^{k-1}d_jF_{j+1},
+\]
+which is \eqref{eq:weights} because $d_{k-1}=1$.
+The graph matrix $\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$
+has eigenvalues $\ph$ and $\psi$: one controls growth of the language,
+the other is the contraction and reflection of its arithmetic phase.
+
+\section{Residues, prime-free blocks, and a corrected heuristic}
+Write $B(n)$ for the word $\E(n)$ interpreted as an ordinary binary
+integer. Primality here refers to $B(n)$, independently of primality of $n$.
+
+\begin{theorem}[Residue determined by length and trailing zeros]
+For a canonical word of length $k$ with $t$ trailing zeros,
+\[
+B(n)\equiv
+\begin{cases}
+0 & \text{if }k-t\text{ is even},\\
+(-1)^t & \text{if }k-t\text{ is odd}
+\end{cases}\pmod3.
+\]
+\end{theorem}
+\begin{proof}
+Let $r$ be the number of ones. Successive one-bit exponents differ by an
+odd number, since the intervening zero runs have even length. Their
+parities alternate, and $2^j\equiv(-1)^j\pmod3$. The contributions
+therefore cancel in pairs; if $r$ is odd, the remaining term is
+$(-1)^t$. The highest and lowest one-bit exponents are $k-1$ and $t$,
+so $r-1\equiv k-1-t\pmod2$, proving the statement.
+\end{proof}
+
+\begin{corollary}[Prime-free blocks]
+Every prime image $B(n)>3$ has odd binary length and is $1\pmod6$.
+For every even $k\ge4$, all inputs in
+\[
+[F_{k+2}-1,F_{k+3}-2]
+\]
+map to composite integers.
+\end{corollary}
+\begin{proof}
+An even image above 2 is composite. An odd image has $t=0$, so at even
+length it is divisible by 3, and at odd length it is $1\pmod3$.
+Use \eqref{eq:length} to obtain the input intervals.
+\end{proof}
+Examples of these intervals are $7$--$11$, $20$--$32$, $54$--$87$,
+$143$--$231$, $376$--$608$, and $986$--$1595$.
+
+\paragraph{The candidate proportion has no limit.}
+There are $F_{k-1}$ words ending in one at each length $k\ge2$:
+their final edge is the one-loop from the even state, and the number
+of paths ending at that state after $k-2$ steps is $F_{k-1}$.
+By the residue theorem, the count coprime to 6 is zero at even lengths
+and $F_{k-1}$ at odd lengths $k\ge3$. Include the length-one image 1,
+which is coprime to 6 but not prime. For $N_k=F_{k+3}-2$, summation gives
+\[
+C_k=\#\{n\le N_k:\gcd(B(n),6)=1\}
+=\begin{cases}F_k&k\text{ odd},\\F_{k-1}&k\text{ even}.\end{cases}
+\]
+The summation identity follows by telescoping
+$F_{2j}=F_{2j+1}-F_{2j-1}$. Hence $C_k/N_k$ tends to $\ph^{-3}$ along
+odd lengths and $\ph^{-4}$ along even lengths, approximately $23.61\%$
+and $14.59\%$. These distinct subsequential limits prove nonexistence of
+a density over all input prefixes. This concerns coprimality to 6, not
+a prime asymptotic.
+
+\subsection{Uniformity away from the local obstruction}
+\begin{theorem}[Fixed-modulus equidistribution]
+Fix a positive integer $m$ coprime to 6. Among canonical words of length
+$k$, each binary residue modulo $m$ has proportion tending to $1/m$.
+Convergence is exponential for each fixed $m$.
+\end{theorem}
+\begin{proof}
+Attach a residue to each zero-parity state. The transitions are
+\[
+(E,r)\xrightarrow{1}(E,2r+1),\quad
+(E,r)\xrightarrow{0}(O,2r),\quad
+(O,r)\xrightarrow{0}(E,2r),
+\]
+with all arithmetic modulo $m$. The case $m=1$ is immediate. Otherwise,
+let $L$ be the multiplicative order of 4 modulo $m$. The two E-to-E
+blocks \texttt{00} and \texttt{11} act as $r\mapsto4r$ and
+$r\mapsto4r+3$. Use $mL$ blocks. Their initial coefficient is 1 modulo
+$m$. At the $m$ positions having $0,L,\ldots,(m-1)L$ blocks remaining,
+choose either block; choose \texttt{00} elsewhere. Selecting \texttt{11}
+at $j$ of those positions gives $r+3j$. For $j=0,\ldots,m-1$ these
+cover all residues, since 3 is invertible. All E states communicate;
+invertibility of 2 connects every O state to them. The one-loop at
+$(E,-1)$ makes the graph aperiodic.
+
+Its adjacency matrix is thus primitive. Positive left and right
+eigenvectors are constant across residues, with state weights
+$(\ph,1)$, and direct multiplication gives eigenvalue $\ph$.
+This uses that $r\mapsto2r$ and $r\mapsto2r+1$ are permutations.
+Perron--Frobenius convergence from the initial state $(E,1)$ therefore
+gives equal limiting total weight to each residue. The remaining
+eigenvalues have modulus strictly smaller than $\ph$, which gives
+exponential convergence with constants depending on $m$.
+\end{proof}
+The same reasoning, restricted to the penultimate E state, proves
+uniformity conditional on a final one. This rules out persistent
+individual residue biases at each fixed prime at least 5. It provides
+no uniform error estimate as $m$ grows, so it does not prove a prime
+counting theorem.
+
+\subsection{Measurements and what remains conjectural}
+For $N\ge3$, a natural local heuristic is
+\[
+H(N)=2+\sum_{\substack{n\le N,\ B(n)>3\\B(n)\equiv1\pmod6}}
+\frac{3}{\log B(n)}.
+\]
+The 2 counts the exceptional primes 2 and 3. The factor 3 is the ordinary
+prime-density factor for the residue class 1 modulo 6, not a fitted
+parameter. Transferring this density to the restricted set is heuristic.
+\begin{center}
+\begin{tabular}{rrr}
+\toprule
+Inputs $1$ through $N$ & Exact mapped primes & $H(N)$\\
+\midrule
+100&12&14.32\\
+1,000&94&94.46\\
+10,000&466&464.53\\
+100,000&4,319&4,342.72\\
+\bottomrule
+\end{tabular}
+\end{center}
+These nested samples are not independent trials. The checked-in data
+also include complete length blocks, including the plateau of 94 primes
+from $N=985$ through $1595$. Dividing prime density by a magnitude
+expansion factor, as in the historical discussion, is unjustified;
+the logarithmic scale and residue restrictions both matter. Neither
+these experiments nor fixed-modulus uniformity establish infinitely
+many prime images. Maynard's restricted-decimal-digit theorem
+\cite{maynard} concerns different hypotheses and is not a theorem for
+this language.
+
+\section{Generalization and concrete further questions}
+Frougny and Lai's finite-transducer normalization results for negative
+Pisot bases \cite{negative} suggest an arithmetic implementation to
+pursue. For the coordinates above, direct expansion of fractional parts
+shows
+\[
+x(n+m)=x(n)+x(m)-c+\fl{\fr{\ph n}+\fr{\ph m}}.
+\]
+The correction is zero or one. An Irradix adder still needs explicit
+normalization, direction of reading, output length, and boundary
+handling; no such transducer is constructed here. Quantitative spectral
+bounds as the residue modulus grows are a separate target toward a
+sieve for prime images.
+
+\paragraph{A graph eigenvalue alone is insufficient.}
+Consider zero gaps divisible by 3. Its graph has return paths of lengths
+1 and 3, so the growth rate $\beta$ satisfies $\beta^3=\beta^2+1$.
+The positive root lies between $4/3$ and $3/2$. Repeated floor quotient
+encoding gives quotients $4\to2\to1\to0$ and digits $1,0,1$ from least
+to most significant: $\E_\beta(4)=\texttt{101}$. This violates the
+proposed gap rule. Thus merely matching the graph's growth rate does
+not reproduce its language by this arithmetic construction.
+
+\paragraph{A limited uniqueness statement.}
+The golden ratio is the only quadratic Pisot number in $(1,2)$.
+Indeed, let $\beta$ be such a number and $\gamma\in(-1,1)$ its other
+conjugate. The integer trace is 1 or 2. Trace 2 makes the integer norm
+$\beta(2-\beta)$ strictly between 0 and 1, impossible. Trace 1 makes
+$\beta(1-\beta)$ strictly between $-2$ and 0, so the norm is $-1$ and
+$\beta^2-\beta-1=0$. This singles out the quadratic contraction in the
+binary range; it does not classify all irrational quotient languages.
 
 \section{Verification and scope}
 The mathematical theorem concerns \emph{exact} quotient and ceiling
@@ -317,11 +527,36 @@ integer-square-root construction and the Fibonacci construction on
 formalizes the exact ceiling-step model, the phase transition argument,
 and the forbidden odd-gap result. Its build instructions and precise
 theorem inventory are in \texttt{research/lean/README.md}.
+The negative-base identity and residue theorems added here are written
+proofs, not part of the Lean formalization. Separate exact Python checks
+cover 10,000 negative-base expansions and 100,000 modular identities.
+A residue automaton checks counting formulas through length 100 and is
+compared with direct enumeration through length 13 for eight moduli.
+The prime experiment uses a sieve through 6,692,032 for 100,000 inputs.
 The Python implementation and the packing formats themselves are not
 formally verified by that Lean proof. Numerical tests are supplementary
 evidence, not a substitute for the all-integers theorem.
 
+\clearpage
 \begin{thebibliography}{9}
+\bibitem{lind}
+D. Lind and B. Marcus,
+\emph{An Introduction to Symbolic Dynamics and Coding},
+Cambridge University Press (1995).
+\url{https://sites.math.washington.edu/SymbolicDynamics/}.
+
+\bibitem{negative}
+C. Frougny and A. C. Lai, \emph{On Negative Bases},
+DLT 2009, LNCS 5583, pp. 252--263 (2009).
+\href{https://doi.org/10.1007/978-3-642-02737-6_20}{doi:10.1007/978-3-642-02737-6\_20}.
+\url{https://www.irif.fr/~cf/publications/dlt-final.pdf}.
+
+\bibitem{pivato}
+M. Pivato and R. Yassawi,
+\emph{Asymptotic Randomization of Sofic Shifts by Linear Cellular Automata},
+preprint (2003; revised 2006).
+\url{https://arxiv.org/abs/math/0306136}.
+
 \bibitem{glasscock}
 D. Glasscock, J. Moreira, and F. K. Richter,
 \emph{Additive and geometric transversality of fractal sets in the integers},
@@ -339,5 +574,13 @@ Representations}, Purdue technical report 85-545 (1985).
 D. A. Lelewer and D. S. Hirschberg,
 \emph{Data Compression}, section 3, universal codes.
 \url{https://ics.uci.edu/~dhirschb/pubs/DC-Sec3.html}.
+\bibitem{streamvbyte}
+D. Lemire, N. Kurz, and C. Rupp,
+\emph{Stream VByte: Faster Byte-Oriented Integer Compression},
+preprint (2017). \url{https://arxiv.org/abs/1709.08990}.
+
+\bibitem{maynard}
+J. Maynard, \emph{Primes with restricted digits}, preprint (2016).
+\url{https://arxiv.org/abs/1604.01041}.
 \end{thebibliography}
 \end{document}

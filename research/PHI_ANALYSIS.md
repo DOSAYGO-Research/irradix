@@ -1,6 +1,6 @@
 # Exact characterization and practical consequences
 
-Read the [five-page proof](../output/pdf/phi-proof.pdf) or its [TeX source](../output/pdf/phi-proof.tex). The formal companion is [PhiPacking.lean](lean/PhiPacking.lean).
+Read the [mathematical paper](../output/pdf/phi-proof.pdf) or its [TeX source](../output/pdf/phi-proof.tex). The formal companion is [PhiPacking.lean](lean/PhiPacking.lean).
 
 The exact quotient algorithm produces precisely the positive binary words with an initial `1` and an even number of zeros between successive ones. Trailing zeros are unrestricted. This is the **even shift**, a known language in symbolic dynamics; the proof establishes the connection to this repository's particular integer algorithm. It is not the usual positional base-phi expansion.
 
@@ -38,12 +38,16 @@ There are exactly `F_(k+1)` words of length `k`, covering the consecutive intege
 
 The sampled length-first advantage over VByte is reproducible, but not unique to phi: on the seeded 50–100 digit sample, L1 used 264,240 bits, Elias delta 263,072 bits, and VByte 286,984 bits. The original “perfect encoding” benchmark is not a general entropy bound; concatenating variable-size lengths without framing does not by itself define a decodable code.
 
-The prime-density experiment reproduces 94 mapped primes among the first 1,000 integers. Only 382 mapped integers are odd. Dividing the original prime percentage by the magnitude expansion factor is the wrong null model; prime density scales with inverse logarithmic magnitude and this mapping biases residues. A parity-adjusted logarithmic heuristic gives about 107, not 21, primes. This does not establish a prime-density theorem or a prime-detection signature.
+The [extended analysis](NEGATIVE_PHI_CONNECTION.md) derives the exact correspondence with greedy negative-phi expansions and stronger arithmetic consequences: prime images above 3 have odd bit length and are 1 modulo 6; every even-length block above length 2 is composite. The proportion of images coprime to 6 oscillates with length, while residues are equidistributed at each fixed modulus coprime to 6. Written proofs and exact checks accompany these results; they are outside the current Lean formalization.
+
+For the first 1,000 inputs, the 94 mapped primes compare with a modulo-6 logarithmic heuristic of 94.46. At 100,000 inputs, the exact sieve gives 4,319 versus the heuristic's 4,342.72. This supersedes the earlier parity-only estimate of about 107 for the small sample. It does not prove a prime asymptotic or infinitely many prime images. See [residue_measurements.json](residue_measurements.json) for all tested prefixes.
 
 ## Reproduction
 
 ```sh
 python3 research/analyze_phi.py
+python3 research/check_negative_phi.py
+python3 research/analyze_residues.py
 # To compare with the original implementation, first install requirements.txt:
 python3 research/analyze_phi.py --legacy
 ```

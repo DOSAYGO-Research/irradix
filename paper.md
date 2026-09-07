@@ -1,3 +1,5 @@
+> **Historical experiment:** see the [current README](README.md) and [mathematical paper](output/pdf/phi-proof.pdf) for proved statements, corrected prime-density interpretations, and reproduced comparisons.
+
 # Outperforming VByte for Very Large Integers using Phi-Based Encoding
 
 ## Abstract

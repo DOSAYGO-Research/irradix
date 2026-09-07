@@ -1,202 +1,211 @@
-# Properties of a Novel Binary Representation of Integers using Base $\phi$
+# Irradix
 
-> **[Read the proof (PDF, 5 pages)](output/pdf/phi-proof.pdf)**
+Integer packing through the golden ratio: an experimental codec, an exact Fibonacci implementation, and a study of the even-shift language and its arithmetic.
+
+> **[Read the mathematical paper (PDF)](output/pdf/phi-proof.pdf)**
+> The complete even-gap proof, exact algorithms, negative-φ correspondence, and prime/residue consequences.
 >
-> Why `101` never occurs: the complete even-gap theorem, proved in Lean, with exact algorithms and packing consequences.
+> [TeX source](output/pdf/phi-proof.tex) · [Lean proof](research/lean/PhiPacking.lean) · [Formal verification record](research/lean/README.md)
 
-[TeX source](output/pdf/phi-proof.tex) · [Verified Lean proof](research/lean/PhiPacking.lean) · [Verification and build instructions](research/lean/README.md) · [Optimizations and measurements](research/PHI_ANALYSIS.md)
+Irradix repeatedly divides an integer by φ and records a binary digit. In exact arithmetic, this enumerates **every binary word beginning with `1` whose zero runs between successive ones have even length**, exactly once. Trailing zeros are unrestricted. The missing pattern `101` provides a starting point for delimiter-based packing; the stronger language rule connects the implementation to Fibonacci numbers, symbolic dynamics, and negative-base expansions.
 
-**Proof and updated analysis (September 2026):** in exact arithmetic, the positive representations are precisely the words beginning with `1` whose zero runs between successive ones have even length. Thus `101` is forbidden, along with every `1` + odd number of zeros + `1`. The research notes include exact Fibonacci-based algorithms and reproducible measurements. They correct the historical positional-value, prime-density, and compression interpretations below.
+The repository contains both the original packing experiments and exact research implementations. Direct Irradix uses about 44% more payload bits than binary. Its practical opportunity is constrained coding and encoding metadata such as integer lengths; its mathematical interest is the explicit connection between integer division and a two-state language.
 
-## Introduction
+## Try the exact implementation
 
-This project explores a novel method for encoding integers using a representation based on the golden ratio ($\phi$), known as the irrational base $\phi$. This encoding method leverages the unique mathematical properties of $\phi$ to create a binary-like representation that inherently avoids certain binary sequences. The exploration focuses on analyzing the characteristics of this representation, particularly when reinterpreted as standard binary numbers, and the unexpected findings related to prime density in the transformed number set.
+From the repository root, with Python 3.8 or later; no third-party dependencies are needed for this example:
 
-The binary sequence `101` never occurs in the exact representation. This is now [proved as a corollary of the even-gap theorem](output/pdf/phi-proof.pdf), strengthening the earlier experimental evidence.
+```python
+from research.phi_exact import fibonacci_irradix, fibonacci_derradix
 
-You can run the available tests on this function by cloning this repository, installing the required dependencies and running:
+assert fibonacci_irradix(8) == "1001"
+assert fibonacci_derradix("1001") == 8
 
-```console
-$ python test.py
+n = 10**200 + 123
+assert fibonacci_derradix(fibonacci_irradix(n)) == n
 ```
 
-Here's what it [looks like](data/table.txt):
+The exact converters support signed integers; zero is represented as `0`. The decoder rejects noncanonical words, including `101` and words with leading zeros. [phi_exact.py](research/phi_exact.py) also provides an independent integer-square-root implementation of the same mapping.
+
+| Integer `n` | Irradix `E(n)` | Ordinary binary value `B(n)` |
+| ---: | :--- | ---: |
+| 1 | `1` | 1 |
+| 2 | `10` | 2 |
+| 3 | `11` | 3 |
+| 4 | `100` | 4 |
+| 5 | `110` | 6 |
+| 6 | `111` | 7 |
+| 7 | `1000` | 8 |
+| 8 | `1001` | 9 |
+
+## What the encoding means
+
+For a positive integer, the exact step is
+
+$$
+q=\left\lfloor n/\varphi\right\rfloor,\qquad
+ d=n-\left\lceil\varphi q\right\rceil\in\{0,1\},\qquad
+ E(n)=E(q)d,
+$$
+
+using an empty word for `E(0)` during recursion. Decode from left to right by replacing the current prefix value `q` with `ceil(φq) + d` for each digit.
+
+This is an iterated ceiling construction. Evaluating its digits as powers of φ does not generally recover the input: `E(2)=10`, whereas the positional value of `10` in base φ is φ.
+
+### Why φ produces even zero gaps
+
+Set `a=φ−1`, `c=2−φ`, and let the phase of a positive prefix `q` be `t=frac(φq)`. A following `1` is admissible exactly when `t>c`. Appending `0` gives
+
+$$
+t_{\mathrm{new}}-c=-a(t-c).
+$$
+
+A `1` leaves the phase above `c`; every subsequent zero flips its side. Another `1` is therefore allowed after exactly an even number of zeros. This proves the full characterization, including its converse—not merely the absence of `101`.
+
+After the leading `1`, the graph is:
+
+```mermaid
+stateDiagram-v2
+    [*] --> Even
+    Even --> Even: 1
+    Even --> Odd: 0
+    Odd --> Even: 0
+```
+
+Both states may terminate a word. Equivalently, the canonical positive language is `1(1|00)*(ε|0)`. Leading-zero versions belong to the broader even-shift language but are not additional canonical integer representations. The original packer's transformed inputs select a subset of these words.
+
+### Fibonacci counts and faster conversion
+
+With `F₀=0`, `F₁=1`, there are `Fₖ₊₁` words of length `k`, representing precisely
+
+$$
+F_{k+2}-1\le n\le F_{k+3}-2.
+$$
+
+For a valid word `1 dₖ₋₂ … d₀`,
+
+$$
+n=F_{k+2}-1+\sum_{j=0}^{k-2}d_jF_{j+1}.
+$$
+
+This yields exact ranking and unranking using integer additions, comparisons, and subtractions. It also explains the asymptotic length `log₂(n)/log₂(φ) ≈ 1.44042 log₂(n)`. In the [recorded local benchmark](research/phi_measurements.json), encoding 100 random 256-bit integers took about 0.493 s in the original Python implementation and 0.0077 s with Fibonacci ranking. These timings are workload and machine dependent.
+
+## The deeper connection: negative φ
+
+The graph's adjacency matrix has eigenvalues `φ` and `ψ=−1/φ`. The first controls the number of words; the second is the contraction and reflection in the phase proof.
+
+There is also an exact positional correspondence. For `n≥1`, define `x(n)=2−φ−frac(φn)`. Its greedy fractional expansion in base `−φ` is
 
 ```text
-Original Integer     irradix Representation         Interpreted as Binary          isPrime    Prime Comparison     Binary Expansion (%)
-------------------------------------------------------------------------------------------------------------------------------------
-1                    1                              1                              False      0                    100.00
-2                    10                             2                              True       3                    100.00
-3                    11                             3                              True       3                    100.00
-4                    100                            4                              False      0                    100.00
-5                    110                            6                              False      2                    100.00
-6                    111                            7                              True       1                    100.00
-7                    1000                           8                              False      2                    133.33
-8                    1001                           9                              False      0                    100.00
+. reverse(E(n)) 1 000000...     (base −φ)
 ```
 
-## Mathematical Foundation
+The extra terminal `1` handles the boundary of the negative-base interval. Expanding this identity in the basis `1, φ` recovers the Fibonacci decoder above. The [detailed derivation](research/NEGATIVE_PHI_CONNECTION.md) includes the boundary case and exact checks using integer pairs, with no floating-point arithmetic.
 
-### Base $\phi$ Representation
+The general negative-φ/even-shift connection was already explicit in **Frougny and Lai (2009)**, Examples 2–3 [2]. Irradix's particular quotient map is related to that construction by the identity above; this repository does not claim to originate the language or the general connection.
 
-The golden ratio $\phi$ is defined as:
+## Primes: exact restrictions and an experimental heuristic
 
-$$\phi = \frac{1 + \sqrt{5}}{2} \approx 1.618033988749895$$
+Here “mapped prime” means that `B(n)`, the Irradix word interpreted in ordinary binary, is prime. It does not mean the input `n` is prime.
 
-Encoding integers using base $\phi$ involves representing numbers in a non-standard manner, where the expansion factor in terms of binary bits is approximately:
+If a word has length `k` and `t` trailing zeros, the even-gap condition implies
 
-$$\frac{\log(2)}{\log(\phi)} \approx 1.44$$
+$$
+B(n)\equiv
+\begin{cases}
+0 & k-t\text{ even},\\
+(-1)^t & k-t\text{ odd}
+\end{cases}\pmod 3.
+$$
 
-This suggests that base $\phi$ encoding requires around 44% more bits than traditional binary encoding. Despite this apparent inefficiency, base $\phi$ encoding has unique properties, such as naturally excluding the sequence "101," which we use as a delimiter.
+Successive one-bit exponents alternate parity, so their contributions modulo 3 cancel in pairs. Consequently:
 
-### Conversion Algorithms for Base $\phi$ Encoding: `irradix` and `derradix`
+- **Every mapped prime above 3 has odd binary length and is `1 mod 6`.**
+- **Every even-length block with `k≥4` is composite.** For example, all inputs `986..1595` map to composite numbers.
+- The proportion of inputs mapping to numbers coprime to 6 has no limit: at complete length-block endpoints it tends to `φ⁻³≈23.61%` along odd lengths and `φ⁻⁴≈14.59%` along even lengths.
+- For each fixed modulus coprime to 6, binary residues become uniformly distributed among length-`k` words as `k` grows. A proof uses the graph combined with a residue tracker and Perron–Frobenius theory.
 
-This section provides a detailed explanation of the conversion algorithms used in the `irradix` and `derradix` functions, including their mathematical foundations. Both algorithms revolve around the idea of encoding and decoding integers using a base $\phi$ representation, where $\phi$ is the golden ratio.
+These are mathematical consequences of the language. A separate **heuristic** applies the density `3/log B` to eligible images `B>3` congruent to 1 modulo 6, adding the exceptions 2 and 3:
 
-#### `irradix` Algorithm
+| Inputs `1..N` | Exact mapped primes | Modulo-6 logarithmic heuristic |
+| ---: | ---: | ---: |
+| 100 | 12 | 14.32 |
+| 1,000 | 94 | 94.46 |
+| 10,000 | 466 | 464.53 |
+| 100,000 | 4,319 | 4,342.72 |
 
-The `irradix` function converts a positive integer $\( n \)$ into its base $\phi$ representation. The process involves iterative calculations that decompose the number into a series of coefficients that correspond to powers of $\phi$.
+The factor 3 is not fitted. These are nested samples, and agreement is not a prime-distribution proof. Fixed-modulus uniformity does not supply the growing-modulus estimates needed for such a proof. We establish neither infinitely many mapped primes nor a prime-counting asymptotic. Maynard's work on restricted decimal digits [8] is relevant background, with different hypotheses.
 
-```math
-\text{irradix}(n) =
-\begin{aligned}
-  & w_0 = n, \quad r = [] \\
-  & \text{while } |w_0| > \text{thresh}: \\
-  & \quad r_i = \left\lfloor w_0 \mod \phi \right\rfloor \\
-  & \quad w_1 = \frac{w_0 - r_i}{\phi} \\
-  & \quad \text{update } r = [r_i] + r \\
-  & \quad w_0 \leftarrow w_1
-\end{aligned}
+[Proofs and research questions](research/NEGATIVE_PHI_CONNECTION.md) · [Reproducible residue and prime measurements](research/residue_measurements.json)
+
+## Packing and practical tradeoffs
+
+The original [irradix.py](irradix.py) offers single-value conversion, direct byte packing (`encode`/`decode`), and length-first packing (`l1encode`/`l1decode`). Packed inputs are nonnegative integers. Install its dependencies with `python3 -m pip install -r requirements.txt`.
+
+```python
+from irradix import encode, decode, l1encode, l1decode
+
+values = [0, 1, 8, 1000]
+assert decode(encode(values)) == values
+assert l1decode(l1encode(values)) == values
 ```
 
-The result, $\( r \)$, is the string of digits that represents $\( n \)$ in base $\phi$.
+Direct packing transforms inputs and repairs delimiter boundaries. A forbidden substring inside individual words does not alone guarantee safe concatenation: occurrences can cross a boundary. The research module includes a separately specified guarded bitstring format, `E(n+1) + 00 + 101`; it is experimental and incompatible with the original byte format.
 
-#### `derradix` Algorithm
+Length-first packing stores ordinary binary payloads and encodes their lengths, giving a `B + O(log B)` cost for a `B`-bit integer. On the seeded sample of 1,000 integers with 50–100 decimal digits:
 
-The `derradix` function performs the inverse operation, converting a base $\phi$ representation back into the original integer. It interprets the base $\phi$ digits and reconstructs the number through a series of multiplication and summation steps, applying the ceiling function at each step.
+| Method | Stored bits, including byte rounding where applicable |
+| :--- | ---: |
+| Raw payload only, without framing | 248,161 |
+| Direct Irradix | 361,216 |
+| Length-first Irradix | 264,240 |
+| Elias delta applied to `n+1` | 263,072 |
+| VByte | 286,984 |
 
-```math
-\text{derradix}(r) = \left\lceil \sum_{i=0}^{k} r_i \phi^{k-i} \right\rceil
+This demonstrates a length-first advantage over VByte on that sample, while Elias delta is slightly smaller. It does not establish general compression superiority. Fibonacci and Elias codes are established comparison points [5, 6]. The repository's VByte implementation is not Stream VByte [7].
+
+The original Python converter uses fixed `mpmath` precision, and the C++ version uses floating-point arithmetic. They should not be treated as exact arbitrary-size converters: the recorded Python checks find failures near `10**100` at 100 decimal digits of precision. Use the exact research converters for the mathematical mapping. Existing `olencode`/`oldecode` functions are batch wrappers, not incremental streaming implementations.
+
+[Optimization analysis and framing details](research/PHI_ANALYSIS.md)
+
+## Reproduce and verify
+
+Run from the repository root:
+
+```sh
+python3 research/analyze_phi.py
+python3 research/check_negative_phi.py
+python3 research/analyze_residues.py
+# Optional comparison with the original code; requires requirements.txt:
+python3 research/analyze_phi.py --legacy
 ```
 
-In this equation, $\( r_i \)$ represents the digits of the base $\phi$ encoded number, and the sum reconstructs the original integer.
+The core run compares 100,001 encodings across independent exact algorithms, checks 500 Fibonacci length thresholds, and exercises experimental codecs. The new checks cover 10,000 exact negative-base expansions, 100,000 modular identities, residue counts through length 100, and a prime sieve for 100,000 inputs. Recorded outputs are [phi_measurements.json](research/phi_measurements.json) and [residue_measurements.json](research/residue_measurements.json).
 
-### Iterative Radix Conversion with Ceil Function
+| Result | Verification status |
+| :--- | :--- |
+| Exact quotient/ceiling model; complete even-gap language; exclusion of `101` | Compiled Lean proof, pinned toolchain; no `sorry` |
+| Fibonacci formulas; negative-φ identity; residue theorems | Written proofs, supplemented by exact Python checks |
+| Packing implementations and size/timing measurements | Executable checks and experiments; not formally verified |
+| Prime-density formula | Heuristic, compared with exact sieve counts |
 
-As discussed earlier, in the `derradix` function, we must apply the ceiling operation iteratively at each step of the summation:
+See [Lean build instructions and theorem inventory](research/lean/README.md). The [TeX source](output/pdf/phi-proof.tex) builds with `pdflatex`; the PDF is checked into the repository. [paper.md](paper.md), [results.md](results.md), and [data/table.txt](data/table.txt) preserve historical experiments; this README and the research paper supersede their broader interpretations.
 
-```math
-n = \left\lceil a_0 + \left\lceil \phi \cdot \left( a_1 + \left\lceil \phi \cdot \left( a_2 + \cdots \right) \right\rceil \right) \right\rceil \right\rceil
-```
+## What is worth pursuing next?
 
-This corresponds to the code, where the ceiling is applied after each multiplication by $\phi$ and addition of the next digit.
+A finite-state adder or incrementer is a concrete engineering target: the negative-base correspondence supplies a route, but normalization, direction of reading, and endpoint handling still need an implementation and proof. Quantitative residue estimates as the modulus grows are a more difficult mathematical target toward understanding primes.
 
-### Notes
+Generalizing by merely replacing φ with another graph's growth rate does not work. For the graph allowing zero gaps divisible by 3, its growth rate satisfies `β³=β²+1`, yet repeated quotient encoding gives `Eβ(4)=101`. The [research note](research/NEGATIVE_PHI_CONNECTION.md) proves this counterexample and the limited uniqueness statement that φ is the only quadratic Pisot number between 1 and 2.
 
-- **Sign Handling**: The above algorithms omit sign handling for clarity. In practice, if the original integer is negative, the algorithm first converts it to a positive number, performs the conversion, and then adds a negative sign to the final result.
-  
-- **Termination Conditions in `irradix`**:
-  - **$\(\text{thresh}\)$**: A small threshold value that stops the loop once the magnitude of $\( w_0 \)$ is sufficiently small.
-  - **$\(\text{quanta}\)$**: Represents a precision level, ensuring that the algorithm's results are accurate.
-  - **$\(\epsilon\)$**: A small value related to the precision of floating-point arithmetic, ensuring that the loop halts when further iterations no longer contribute meaningful digits.
+## Origins and references
 
-## Exploring Base $\phi$ Representation
+The maintainer dates Irradix's original development to approximately 2018. The even-shift language predates that work, and its negative-φ realization was published in 2009. The contribution documented here is an explicit analysis of this repository's integer construction, its exact implementation, and its consequences; priority for the particular construction has not been established.
 
-### Analysis and Observations
-
-We analyzed the first 1,000 integers encoded using the base $\phi$ system, converting these representations back into integers by treating them as binary numbers. The analysis revealed unexpected behavior in the distribution and density of prime numbers in the transformed set, particularly when compared to the original integer set.
-
-### Prime Density Anomaly
-
-Interestingly, when we mapped the first 1,000 integers through the base $\phi$ representation, we observed an unexpected prime density in the reinterpreted binary set. Given the nature of the expansion factor, one would anticipate a decrease in prime density by a factor corresponding to the expansion ratio. However, our findings suggest that the prime density in the reinterpreted set is significantly higher than expected.
-
-This anomaly indicates that the base $\phi$ mapping may lead to a disproportionately higher number of primes in the transformed set compared to a uniform distribution. This finding could imply deeper number-theoretic properties associated with base $\phi$ representations, potentially linked to how $\phi$ interacts with the distribution of primes.
-
-### Statistical Considerations
-
-From a statistical number theory perspective, the observed increase in prime density could be an artifact of how base $\phi$ encoding clusters certain types of integers. Given that base $\phi$ avoids certain sequences, it might be preferentially preserving numbers that are prime when interpreted as binary, thus inflating the prime density in the resulting set. Further exploration into this phenomenon could involve analyzing whether similar patterns emerge with other irrational bases or if this effect is unique to $\phi$.
-
-## Integer Packaging and Efficiency
-
-### Delimiter-Based Packing
-
-One of the key applications of the base $\phi$ representation explored in this project is integer packaging. The exclusion of the "101" sequence in the base $\phi$ encoded strings makes this encoding suitable for delimiter-based packing schemes, where "101" serves as a marker for separating individual encoded integers. This approach is particularly space-efficient as it avoids the need for additional length signifiers that are common in traditional length-type-value or length-value encoding schemes.
-
-### Efficiency of Packing
-
-The practical efficiency of this packing method lies in its ability to represent multiple integers in a compressed format, using the inherent properties of the base $\phi$ system to delimit sequences without explicit markers. However, this method does introduce some redundancy, particularly when sequences must be padded to prevent unintentional "101" patterns. Despite this, the space savings from avoiding explicit length markers can be significant, making this method advantageous in certain contexts.
-
-### Connection to Binary Representation of 5
-
-It is noteworthy that the sequence "101" corresponds to the binary representation of the number 5. In the context of base $\phi$ encoding, the exclusion of this sequence as a delimiter creates an interesting intersection between number theory and binary encoding. This connection suggests potential links to other irrational bases derived from primes, such as $\(\sqrt{7}\)$, which might naturally avoid other specific sequences like "111" (binary for 7).
-
-## Implications for Prime Density and Number Theory
-
-### Expected vs. Observed Prime Density
-
-Given the expansion factor of approximately 1.44 in base $\phi$ encoding, one would expect the density of primes in the reinterpreted binary set to decrease proportionally. Specifically, if the prime density in the original set is around 16.8%, the expected prime density in the binary reinterpreted set should be approximately:
-
-$$\frac{16.8\%}{8} \approx 2.1\%$$
-
-However, the observed prime density in the binary set is significantly higher, [around 9.5%](data/table.txt). This discrepancy suggests that the base $\phi$ mapping might be influencing the distribution of primes in a way that is not immediately apparent from a uniform distribution perspective.
-
-*The first and last few lines of the data table:*
-```text
-Original Integer     irradix Representation         Interpreted as Binary          isPrime    Prime Comparison     Binary Expansion (%)
-------------------------------------------------------------------------------------------------------------------------------------
-1                    1                              1                              False      0                    100.00
-2                    10                             2                              True       3                    100.00
-3                    11                             3                              True       3                    100.00
-4                    100                            4                              False      0                    100.00
-5                    110                            6                              False      2                    100.00
-6                    111                            7                              True       1                    100.00
-7                    1000                           8                              False      2                    133.33
-8                    1001                           9                              False      0                    100.00
-
- ... 
-
-
-988                  10000000000100                 8196                           False      0                    140.00
-989                  10000000000110                 8198                           False      0                    140.00
-990                  10000000000111                 8199                           False      0                    140.00
-991                  10000000010000                 8208                           False      2                    140.00
-992                  10000000010010                 8210                           False      0                    140.00
-993                  10000000010011                 8211                           False      0                    140.00
-994                  10000000011000                 8216                           False      0                    140.00
-995                  10000000011001                 8217                           False      0                    140.00
-996                  10000000011100                 8220                           False      0                    140.00
-997                  10000000011110                 8222                           False      2                    140.00
-998                  10000000011111                 8223                           False      0                    140.00
-999                  10000001000000                 8256                           False      0                    140.00
-1000                 10000001000010                 8258                           False      0                    140.00
-
-Prime Density:
-Original:                          16.80%
-Interpret base-phi rep as binary:   9.40%
-
-Prime Comparison Key:
-3: Both Original and Binary Interpretations are Prime
-2: Original is Prime, Binary Interpretation is Not
-1: Binary Interpretation is Prime, Original is Not
-0: Neither Original nor Binary Interpretation is Prime
-```
-
-### Statistical Number Theory Perspective
-
-This unexpected increase in prime density raises intriguing questions about the nature of the base $\phi$ encoding and its impact on number theory. It is possible that the encoding method selectively preserves or amplifies the presence of primes due to the unique properties of $\phi$. Further research could explore whether this phenomenon is specific to base $\phi$ or if similar effects are observed with other irrational bases.
-
-## Conclusion and Future Directions
-
-The exploration of base $\phi$ as a novel binary encoding method has uncovered intriguing and unexpected properties, particularly regarding prime density and integer packaging efficiency. While the practical applications may be limited due to the complexity of base $\phi$ arithmetic, the theoretical implications are compelling and warrant further investigation.
-
-### Summary of Python API
-
-The Python API provided here leverages the mathematical properties of the golden ratio $\phi$ for encoding and decoding integers using a base $\phi$ representation. The key functions included in this API are as follows:
-
-- **`irradix(num)`**: Converts a given integer into its base $\phi$ representation. This function handles the decomposition of the number into coefficients that correspond to powers of $\phi$, returning a string that represents the number in base $\phi$.
-
-- **`derradix(rep)`**: Decodes a base $\phi$ encoded string back into the original integer. It reconstructs the number by summing the products of the coefficients and powers of $\phi$, with a ceiling operation applied at each step to ensure accuracy.
-
-- **`encode(nums)`**: Packs a list of arbitrarily-sized integers using the base $\phi$ encoding scheme. This function concatenates the encoded integers, handles padding, and converts the final sequence into an array of bytes.
-
-- **`decode(chunks)`**: Unpacks a sequence of encoded integers from an input of bytes, by reconstructing the original sequence, and decoding it back into the list of integers.
+1. **Douglas Lind and Brian Marcus.** *An Introduction to Symbolic Dynamics and Coding.* Cambridge University Press, 1995. [Authors' book site](https://sites.math.washington.edu/SymbolicDynamics/). Background on shifts, graph presentations, entropy, and coding.
+2. **Christiane Frougny and Anna Chiara Lai.** *On Negative Bases.* DLT 2009, LNCS 5583, pp. 252–263. [Paper](https://www.irif.fr/~cf/publications/dlt-final.pdf) · [DOI](https://doi.org/10.1007/978-3-642-02737-6_20). The negative-φ/even-shift example and finite-transducer normalization for negative Pisot bases.
+3. **Marcus Pivato and Reem Yassawi.** *Asymptotic Randomization of Sofic Shifts by Linear Cellular Automata.* Preprint, 2003; revised 2006. [arXiv](https://arxiv.org/abs/math/0306136). An explicit pre-2018 treatment of the even shift; their symbol convention can be exchanged with ours.
+4. **Daniel Glasscock, Joel Moreira, and Florian K. Richter.** *Additive and geometric transversality of fractal sets in the integers.* Journal of the London Mathematical Society, 2024. [DOI](https://doi.org/10.1112/jlms.12902). Section 3.3 treats the even shift as a binary integer set of dimension `log φ/log 2`; this is a later application, not the language's origin.
+5. **Alberto Apostolico and Aviezri S. Fraenkel.** *Robust Transmission of Unbounded Strings Using Fibonacci Representations.* Purdue technical report 85-545, 1985; journal version, IEEE Transactions on Information Theory, 1987. [Report](https://docs.lib.purdue.edu/cstech/464/). Established Fibonacci coding for comparison with Irradix framing.
+6. **Debra A. Lelewer and Daniel S. Hirschberg.** *Data Compression.* [Authors' survey, section 3](https://ics.uci.edu/~dhirschb/pubs/DC-Sec3.html). Universal integer codes and the Elias/Fibonacci baselines.
+7. **Daniel Lemire, Nathan Kurz, and Christoph Rupp.** *Stream VByte: Faster Byte-Oriented Integer Compression.* Preprint, 2017. [arXiv](https://arxiv.org/abs/1709.08990). Context for fast byte-oriented codecs, distinct from this repository's VByte baseline.
+8. **James Maynard.** *Primes with restricted digits.* Preprint, 2016. [arXiv](https://arxiv.org/abs/1604.01041). A prime theorem for a different digital restriction; it is not a theorem about Irradix.
