@@ -1,0 +1,138 @@
+{
+  "seed": 20260910,
+  "python": "3.14.4",
+  "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+  "checks": {
+    "forced_recursive_encodings": 20001,
+    "signed_roundtrips": 2001,
+    "random_roundtrips": 300,
+    "max_random_conversion_bits": 8192,
+    "fibonacci_boundaries": 500,
+    "signed_product_pairs": 4225,
+    "random_signed_products": 100,
+    "max_random_product_bits": 4096,
+    "observed_max_prefix_corrections": 2,
+    "ring_identities": 1000,
+    "prime_order_checks": 166
+  },
+  "multiplication_timings": [
+    {
+      "input_digits": 128,
+      "output_digits": 256,
+      "hybrid_seconds": 0.0001352920662611723,
+      "previous_conversion_seconds": 8.587515912950039e-05,
+      "native_product_only_seconds": 2.9103830456733704e-07,
+      "digit_horner_seconds": 0.04110608296468854,
+      "balanced_decode_seconds": 1.837499439716339e-05,
+      "rolling_decode_seconds": 1.133396290242672e-05,
+      "balanced_encode_seconds": 0.00010716612450778484,
+      "previous_encode_seconds": 6.466591730713844e-05
+    },
+    {
+      "input_digits": 1024,
+      "output_digits": 2049,
+      "hybrid_seconds": 0.0011795000173151493,
+      "previous_conversion_seconds": 0.0009558750316500664,
+      "native_product_only_seconds": 1.5420373529195786e-06,
+      "digit_horner_seconds": 3.3136533331125975,
+      "balanced_decode_seconds": 0.00021783285774290562,
+      "rolling_decode_seconds": 0.00017324998043477535,
+      "balanced_encode_seconds": 0.0015122501645237207,
+      "previous_encode_seconds": 0.0011527501046657562
+    },
+    {
+      "input_digits": 8192,
+      "output_digits": 16384,
+      "hybrid_seconds": 0.034861958120018244,
+      "previous_conversion_seconds": 0.04535537492483854,
+      "native_product_only_seconds": 6.104190833866596e-05,
+      "balanced_decode_seconds": 0.0019541659858077765,
+      "rolling_decode_seconds": 0.003613458015024662,
+      "balanced_encode_seconds": 0.023301833076402545,
+      "previous_encode_seconds": 0.039804625092074275
+    },
+    {
+      "input_digits": 16384,
+      "output_digits": 32768,
+      "hybrid_seconds": 0.04692779202014208,
+      "previous_conversion_seconds": 0.11116829211823642,
+      "native_product_only_seconds": 0.00019408296793699265,
+      "balanced_decode_seconds": 0.004043542081490159,
+      "rolling_decode_seconds": 0.014887792058289051,
+      "balanced_encode_seconds": 0.06160629098303616,
+      "previous_encode_seconds": 0.09991991682909429
+    }
+  ],
+  "encoding_memory": [
+    {
+      "output_digits": 4096,
+      "balanced_peak_python_bytes": 40021,
+      "previous_peak_python_bytes": 968541
+    },
+    {
+      "output_digits": 16384,
+      "balanced_peak_python_bytes": 143193,
+      "previous_peak_python_bytes": 13204993
+    }
+  ],
+  "large_product": {
+    "input_digits": 100000,
+    "output_digits": 200001,
+    "hybrid_seconds": 1.3967211248818785
+  },
+  "factoring_examples": [
+    {
+      "n": 109033,
+      "p": 107,
+      "q": 1019,
+      "bound": 27,
+      "phi": 107,
+      "lucas": 107,
+      "pollard_pm1": null
+    },
+    {
+      "n": 115147,
+      "p": 113,
+      "q": 1019,
+      "bound": 16,
+      "phi": null,
+      "lucas": null,
+      "pollard_pm1": 113
+    }
+  ],
+  "factoring_experiment": [
+    {
+      "bound": 16,
+      "semiprimes": 200,
+      "phi_seconds": 0.0032576671801507473,
+      "phi_successes": 16,
+      "lucas_seconds": 0.0017790421843528748,
+      "lucas_successes": 16,
+      "pollard_pm1_seconds": 0.0008817911148071289,
+      "pollard_pm1_successes": 14,
+      "either_phi_or_pm1": 22
+    },
+    {
+      "bound": 64,
+      "semiprimes": 200,
+      "phi_seconds": 0.015511375153437257,
+      "phi_successes": 105,
+      "lucas_seconds": 0.00630208314396441,
+      "lucas_successes": 105,
+      "pollard_pm1_seconds": 0.004767291946336627,
+      "pollard_pm1_successes": 102,
+      "either_phi_or_pm1": 129
+    },
+    {
+      "bound": 256,
+      "semiprimes": 200,
+      "phi_seconds": 0.03156633302569389,
+      "phi_successes": 172,
+      "lucas_seconds": 0.010041417088359594,
+      "lucas_successes": 172,
+      "pollard_pm1_seconds": 0.004425666993483901,
+      "pollard_pm1_successes": 171,
+      "either_phi_or_pm1": 191
+    }
+  ]
+}

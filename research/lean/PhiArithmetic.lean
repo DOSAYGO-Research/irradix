@@ -111,10 +111,63 @@ theorem multiplication_initial (n : Int) (ds : List Int) :
     multiplyRun n (0, 0) (1 :: ds) = multiplyRun n (n, 0) ds := by
   simp [multiplyRun, multiplyStep]
 
+/-- Quadratic ring Z[phi], with phi^2 = phi + 1. -/
+def ringProduct (a b : Carry) : Carry :=
+  (a.1*b.1 + a.2*b.2, a.1*b.2 + a.2*b.1 + a.2*b.2)
+
+def norm (a : Carry) : Int := a.1^2 + a.1*a.2 - a.2^2
+
+def weight (a : Carry) : Int := a.1 + a.2
+
+theorem three_products (a b : Carry) :
+    ringProduct a b =
+      (a.1*b.1 + a.2*b.2, (a.1+a.2)*(b.1+b.2)-a.1*b.1) := by
+  apply Prod.ext
+  · rfl
+  · change a.1*b.2 + a.2*b.1 + a.2*b.2 = (a.1+a.2)*(b.1+b.2)-a.1*b.1
+    ring
+
+theorem norm_product (a b : Carry) :
+    norm (ringProduct a b) = norm a * norm b := by
+  simp only [norm, ringProduct]
+  ring
+
+/-- Fibonacci evaluation is not a ring homomorphism. -/
+theorem weight_product (a b : Carry) :
+    weight (ringProduct a b) = weight a * weight b + a.2*b.2 := by
+  simp only [weight, ringProduct]
+  ring
+
+theorem pell_coordinates (a : Carry) :
+    (2*a.1+a.2)^2 - 5*a.2^2 = 4*norm a := by
+  simp only [norm]
+  ring
+
+theorem multiply_run_append (n : Int) (c : Carry) (hi lo : List Int) :
+    multiplyRun n c (hi ++ lo) = multiplyRun n (multiplyRun n c hi) lo := by
+  induction hi generalizing c with
+  | nil => rfl
+  | cons d ds ih => simpa only [List.cons_append, multiplyRun] using ih (multiplyStep n c d)
+
+/-- Two high-block coordinates determine its contribution after a shift. -/
+theorem block_weight (hi lo : List Int) :
+    weighted (hi ++ lo) =
+      fib (lo.length+1) * (multiplyRun 1 (0,0) hi).1 +
+      fib lo.length * (multiplyRun 1 (0,0) hi).2 + weighted lo := by
+  have h := multiply_run_value 1 (0,0) (hi ++ lo)
+  simp only [mul_zero, zero_add, one_mul] at h
+  rw [← h, multiply_run_append, multiply_run_value]
+  simp only [one_mul]
+
 #print axioms run_value
 #print axioms weighted_difference
 #print axioms addition_iff
 #print axioms multiply_run_value
 #print axioms multiplication_value
+#print axioms three_products
+#print axioms norm_product
+#print axioms weight_product
+#print axioms pell_coordinates
+#print axioms block_weight
 
 end PhiArithmetic

@@ -3,7 +3,7 @@
 Integer packing through the golden ratio: an experimental codec, an exact Fibonacci implementation, and a study of the even-shift language and its arithmetic.
 
 > **[Read the mathematical paper (PDF)](output/pdf/phi-proof.pdf)**
-> The complete even-gap proof, exact addition and multiplication, negative-φ correspondence, and prime/residue consequences.
+> The complete even-gap proof, exact addition and multiplication, balanced conversion, Pell-conic factoring, and prime/residue consequences.
 >
 > [TeX source](output/pdf/phi-proof.tex) · [Lean proof](research/lean/PhiPacking.lean) · [Formal verification record](research/lean/README.md)
 
@@ -219,6 +219,7 @@ python3 research/check_negative_phi.py
 python3 research/analyze_residues.py
 python3 research/check_arithmetic.py
 python3 research/check_multiplication.py
+python3 research/check_fast.py
 # Optional comparison with the original code; requires requirements.txt:
 python3 research/analyze_phi.py --legacy
 ```
@@ -230,14 +231,58 @@ The core run compares 100,001 encodings across independent exact algorithms, che
 | Exact quotient/ceiling model; complete even-gap language; exclusion of `101` | Compiled Lean proof, pinned toolchain; no `sorry` |
 | Fibonacci formulas; negative-φ identity; residue theorems | Written proofs, supplemented by exact Python checks |
 | Arithmetic carry/acceptance equations and scaled multiplication invariant under augmented-weight hypotheses | Compiled Lean proof; finite bounds and implementation have written proofs and executable checks |
+| Block-weight, three-product, norm, and Pell-coordinate identities | Compiled Lean proofs; balanced encoding and finite-field analysis have written proofs |
 | Packing implementations and size/timing measurements | Executable checks and experiments; not formally verified |
 | Prime-density formula | Heuristic, compared with exact sieve counts |
 
 See [Lean build instructions and theorem inventory](research/lean/README.md). The [TeX source](output/pdf/phi-proof.tex) builds with `pdflatex`; the PDF is checked into the repository. [paper.md](paper.md), [results.md](results.md), and [data/table.txt](data/table.txt) preserve historical experiments; this README and the research paper supersede their broader interpretations.
 
+## Faster multiplication and the factoring connection
+
+The φ structure yields useful algorithms, although no advantage over standard
+multiplication or factoring cores has emerged. [Balanced conversion](research/phi_fast.py)
+splits words into two-coordinate blocks. Its encoder finds the correct half-word
+prefix with **at most two corrections**, independent of input length.
+
+```python
+from research.phi_fast import encode_balanced, decode_balanced, multiply_hybrid
+
+assert decode_balanced(multiply_hybrid(encode_balanced(-123),
+                                      encode_balanced(456))) == -56088
+```
+
+In the [recorded benchmark](research/fast_measurements.json), multiplying two
+16,384-digit words through balanced conversion took 46.9 ms versus 111 ms through
+the previous converter: **2.37× faster**. Native multiplication alone took 0.194 ms.
+Encoding a 16,384-digit output used **about 92× less peak Python allocation**.
+The simpler converter remains faster for short words. A checked product of two
+100,000-digit words took 1.40 seconds. These are local Python measurements,
+not universal performance guarantees; this hybrid explicitly converts whole values.
+
+The quadratic ring also has a genuine point group: norm-one pairs satisfy
+`u²+uv−v²=1`, or **`x²−5y²=4`** after `x=2u+v, y=v`. This is a Pell conic [13].
+The unit `φ²` has order dividing `p−(5|p)` modulo a prime `p≠2,5`, giving a
+[factoring prototype](research/phi_factor.py). It reduces to discriminant-5
+Lucas/Williams factoring [12, 14, 15]. In 200 small semiprime experiments the
+scalar Lucas comparator found exactly the same factors and ran faster.
+The connection complements fixed-base p−1 factoring but supplies no new
+factoring breakthrough or post-quantum security assumption.
+
+**[Read the derivations, limits, and benchmark methodology](research/FAST_ARITHMETIC.md).**
+The block-weight and quadratic-ring identities are also proved in
+[Lean](research/lean/PhiArithmetic.lean). Balanced encoding and the finite-field
+arguments have written proofs; the Python programs are not formally verified.
+
 ## What is worth pursuing next?
 
-Addition, multiplication, increment, and decrement are now implemented. The next engineering targets are reducing the adder’s table and path-storage overhead and comparing specialized multipass implementations. Canonical bounded-delay streaming in either direction is ruled out by the incrementer counterexamples. Quantitative residue estimates as the modulus grows remain a more difficult mathematical target toward understanding primes.
+Addition, multiplication, increment, decrement, and balanced conversion are
+implemented. The next engineering targets are tuning conversion thresholds,
+reducing the adder's table and path-storage overhead, and comparing specialized
+multipass implementations. Binary integers remain the sensible arithmetic core
+when retaining Irradix words is unnecessary. Canonical bounded-delay streaming
+in either direction is ruled out by the incrementer counterexamples.
+Quantitative residue estimates as the modulus grows remain a more difficult
+mathematical target toward understanding primes.
 
 Generalizing by merely replacing φ with another graph's growth rate does not work. For the graph allowing zero gaps divisible by 3, its growth rate satisfies `β³=β²+1`, yet repeated quotient encoding gives `Eβ(4)=101`. The [research note](research/NEGATIVE_PHI_CONNECTION.md) proves this counterexample and the limited uniqueness statement that φ is the only quadratic Pisot number between 1 and 2.
 
@@ -255,3 +300,9 @@ The maintainer dates Irradix's original development to approximately 2018. The e
 8. **James Maynard.** *Primes with restricted digits.* Preprint, 2016. [arXiv](https://arxiv.org/abs/1604.01041). A prime theorem for a different digital restriction; it is not a theorem about Irradix.
 9. **Christiane Frougny.** *On-line finite automata for addition in some numeration systems.* RAIRO–Theoretical Informatics and Applications 33(1), 79–101, 1999. [Paper](https://www.numdam.org/item/ITA_1999__33_1_79_0.pdf). Online addition for golden-ratio and Fibonacci representations, with different canonical conventions.
 10. **Connor Ahlbach, Jeremy Usatine, Christiane Frougny, and Nicholas Pippenger.** *Efficient Algorithms for Zeckendorf Arithmetic.* Fibonacci Quarterly 51(3), 249–255, 2013. [Paper](https://www.fq.math.ca/Papers1/51-3/AhlbachUsatineFrougnyPippenger.pdf). Linear-time, three-pass addition in Zeckendorf representation.
+
+11. **GMP developers.** *Karatsuba Multiplication* and *Fibonacci Numbers Algorithm*. [Multiplication](https://gmplib.org/manual/Karatsuba-Multiplication) · [Fast doubling](https://gmplib.org/manual/Fibonacci-Numbers-Algorithm). Established arithmetic underlying the balanced implementation.
+12. **H. C. Williams.** *A p+1 Method of Factoring.* Mathematics of Computation 39(159), 225–234, 1982. [DOI](https://doi.org/10.1090/S0025-5718-1982-0658227-7). The established Lucas factoring method to which the φ-unit construction specializes.
+13. **Franz Lemmermeyer.** *Conics—a Poor Man's Elliptic Curves.* Preprint, 2003. [Paper](https://arxiv.org/abs/math/0311306). Pell-conic group laws, finite-field groups, and factoring connections.
+14. **Rasa Šleževičienė.** *Factoring with Pell conics.* Lietuvos matematikos rinkinys 44(spec.), 120–124, 2004. [Paper](https://doi.org/10.15388/LMR.2004.31881). Explicit prior work on conic-based factoring.
+15. **GMP-ECM developers.** *GMP-ECM README*, section 2. [Implementation documentation](https://github.com/sethtroisi/gmp-ecm/blob/main/README). Practical p−1/p+1 methods and the discriminant condition for p+1 seeds.

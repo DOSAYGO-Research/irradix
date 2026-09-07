@@ -1,7 +1,7 @@
 Verified September 7, 2026.
 Lean: leanprover/lean4:v4.34.0-rc2
 mathlib: 0383a80e644c8b14e66fd137516001534006077f
-SHA256 PhiArithmetic.lean: 2e9c4ab38dc92f8c0e97a3be489703f42204fdddb26e3b827ceec9115676054f
+SHA256 PhiArithmetic.lean: 09d384aecb854e3644a1dce49964fcc06ea96a17844b2becba51f29b0c2a2012
 
 Working directory: /tmp/irradix-mathlib
 Command:
@@ -14,8 +14,17 @@ Compiler output (no warnings or errors):
 'PhiArithmetic.addition_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
 'PhiArithmetic.multiply_run_value' depends on axioms: [propext]
 'PhiArithmetic.multiplication_value' depends on axioms: [propext]
+'PhiArithmetic.three_products' depends on axioms: [propext]
+'PhiArithmetic.norm_product' depends on axioms: [propext, Quot.sound]
+'PhiArithmetic.weight_product' depends on axioms: [propext]
+'PhiArithmetic.pell_coordinates' depends on axioms: [propext, Quot.sound]
+'PhiArithmetic.block_weight' depends on axioms: [propext]
 
 Scope: unrestricted integer carry invariant, conditional addition acceptance,
-and scaled Fibonacci Horner multiplication including the augmentation offset.
+scaled Fibonacci Horner multiplication including the augmentation offset, block
+weight under concatenation, three-product ring multiplication, multiplicative
+norm, the weight-product correction, and the Pell-coordinate identity.
 The finite carry bound, canonical-word identity, and Python implementation are
-not formalized by this companion. See ../ARITHMETIC.md for written proofs.
+not formalized by this companion. Neither are balanced encoding, the prefix
+correction bound, nor the finite-field factoring analysis. See ../ARITHMETIC.md
+and ../FAST_ARITHMETIC.md for written proofs.

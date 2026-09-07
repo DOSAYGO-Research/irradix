@@ -346,3 +346,11 @@ These establish substantial prior art for finite-state Fibonacci
 arithmetic. This note supplies a concrete construction and implementation
 for this repository's augmented even-shift representation, without a
 novelty-priority claim.
+
+## Balanced conversion and quadratic-ring follow-up
+
+[FAST_ARITHMETIC.md](FAST_ARITHMETIC.md) derives a balanced encoder/decoder,
+a separate conversion-based multiplier, and the Pell/Lucas factoring connection.
+The direct digit multiplier described above remains useful as an arithmetic
+construction; the new hybrid is substantially faster for large words. It uses
+native whole integers and does not improve the underlying multiplication core.

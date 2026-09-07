@@ -41,7 +41,9 @@ a separate theorem gives equidistribution at fixed moduli coprime to 6.
 A 19-state carry relation constructs exact sums, with a bounded-delay
 obstruction for canonical streaming output; scaled Fibonacci Horner
 evaluation constructs products using the adder. Prime counts are compared
-with a heuristic, not a prime asymptotic.
+with a heuristic, not a prime asymptotic. Balanced conversion improves
+long-word multiplication overhead; norm-one coordinates lead to a
+Pell conic and established Lucas/Williams factoring.
 Finite-precision implementations are distinguished from
 the mathematical encoding throughout.
 \end{abstract}
@@ -700,6 +702,219 @@ The direct incrementer is faster on those sampled workloads.
 Machine and workload details are recorded in
 \texttt{research/arithmetic\_measurements.json}.
 
+\section{Balanced conversion and the Pell-conic connection}
+\label{sec:fast}
+The two-coordinate structure yields a useful conversion algorithm and a
+classical factoring connection. Neither gives an improvement over the
+underlying standard multiplication or factoring methods.
+
+\subsection{Balanced block decoding}
+For a binary block $w=d_{k-1}\cdots d_0$, define
+\[
+ X(w)=\sum_jd_jF_{j+1},\qquad Y(w)=\sum_jd_jF_j.
+\]
+Appending $d$ sends $(X,Y)$ to $(X+Y+d,X)$. Thus if $w=h\ell$ and
+$r=|\ell|\ge1$, matrix powering gives
+\begin{align*}
+ X(h\ell)&=F_{r+1}X(h)+F_rY(h)+X(\ell),\\
+ Y(h\ell)&=F_rX(h)+F_{r-1}Y(h)+Y(\ell).
+\end{align*}
+Indeed the shift matrix is $\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$,
+whose $r$th power has entries $F_{r+1},F_r,F_r,F_{r-1}$.
+This identity holds for arbitrary blocks. Since $X(1\E(n))=n+1$,
+it gives a balanced decoder, using exact Fibonacci fast doubling
+\cite{gmp}. The implementation uses Horner evaluation for leaves of at
+most 64 digits and a fresh Fibonacci cache for each operation.
+
+\subsection{Exact balanced encoding}
+Let $T(n)=\fl{n/\ph}$. For a length-$k$ word remove $r=\fl{k/2}$
+digits. Its remaining prefix represents $q=T^r(n)$.
+\begin{theorem}[Bounded prefix correction]
+For $n>0$ and $1\le r<|\E(n)|$, put $q_0=\fl{n/\ph^r}$. Then
+$q\in\{q_0,q_0-1,q_0-2\}$. The first integer with prefix $\E(q)$
+after removing $r$ digits is
+\begin{equation}\label{eq:zero-boundary}
+ Z_r(q)=F_r(\fl{\ph q}+2)+F_{r-1}(q+1)-1.
+\end{equation}
+Starting at $q_0$ and decrementing while $Z_r(q)>n$ therefore finds the
+correct prefix in at most two corrections.
+\end{theorem}
+\begin{proof}
+Write $T(x)=x/\ph-\varepsilon(x)$, with $0\le\varepsilon(x)<1$.
+Iteration gives
+\[
+0\le n/\ph^r-T^r(n)
+ =\sum_{i=0}^{r-1}\ph^{-(r-1-i)}\varepsilon(T^i(n))
+ <\frac1{1-\ph^{-1}}=\ph^2<3.
+\]
+Taking floors gives the three possible integer prefixes.
+For the boundary, $Z_r(q)$ is the value of $\E(q)0^r$.
+The phase coordinate
+$x(q)=(\fl{\ph q}+2)-(q+1)\ph$ satisfies
+$x(Z_r(q))=\psi^rx(q)$, where $\psi=1-\ph$.
+Substituting $\psi^r=F_{r+1}-F_r\ph$ and comparing coefficients
+of $\ph$ proves \eqref{eq:zero-boundary}.
+The quotient map is monotone, its fibers are consecutive, and choosing
+zero at each inverse step gives their first element. Consequently $Z_r$
+is strictly increasing and $q$ is the greatest prefix with $Z_r(q)\le n$.
+\end{proof}
+All quantities can be computed without floating point. Put $f=F_r$,
+$g=F_{r+1}$, and $t=\fl{\ph nf}$. Since
+$\ph^{-r}=(-1)^r(g-f\ph)$ and $nf>0$,
+\[
+ q_0=\begin{cases}t-ng,&r\text{ odd},\\ng-t-1,&r\text{ even}.
+ \end{cases}
+\]
+The floor $\fl{\ph s}$ is $(s+\operatorname{isqrt}(5s^2))\mathbin{//}2$.
+
+After recursively encoding $q$, set $j=n-Z_r(q)$, the suffix rank.
+If the prefix has an even number of trailing zeros, its $r$-digit suffix
+is obtained by encoding $F_{r+3}-1+j$ as a length-$(r+1)$ word and
+removing the initial 1. If the parity is odd, the first suffix digit is
+forced to be zero: encode $F_{r+2}-1+j$ as a length-$r$ word, remove
+its initial 1, and prepend the forced zero. These rules follow directly
+from the two-state language and the first value $F_{s+2}-1$ of length
+$s$. The consecutive-fiber property ensures the rank is in range.
+Induction on $k$, with lengths at most 64 handled by ordinary Fibonacci
+unranking, proves correctness of the balanced encoder.
+
+If $M(k)$ and $S(k)$ are the big-integer multiplication and square-root
+costs on $O(k)$ bits, the recursive work is bounded in the form
+\[
+ C(k)\le C(\cl{k/2})+C(\fl{k/2}+1)+O(M(k)+S(k)+k).
+\]
+Under usual regularity assumptions a conservative bound, including
+Fibonacci preparation and initial length search, is
+$O((M(k)+S(k)+k)\log k)$. This is backend dependent; square root is
+not a unit-cost operation. It is not a claim that the Python program
+achieves Karatsuba's exponent. The construction avoids storing the
+original encoder's quadratic total number of Fibonacci-table bits.
+
+\subsection{Multiplication measurements and a ring obstruction}
+The new \texttt{multiply\_hybrid} performs balanced decoding, native
+integer multiplication, and balanced encoding. It explicitly converts
+whole values; the direct digit multiplier of Section~\ref{sec:arithmetic}
+remains a separate construction.
+
+\begin{center}
+\begin{tabular}{rrrr}
+\toprule
+Input digits each & Hybrid (ms) & Previous route (ms) & Native only (ms)\\
+\midrule
+128 & 0.135 & 0.0859 & 0.000291\\
+1,024 & 1.18 & 0.956 & 0.00154\\
+8,192 & 34.9 & 45.4 & 0.0610\\
+16,384 & 46.9 & 111 & 0.194\\
+\bottomrule
+\end{tabular}
+\end{center}
+These are seeded local measurements on Python 3.14.4, macOS arm64,
+best of three, with fresh per-operation caches. The previous route uses
+rolling Fibonacci-weight decoding and the original exact Fibonacci
+encoder. Native-only timings exclude conversion. The gain at 16,384
+digits is $2.37\times$ over that route; short words favor the simpler
+converter. A 100,000-by-100,000-digit product produced 200,001 digits
+in 1.40 seconds and was checked by independent rolling weights.
+For encoding a 16,384-digit \emph{output}, peak Python allocation was
+143,193 bytes versus 13,204,993 bytes, about $92\times$ less; this is
+\texttt{tracemalloc} allocation, not process RSS. The timing table instead
+uses 16,384-digit inputs. Full data are in
+\texttt{research/fast\_measurements.json}.
+
+There is also a three-product ring identity:
+\[
+(u+v\ph)(a+b\ph)=(ua+vb)+(ub+va+vb)\ph.
+\]
+Compute $P=ua$, $Q=vb$, $R=(u+v)(a+b)$ and return $(P+Q,R-P)$.
+But the Fibonacci weight $W(u+v\ph)=u+v$ satisfies
+\[
+ W(CD)=W(C)W(D)+vb.
+\]
+For example $W(\ph)=1$ but $W(\ph^2)=2$. Thus positional polynomial
+multiplication followed by Fibonacci evaluation is not the desired integer
+product; the correction is itself a large product. This supplies no
+improvement over the established three-product multiplication principle
+\cite{gmp}, although it does not rule out every future algorithm.
+
+\subsection{Norm-one units are points on a Pell conic}
+Conjugation gives the multiplicative norm
+\[
+ N(u,v)=u^2+uv-v^2.
+\]
+Norm-one pairs form a group, with inverse $(u+v,-v)$. Put $x=2u+v$
+and $y=v$. Then $x^2-5y^2=4N(u,v)$, so the group is the Pell conic
+\[
+ x^2-5y^2=4,\qquad
+ (x,y)\star(z,t)=\left(\frac{xz+5yt}{2},\frac{xt+yz}{2}\right).
+\]
+The identity is $(2,0)$; the natural unit $\alpha=\ph^2=1+\ph$
+is $(3,1)$, and $\alpha^m$ corresponds to $(L_{2m},F_{2m})$.
+For odd moduli division by 2 is defined, and for integer points from
+the ring the displayed quotients are integral. This is a genuine point
+group, but a classical conic rather than an elliptic curve. Pell-conic
+arithmetic and factoring precede this project \cite{pell,pellfactor}.
+
+For a prime $p\ne2,5$, put $\chi=(5\mid p)$. The norm-one group
+in $\mathbb F_p[t]/(t^2-t-1)$ has order $p-\chi$.
+Indeed, for $\chi=1$ the ring splits as $\mathbb F_p\times\mathbb F_p$,
+and norm-one elements are $(a,a^{-1})$, giving $p-1$ elements.
+For $\chi=-1$ it is $\mathbb F_{p^2}$; Frobenius is conjugation,
+so the norm-one kernel of $z\mapsto z^{p+1}$ has order $p+1$.
+In particular $\alpha^{p-\chi}=1$.
+
+Choose $M=\operatorname{lcm}(1,\ldots,B)$. If the order of $\alpha$
+modulo an unknown prime factor $p$ divides $M$, then writing
+$\alpha^M=(u,v)\pmod N$ gives a gcd
+\[
+ g=\gcd(N,u-1,v)
+\]
+divisible by $p$. Success requires $1<g<N$. The implementation
+builds the exponent from maximal prime powers at most $B$, checking
+gcds after each step. Small prime divisors alone do not suffice if their
+required powers are missing from $M$; simultaneous annihilation at all
+factors can also make the attempt fail.
+
+\subsection{The factoring algorithm reduces to Lucas/Williams}
+The trace of $\alpha^m$ is $V_m(3,1)$, where
+$V_0=2$, $V_1=3$, and $V_{m+1}=3V_m-V_{m-1}$.
+For a norm-one element $z$ in either algebra above,
+\[
+ \operatorname{Tr}(z)-2=z+z^{-1}-2=(z-1)^2/z.
+\]
+The algebra has no nonzero nilpotents, so this vanishes exactly when
+$z=1$. Consequently, for squarefree $N$ coprime to 10, the scalar
+Lucas gcd $\gcd(N,V_M(3,1)-2)$ detects exactly the same prime factors.
+For prime powers valuations may differ. The scalar recurrence uses
+$V_{2m}=V_m^2-2$ and $V_{2m+1}=V_mV_{m+1}-P$ for parameter $P$.
+This is a discriminant-5 specialization of established Lucas/Williams
+factoring, with the $p+1$ case when 5 is a nonresidue
+\cite{williams,gmpecm}.
+
+At bound 27, the pair method factors $107\cdot1019$ while the fixed-base-2
+$p-1$ comparator fails; at bound 16, the comparator factors
+$113\cdot1019$ while the pair method fails. On 200 seeded semiprimes
+with distinct prime factors in $[1000,9999]$:
+\begin{center}
+\begin{tabular}{rrrr}
+\toprule
+Bound & Pair / scalar successes & $p-1$ successes & Either\\
+\midrule
+16 & 16 / 16 & 14 & 22\\
+64 & 105 / 105 & 102 & 129\\
+256 & 172 / 172 & 171 & 191\\
+\bottomrule
+\end{tabular}
+\end{center}
+At bound 256, the pair method took 31.6 ms, scalar Lucas 10.0 ms, and
+$p-1$ 4.43 ms for the sample. Thus the scalar method finds the same
+factors faster. These are small stage-one experiments, not a comparison
+with full factoring packages or cryptographic-size inputs. The group
+embeds in finite-field multiplication and supplies no new post-quantum
+hardness assumption. The useful engineering gain is balanced conversion
+when Irradix words must be retained; binary remains the sensible core
+for arithmetic-heavy applications.
+
+\clearpage
 \section{Generalization and concrete further questions}
 The construction in Section~\ref{sec:arithmetic} resolves the finite-state
 arithmetic question for this representation. The original fractional
@@ -762,6 +977,14 @@ canonical augmentation identity, incrementer, or output recovery.
 It also verifies scaled Fibonacci Horner evaluation and the final
 subtraction that converts the augmented weight to the product. Those
 integer invariants do not formally verify the Python multiplier.
+The companion additionally proves the block-weight identity, three-product
+ring identity, norm multiplicativity, weight-product correction, and
+Pell-coordinate identity. The balanced encoder and finite-field arguments
+in Section~\ref{sec:fast} have written proofs, not Lean formalizations.
+New executable checks cover 20,001 forced-recursive encodings, 2,001
+signed round trips, 300 large random conversions, 500 Fibonacci thresholds,
+4,225 small signed products, 100 large random products, 1,000 ring identities,
+and the unit-order bound at 166 primes.
 The Python implementation and the packing formats themselves are not
 formally verified by that Lean proof. Numerical tests are supplementary
 evidence, not a substitute for the all-integers theorem.
@@ -821,5 +1044,29 @@ C. Ahlbach, J. Usatine, C. Frougny, and N. Pippenger,
 \emph{Efficient Algorithms for Zeckendorf Arithmetic},
 Fibonacci Quarterly 51(3), 249--255 (2013).
 \url{https://www.fq.math.ca/Papers1/51-3/AhlbachUsatineFrougnyPippenger.pdf}.
+
+\bibitem{gmp}
+GMP developers, \emph{Karatsuba Multiplication} and
+\emph{Fibonacci Numbers Algorithm}, GNU MP manual.
+\url{https://gmplib.org/manual/Karatsuba-Multiplication};
+\url{https://gmplib.org/manual/Fibonacci-Numbers-Algorithm}.
+
+\bibitem{williams}
+H. C. Williams, \emph{A $p+1$ Method of Factoring},
+Mathematics of Computation 39(159), 225--234 (1982).
+\href{https://doi.org/10.1090/S0025-5718-1982-0658227-7}{doi:10.1090/S0025-5718-1982-0658227-7}.
+
+\bibitem{pell}
+F. Lemmermeyer, \emph{Conics---a Poor Man's Elliptic Curves},
+preprint (2003). \url{https://arxiv.org/abs/math/0311306}.
+
+\bibitem{pellfactor}
+R. \v{S}le\v{z}evi\v{c}ien\.{e}, \emph{Factoring with Pell conics},
+Lietuvos matematikos rinkinys 44(spec.), 120--124 (2004).
+\href{https://doi.org/10.15388/LMR.2004.31881}{doi:10.15388/LMR.2004.31881}.
+
+\bibitem{gmpecm}
+GMP-ECM developers, \emph{GMP-ECM README}, section 2.
+\url{https://github.com/sethtroisi/gmp-ecm/blob/main/README}.
 \end{thebibliography}
 \end{document}

@@ -63,3 +63,13 @@ gives the integer product. `multiplication_initial` verifies the initial
 state used after reading the prefixed one. These are integer-value
 invariants; the Python multiplier's calls to the digit adder and sign
 handling are covered by written arguments and executable checks.
+
+## Block and quadratic-ring identities
+
+The arithmetic companion also verifies `block_weight` (the high block's
+contribution after concatenation), `three_products` (quadratic-ring multiplication),
+`norm_product`, `weight_product` (the correction showing weight is not
+multiplicative), and `pell_coordinates` (the discriminant-5 conic identity).
+The bounded prefix correction, balanced encoder correctness, finite-field group
+orders, and factoring method have written proofs in
+[FAST_ARITHMETIC.md](../FAST_ARITHMETIC.md); they are outside this formalization.
